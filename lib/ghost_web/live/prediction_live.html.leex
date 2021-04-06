@@ -1,0 +1,146 @@
+<div class="flex items-center space-x-4">
+  <h2 class="text-3xl">Predictions</h2>
+</div>
+
+<%= form_for @changeset, "#", [phx_submit: :save], fn f -> %>
+  <table class="w-full mt-4">
+    <thead>
+      <tr>
+        <th scope="col" class="px-4 py-2">End At</th>
+        <th scope="col" class="px-4 py-2">Base</th>
+        <th scope="col" class="px-4 py-2">Quote</th>
+        <th scope="col" class="px-4 py-2">Price</th>
+        <th scope="col" class="px-4 py-2">Source</th>
+        <th scope="col" class="px-4 py-2">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= if Enum.any?(@predictions) do %>
+        <%= for p <- @predictions do %>
+          <tr>
+            <td class="border px-4 py-2"><%= p.end_at %></td>
+            <td class="border px-4 py-2"><%= p.base %></td>
+            <td class="border px-4 py-2"><%= p.quote %></td>
+            <td class="border px-4 py-2"><%= p.price %></td>
+            <td class="border px-4 py-2"><%= p.source %></td>
+            <td class="border px-4 py-2 text-right">
+              <button
+                type="button"
+                class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                phx-click="delete"
+                phx-value-prediction-id="<%= p.id %>"
+              >
+                Delete
+              </button>
+            </td>
+          </tr>
+        <% end %>
+      <% else %>
+        <tr>
+          <td colspan="6" class="border px-4 py-2">No predictions</td>
+        </tr>
+      <% end %>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td class="border px-4 py-2">
+          <%= text_input f, :end_at, placeholder: "2021-04-06T07:05:44.225959Z" %>
+          <%= error_tag f, :end_at %>
+        </td>
+        <td class="border px-4 py-2">
+          <%= text_input f, :base, placeholder: "btc" %>
+          <%= error_tag f, :base %>
+        </td>
+        <td class="border px-4 py-2">
+          <%= text_input f, :quote, placeholder: "usd" %>
+          <%= error_tag f, :quote %>
+        </td>
+        <td class="border px-4 py-2">
+          <%= text_input f, :price, type: :number, min: 0, step: 0.0000000000000000001, placeholder: "20000.1" %>
+        </td>
+        <td class="border px-4 py-2">
+          <%= text_input f, :source, placeholder: "manual" %>
+          <%= error_tag f, :source %>
+        </td>
+        <td class="border px-4 py-2 text-right">
+          <button
+            type="button"
+            class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
+            phx-click="end-at-hour"
+          >
+            1 Hour
+          </button>
+          <button
+            type="button"
+            class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
+            phx-click="end-at-today"
+          >
+            Today
+          </button>
+          <button
+            type="button"
+            class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
+            phx-click="end-at-tomorrow"
+          >
+            Tomorrow
+          </button>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="6" class="px-4 py-2">
+          <button class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">Add</button>
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+<% end %>
+
+<hr class="mt-4" />
+
+<div class="mt-4">
+  <h2 class="text-2xl">Last Week</h2>
+
+  <div>
+    TODO...
+  </div>
+</div>
+
+<div class="mt-4">
+  <h2 class="text-2xl">Yesterday</h2>
+
+  <div>
+    TODO...
+  </div>
+</div>
+
+<div class="mt-4">
+  <h2 class="text-2xl">Today</h2>
+
+  <div>
+    TODO...
+  </div>
+</div>
+
+<div class="mt-4">
+  <h2 class="text-2xl">Tomorrow</h2>
+
+  <div>
+    TODO...
+  </div>
+</div>
+
+<div class="mt-4">
+  <h2 class="text-2xl">This Week</h2>
+
+  <div>
+    TODO...
+  </div>
+</div>
+
+<div class="mt-4">
+  <h2 class="text-2xl">Next Week</h2>
+
+  <div>
+    TODO...
+  </div>
+</div>
