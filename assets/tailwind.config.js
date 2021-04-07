@@ -14,7 +14,11 @@ module.exports = {
       opacity: ['disabled'],
     },
   },
+  modules: {
+    display: ['responsive', 'empty'],
+  },
   plugins: [
     require('@tailwindcss/forms'),
+    require('tailwindcss-empty')(),
   ],
 }
