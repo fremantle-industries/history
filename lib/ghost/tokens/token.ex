@@ -1,4 +1,4 @@
-defmodule Ghost.Token do
+defmodule Ghost.Tokens.Token do
   use Ecto.Schema
   import Ecto.Changeset
 

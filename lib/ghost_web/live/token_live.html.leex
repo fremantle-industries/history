@@ -1,22 +1,23 @@
-<div class="flex items-center space-x-4">
-  <h2 class="text-3xl">Tokens</h2>
+<h2 class="text-3xl">Tokens</h2>
 
-  <form phx-change="suggest" phx-submit="search">
-    <input type="text" name="q" value="<%= @query %>" placeholder="Live token search" list="tokens" autocomplete="off"/>
-    <datalist id="tokens">
-      <%= for t <- @tokens do %>
-        <option value="<%= t.id %>"><%= t.name %></option>
-      <% end %>
-    </datalist>
-    <button type="submit" phx-disable-with="Searching...">Search</button>
-    <button type="button" phx-click="download" phx-disable-with="Downloading...">Download</button>
-  </form>
-</div>
+<form phx-change="suggest" phx-submit="search" class="mt-4">
+  <input type="text" name="q" value="<%= @query %>" placeholder="Live token search" list="tokens" autocomplete="off"/>
+  <datalist id="tokens">
+    <%= for t <- @tokens do %>
+      <option value="<%= t.name %>"><%= t.name %></option>
+    <% end %>
+  </datalist>
+  <button type="submit" phx-disable-with="Searching..." class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
+    Search
+  </button>
+  <button disabled type="button" phx-click="download" phx-disable-with="Downloading..." class="disabled:opacity-50 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
+    Download
+  </button>
+</form>
 
-<%= form_for @changeset, "#", [phx_submit: :save], fn f -> %>
+<%= form_for @changeset, "#", [phx_submit: :save, class: "mt-4"], fn f -> %>
   <table class="w-full mt-4">
     <thead>
-      <th scope="col" class="px-4 py-2">ID</th>
       <th scope="col" class="px-4 py-2">Name</th>
       <th scope="col" class="px-4 py-2">Symbol</th>
       <th scope="col" class="px-4 py-2">Actions</th>
@@ -25,7 +26,6 @@
       <%= if Enum.any?(@tokens) do %>
         <%= Enum.map @tokens, fn t -> %>
           <tr>
-            <td scope="row" class="border px-4 py-2"><%= t.id %></td>
             <td class="border px-4 py-2"><%= t.name %></td>
             <td class="border px-4 py-2"><%= t.symbol %></td>
             <td class="border px-4 py-2 text-right">
@@ -42,13 +42,18 @@
         <% end %>
       <% else %>
         <tr>
-          <td colspan="4" class="border px-4 py-2">No tokens</td>
+          <td colspan="4" class="border px-4 py-2">
+            <%= if @query == nil do %>
+              No tokens. Add some below
+            <% else %>
+              No tokens found matching "<%= @query %>"
+            <% end %>
+          </td>
         </tr>
       <% end %>
     </tbody>
     <tfoot>
       <tr>
-        <td class="border px-4 py-2"></td>
         <td class="border px-4 py-2">
           <%= text_input f, :name, placeholder: "Bitcoin" %>
           <%= error_tag f, :name %>
