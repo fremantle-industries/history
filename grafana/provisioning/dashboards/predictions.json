@@ -16,7 +16,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": 5,
-  "iteration": 1617786371579,
+  "iteration": 1617858862016,
   "links": [
     {
       "icon": "external link",
@@ -69,7 +69,28 @@
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
-      "seriesOverrides": [],
+      "seriesOverrides": [
+        {
+          "$$hashKey": "object:50",
+          "alias": "/.*volume/",
+          "bars": true,
+          "lines": false,
+          "yaxis": 2,
+          "zindex": -1
+        },
+        {
+          "$$hashKey": "object:106",
+          "alias": "/.*(high|low)/",
+          "fillBelowTo": "btc-usd low",
+          "lines": false,
+          "linewidth": 2
+        },
+        {
+          "$$hashKey": "object:125",
+          "alias": "/.*low/",
+          "lines": false
+        }
+      ],
       "spaceLength": 10,
       "stack": false,
       "steppedLine": false,
@@ -134,7 +155,7 @@
           "hide": false,
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT\n  $__time(time),\n  base || '-' || quote AS text,\n  open,\n  high,\n  low,\n  close\nFROM\n  ohlc\nWHERE\n  $__timeFilter(time)\n  AND base IN ($base)\n  AND quote IN ($quote)\nORDER BY time\n",
+          "rawSql": "SELECT\n  $__time(time),\n  base || '-' || quote AS text,\n  high,\n  low,\n  volume\nFROM\n  ohlc\nWHERE\n  $__timeFilter(time)\n  AND base IN ($base)\n  AND quote IN ($quote)\nORDER BY time\n",
           "refId": "B",
           "select": [
             [
@@ -176,6 +197,7 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:81",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -184,6 +206,7 @@
           "show": true
         },
         {
+          "$$hashKey": "object:82",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -209,13 +232,12 @@
       {
         "allValue": null,
         "current": {
-          "selected": true,
-          "tags": [],
+          "selected": false,
           "text": [
-            "bnb"
+            "All"
           ],
           "value": [
-            "bnb"
+            "$__all"
           ]
         },
         "datasource": "Ghost TimescaleDB",
@@ -242,7 +264,7 @@
       {
         "allValue": null,
         "current": {
-          "selected": true,
+          "selected": false,
           "text": [
             "All"
           ],
@@ -274,12 +296,12 @@
     ]
   },
   "time": {
-    "from": "2021-04-05T07:00:00.000Z",
+    "from": "2021-03-30T07:00:00.000Z",
     "to": "2021-04-12T06:59:59.000Z"
   },
   "timepicker": {},
   "timezone": "",
   "title": "Predictions",
   "uid": "r3gDSylGz",
-  "version": 4
+  "version": 6
 }
