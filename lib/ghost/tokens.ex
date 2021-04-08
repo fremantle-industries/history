@@ -5,7 +5,7 @@ defmodule Ghost.Tokens do
 
   def all do
     Ecto.Query.from(
-      t in "tokens",
+      "tokens",
       order_by: [asc: :name],
       select: [:id, :name, :symbol]
     )
