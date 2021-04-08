@@ -44,7 +44,7 @@ defmodule Ghost.MixProject do
       {:telemetry_metrics_prometheus, "~> 1.0"},
       {:telemetry_poller, "~> 0.4"},
       {:timex, "~> 3.7"},
-      {:workbench, "~> 0.0.7"},
+      {:workbench, "~> 0.0.8"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:dialyxir, "~> 1.0", only: :dev, runtime: false},
       {:ex_doc, ">= 0.0.0", only: :dev},
