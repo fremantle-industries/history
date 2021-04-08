@@ -7,28 +7,25 @@
       <option value="<%= t.name %>"><%= t.name %></option>
     <% end %>
   </datalist>
-  <button type="submit" phx-disable-with="Searching..." class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
-    Search
-  </button>
   <button disabled type="button" phx-click="download" phx-disable-with="Downloading..." class="disabled:opacity-50 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
     Download
   </button>
 </form>
 
 <%= form_for @changeset, "#", [phx_submit: :save, class: "mt-4"], fn f -> %>
-  <table class="w-full mt-4">
+  <table class="mt-4">
     <thead>
       <th scope="col" class="px-4 py-2">Name</th>
       <th scope="col" class="px-4 py-2">Symbol</th>
       <th scope="col" class="px-4 py-2">Actions</th>
     </thead>
-    <tbody>
+    <tbody class="border">
       <%= if Enum.any?(@tokens) do %>
         <%= Enum.map @tokens, fn t -> %>
-          <tr>
-            <td class="border px-4 py-2"><%= t.name %></td>
-            <td class="border px-4 py-2"><%= t.symbol %></td>
-            <td class="border px-4 py-2 text-right">
+          <tr class="hover:bg-gray-50">
+            <td class="px-4 py-2"><%= t.name %></td>
+            <td class="px-4 py-2"><%= t.symbol %></td>
+            <td class="border-r px-4 py-2 text-right">
               <button
                 type="button"
                 class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
@@ -53,16 +50,16 @@
       <% end %>
     </tbody>
     <tfoot>
-      <tr>
-        <td class="border px-4 py-2">
+      <tr class="border">
+        <td class="border-r px-4 py-2">
           <%= text_input f, :name, placeholder: "Bitcoin" %>
           <%= error_tag f, :name %>
         </td>
-        <td class="border px-4 py-2">
+        <td class="px-4 py-2">
           <%= text_input f, :symbol, placeholder: "btc" %>
           <%= error_tag f, :symbol %>
         </td>
-        <td class="border px-4 py-2"></td>
+        <td class="border-r px-4 py-2"></td>
       </tr>
       <tr>
         <td colspan="4" class="px-4 py-2">
