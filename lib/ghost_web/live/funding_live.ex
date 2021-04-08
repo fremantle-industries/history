@@ -1,4 +1,4 @@
-defmodule GhostWeb.DataLive do
+defmodule GhostWeb.FundingLive do
   use GhostWeb, :live_view
   require Ecto.Query
 

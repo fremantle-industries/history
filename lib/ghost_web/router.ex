@@ -20,6 +20,8 @@ defmodule GhostWeb.Router do
     live "/", HomeLive, :index
     live "/tokens", TokenLive, :index
     live "/data", DataLive, :index
+    live "/data/ohlc", OHLCLive, :index
+    live "/data/funding", FundingLive, :index
     live "/predictions", PredictionLive, :index
   end
 

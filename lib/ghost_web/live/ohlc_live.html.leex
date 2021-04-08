@@ -1,0 +1,134 @@
+<div class="space-x-4">
+  <%= render GhostWeb.DataView, "_header.html", conn: @socket, section: "OHLC" %>
+</div>
+<%= render GhostWeb.DataView, "_nav.html", conn: @socket %>
+
+<%= form_for @changeset, "#", [phx_submit: :save, class: "mt-8"], fn f -> %>
+  <table class="w-full mt-4">
+    <thead class="bg-gray-200 border-t-2 border-gray-400">
+      <tr>
+        <th scope="col" class="px-4 py-3 text-left text-gray-700">Period</th>
+        <th scope="col" class="px-4 py-3 text-left text-gray-700">Time</th>
+        <th scope="col" class="px-4 py-3 text-left text-gray-700">Base</th>
+        <th scope="col" class="px-4 py-3 text-left text-gray-700">Quote</th>
+        <th scope="col" class="px-4 py-3 text-left text-gray-700">Open</th>
+        <th scope="col" class="px-4 py-3 text-left text-gray-700">High</th>
+        <th scope="col" class="px-4 py-3 text-left text-gray-700">Low</th>
+        <th scope="col" class="px-4 py-3 text-left text-gray-700">Close</th>
+        <th scope="col" class="px-4 py-3 text-left text-gray-700">Volume</th>
+        <th scope="col" class="px-4 py-3 text-left text-gray-700">Source</th>
+        <th scope="col" class="px-4 py-3 text-right text-gray-700">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= if Enum.any?(@ohlc) do %>
+        <%= for c <- @ohlc do %>
+          <tr class="hover:bg-gray-50 border-t border-b group">
+            <td class="px-4 py-3"><%= c.period %></td>
+            <td class="px-4 py-3"><%= c.time %></td>
+            <td class="px-4 py-3"><%= c.base %></td>
+            <td class="px-4 py-3"><%= c.quote %></td>
+            <td class="px-4 py-3"><%= c.open %></td>
+            <td class="px-4 py-3"><%= c.high %></td>
+            <td class="px-4 py-3"><%= c.low %></td>
+            <td class="px-4 py-3"><%= c.close %></td>
+            <td class="px-4 py-3"><%= c.volume %></td>
+            <td class="px-4 py-3"><%= c.source %></td>
+            <td class="px-4 py-3 text-right">
+              <button
+                type="button"
+                class="text-blue-500 opacity-75 hover:opacity-100 invisible group-hover:visible"
+                phx-click="copy"
+                phx-value-ohlc-id="<%= c.id %>"
+              >
+                Copy
+              </button>
+              <span class="text-gray-300 invisible group-hover:visible">|</span>
+              <button
+                type="button"
+                class="text-red-500 opacity-75 hover:opacity-100 invisible group-hover:visible"
+                phx-click="delete"
+                phx-value-ohlc-id="<%= c.id %>"
+              >
+                Delete
+              </button>
+            </td>
+          </tr>
+        <% end %>
+      <% else %>
+        <tr>
+          <td colspan="11" class="px-4 py-3">No OHLC candles</td>
+        </tr>
+      <% end %>
+    </tbody>
+    <tfoot>
+      <tr class="border-t border-b">
+        <td class="px-4 py-3">
+          <%= select f, :period, [:min_1, :min_5, :min_15, :hour_1, :hour_4, :day_1, :week_1, :month_1, :year_1], class: "w-32" %>
+          <%= error_tag f, :period %>
+        </td>
+        <td class="px-4 py-3">
+          <%= text_input f, :time, placeholder: "2021-04-06T07:05:44.225959Z", class: "w-64" %>
+          <%= error_tag f, :time %>
+        </td>
+        <td class="px-4 py-3">
+          <%= text_input f, :base, placeholder: "btc", class: "w-32" %>
+          <%= error_tag f, :base %>
+        </td>
+        <td class="px-4 py-3">
+          <%= text_input f, :quote, placeholder: "usd", class: "w-32" %>
+          <%= error_tag f, :quote %>
+        </td>
+        <td class="px-4 py-3">
+          <%= text_input f, :open, type: :number, min: 0, step: 0.0000000000000000001, placeholder: "20000.1", class: "w-32" %>
+        </td>
+        <td class="px-4 py-3">
+          <%= text_input f, :high, type: :number, min: 0, step: 0.0000000000000000001, placeholder: "20000.1", class: "w-32" %>
+        </td>
+        <td class="px-4 py-3">
+          <%= text_input f, :low, type: :number, min: 0, step: 0.0000000000000000001, placeholder: "20000.1", class: "w-32" %>
+        </td>
+        <td class="px-4 py-3">
+          <%= text_input f, :close, type: :number, min: 0, step: 0.0000000000000000001, placeholder: "20000.1", class: "w-32" %>
+        </td>
+        <td class="px-4 py-3">
+          <%= text_input f, :volume, type: :number, min: 0, step: 0.0000000000000000001, placeholder: "20000.1", class: "w-32" %>
+        </td>
+        <td class="px-4 py-3">
+          <%= text_input f, :source, class: "w-52" %>
+          <%= error_tag f, :source %>
+        </td>
+        <td class="px-4 py-3 text-right">
+          <button
+            type="button"
+            class="text-blue-500 opacity-75 hover:opacity-100"
+            phx-click="hour-start"
+          >
+            Hour Start
+          </button>
+          <span class="text-gray-300">|</span>
+          <button
+            type="button"
+            class="text-blue-500 opacity-75 hover:opacity-100"
+            phx-click="today"
+          >
+            Today
+          </button>
+          <span class="text-gray-300">|</span>
+          <button
+            type="button"
+            class="text-blue-500 opacity-75 hover:opacity-100"
+            phx-click="tomorrow"
+          >
+            Tomorrow
+          </button>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="11" class="px-4 py-2">
+          <button class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">Add</button>
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+<% end %>
