@@ -14,21 +14,21 @@
 
 <%= form_for @changeset, "#", [phx_submit: :save, class: "mt-4"], fn f -> %>
   <table class="mt-4">
-    <thead>
-      <th scope="col" class="px-4 py-2">Name</th>
-      <th scope="col" class="px-4 py-2">Symbol</th>
-      <th scope="col" class="px-4 py-2">Actions</th>
+    <thead class="bg-gray-200 border-t-2 border-gray-400">
+      <th scope="col" class="px-4 py-3 text-left text-gray-700">Name</th>
+      <th scope="col" class="px-4 py-3 text-left text-gray-700">Symbol</th>
+      <th scope="col" class="px-4 py-3 text-left text-gray-700">Actions</th>
     </thead>
-    <tbody class="border">
+    <tbody>
       <%= if Enum.any?(@tokens) do %>
         <%= Enum.map @tokens, fn t -> %>
-          <tr class="hover:bg-gray-50">
+          <tr class="hover:bg-gray-50 border-t border-b group">
             <td class="px-4 py-2"><%= t.name %></td>
             <td class="px-4 py-2"><%= t.symbol %></td>
-            <td class="border-r px-4 py-2 text-right">
+            <td class="px-4 py-2 text-right">
               <button
                 type="button"
-                class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                class="text-red-500 opacity-75 hover:opacity-100 invisible group-hover:visible"
                 phx-click="delete"
                 phx-value-token-id="<%= t.id %>"
               >
@@ -50,8 +50,8 @@
       <% end %>
     </tbody>
     <tfoot>
-      <tr class="border">
-        <td class="border-r px-4 py-2">
+      <tr class="border-t border-b">
+        <td class="px-4 py-2">
           <%= text_input f, :name, placeholder: "Bitcoin" %>
           <%= error_tag f, :name %>
         </td>
@@ -59,7 +59,7 @@
           <%= text_input f, :symbol, placeholder: "btc" %>
           <%= error_tag f, :symbol %>
         </td>
-        <td class="border-r px-4 py-2"></td>
+        <td class="px-4 py-2"></td>
       </tr>
       <tr>
         <td colspan="4" class="px-4 py-2">
