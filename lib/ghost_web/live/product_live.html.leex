@@ -1,0 +1,55 @@
+<h2 class="text-3xl">
+  Products
+</h2>
+
+<form phx-change="suggest" phx-submit="search" class="mt-4">
+  <input type="text" name="q" value="<%= @query %>" placeholder="Live product search" list="products" autocomplete="off"/>
+  <datalist id="products">
+    <%= for p <- @symbols do %>
+      <option value="<%= p.symbol %>"><%= p.symbol %></option>
+    <% end %>
+  </datalist>
+  <button disabled type="button" phx-click="download" phx-disable-with="Downloading..." class="disabled:opacity-50 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
+    Import
+  </button>
+</form>
+
+<%= form_for @changeset, "#", [phx_submit: :save, class: "mt-8"], fn f -> %>
+  <table class="w-full mt-4">
+    <thead class="bg-gray-200 border-t-2 border-gray-400">
+      <tr>
+        <th scope="col" class="px-4 py-3 text-left text-gray-700">Symbol</th>
+        <th scope="col" class="px-4 py-3 text-left text-gray-700">Venue Symbol</th>
+        <th scope="col" class="px-4 py-3 text-left text-gray-700">Venue</th>
+        <th scope="col" class="px-4 py-3 text-left text-gray-700">Type</th>
+        <th scope="col" class="px-4 py-3 text-right text-gray-700">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= if Enum.any?(@products) do %>
+        <%= for p <- @products do %>
+          <tr class="hover:bg-gray-50 border-t border-b group">
+            <td class="px-4 py-3"><%= p.symbol %></td>
+            <td class="px-4 py-3"><%= p.venue_symbol %></td>
+            <td class="px-4 py-3"><%= p.venue %></td>
+            <td class="px-4 py-3"><%= p.type %></td>
+            <td class="px-4 py-3 text-right">
+              <button
+                type="button"
+                class="text-red-500 opacity-75 hover:opacity-100 invisible group-hover:visible"
+                phx-click="delete"
+                phx-value-product-id="<%= p.id %>"
+              >
+                Delete
+              </button>
+            </td>
+          </tr>
+        <% end %>
+      <% else %>
+        <tr>
+          <td colspan="5" class="px-4 py-3">No products</td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

@@ -111,6 +111,10 @@ config :navigator,
         link: {GhostWeb.Router.Helpers, :data_path, [GhostWeb.Endpoint, :index]}
       },
       %{
+        label: "Products",
+        link: {GhostWeb.Router.Helpers, :product_path, [GhostWeb.Endpoint, :index]}
+      },
+      %{
         label: "Tokens",
         link: {GhostWeb.Router.Helpers, :token_path, [GhostWeb.Endpoint, :index]}
       },

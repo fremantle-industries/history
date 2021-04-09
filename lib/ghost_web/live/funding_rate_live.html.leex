@@ -1,0 +1,114 @@
+<div class="space-x-4">
+  <%= render GhostWeb.DataView, "_header.html", conn: @socket, section: "Funding Rates" %>
+</div>
+<%= render GhostWeb.DataView, "_nav.html", conn: @socket %>
+
+<%= form_for @changeset, "#", [phx_submit: :save, class: "mt-8"], fn f -> %>
+  <table class="w-full mt-4">
+    <thead class="bg-gray-200 border-t-2 border-gray-400">
+      <tr>
+        <th scope="col" class="px-4 py-3 text-left text-gray-700">Time</th>
+        <th scope="col" class="px-4 py-3 text-left text-gray-700">Product</th>
+        <th scope="col" class="px-4 py-3 text-left text-gray-700">Venue</th>
+        <th scope="col" class="px-4 py-3 text-left text-gray-700">Rate</th>
+        <th scope="col" class="px-4 py-3 text-right text-gray-700">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= if Enum.any?(@funding_rates) do %>
+        <%= for r <- @funding_rates do %>
+          <tr class="hover:bg-gray-50 border-t border-b group">
+            <td class="px-4 py-3"><%= r.time %></td>
+            <td class="px-4 py-3"><%= r.product %></td>
+            <td class="px-4 py-3"><%= r.venue %></td>
+            <td class="px-4 py-3"><%= r.rate %></td>
+            <td class="px-4 py-3 text-right">
+              <button
+                type="button"
+                class="text-red-500 opacity-75 hover:opacity-100 invisible group-hover:visible"
+                phx-click="delete"
+                phx-value-funding-rate-id="<%= r.id %>"
+              >
+                Delete
+              </button>
+            </td>
+          </tr>
+        <% end %>
+      <% else %>
+        <tr>
+          <td colspan="5" class="px-4 py-3">No funding rates</td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
+
+<div class="mt-4">
+  <h3 class="text-2xl">
+    History
+  </h3>
+
+  <%= form_for @history_download_changeset, "#", [phx_submit: :download, class: "flex items-start mt-8"], fn f -> %>
+    <label class="font-bold">
+      from:
+      <%= date_select f, :from_date %>
+      <%= error_tag f, :from_date %>
+      <%= text_input f, :from_time, type: "time" %>
+      <%= error_tag f, :from_time %>
+    </label>
+    <label class="ml-4 font-bold">
+      to:
+      <%= date_select f, :to_date %>
+      <%= error_tag f, :to_date %>
+      <%= text_input f, :to_time, type: "time" %>
+      <%= error_tag f, :to_time %>
+    </label>
+    <%= multiple_select f, :products, @swap_products, selected: f.data.products |> Enum.map(& Jason.encode!/1), class: "ml-4" %>
+    <%= error_tag f, :products %>
+    <button class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded ml-4">
+      Download
+    </button>
+  <% end %>
+
+  <table class="w-full mt-4">
+    <thead class="bg-gray-200 border-t-2 border-gray-400">
+      <tr>
+        <th scope="col" class="px-4 py-3 text-left text-gray-700">Created At</th>
+        <th scope="col" class="px-4 py-3 text-left text-gray-700">From</th>
+        <th scope="col" class="px-4 py-3 text-left text-gray-700">To</th>
+        <th scope="col" class="px-4 py-3 text-left text-gray-700">Products</th>
+        <th scope="col" class="px-4 py-3 text-left text-gray-700">Status</th>
+        <th scope="col" class="px-4 py-3 text-right text-gray-700">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= if Enum.any?(@history_downloads) do %>
+        <%= for d <- @history_downloads do %>
+          <tr class="hover:bg-gray-50 border-t border-b group">
+            <td class="px-4 py-3"><%= d.inserted_at %></td>
+            <td class="px-4 py-3"><%= from(d) %></td>
+            <td class="px-4 py-3"><%= to(d) %></td>
+            <td class="px-4 py-3"><%= format_download_products(d.products) %></td>
+            <td class="px-4 py-3">
+              <span class="bg-yellow-50 text-yellow-400 py-2 px-4 inline-block rounded-full">pending</span>
+            </td>
+            <td class="px-4 py-3 text-right">
+              <button
+                type="button"
+                class="text-red-500 opacity-75 hover:opacity-100 invisible group-hover:visible"
+                phx-click="cancel"
+                phx-value-history-download-id="<%= d.id %>"
+              >
+                Cancel
+              </button>
+            </td>
+          </tr>
+        <% end %>
+      <% else %>
+        <tr>
+          <td colspan="4" class="px-4 py-3">No history downloads</td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

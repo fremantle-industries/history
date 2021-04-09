@@ -12,3 +12,5 @@
 
 Code.require_file("seeds/tokens.exs", __DIR__)
 Code.require_file("seeds/ohlc.exs", __DIR__)
+Code.require_file("seeds/products.exs", __DIR__)
+Code.require_file("seeds/funding_rates.exs", __DIR__)

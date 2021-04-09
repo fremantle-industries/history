@@ -17,7 +17,7 @@ defmodule Ghost.Tokens do
       t in "tokens",
       order_by: [asc: :name],
       select: [:id, :name, :symbol],
-      where: ilike(t.name, ^"#{query}%") or ilike(t.symbol, ^"#{query}%")
+      where: ilike(t.name, ^"%#{query}%") or ilike(t.symbol, ^"%#{query}%")
     )
     |> Repo.all()
   end

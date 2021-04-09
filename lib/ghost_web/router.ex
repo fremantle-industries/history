@@ -18,11 +18,12 @@ defmodule GhostWeb.Router do
     pipe_through :browser
 
     live "/", HomeLive, :index
-    live "/tokens", TokenLive, :index
+    live "/predictions", PredictionLive, :index
     live "/data", DataLive, :index
     live "/data/ohlc", OHLCLive, :index
-    live "/data/funding", FundingLive, :index
-    live "/predictions", PredictionLive, :index
+    live "/data/funding", FundingRateLive, :index
+    live "/products", ProductLive, :index
+    live "/tokens", TokenLive, :index
   end
 
   # Other scopes may use custom stacks.

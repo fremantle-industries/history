@@ -27,6 +27,13 @@
     {
       "icon": "external link",
       "tags": [
+        "funding-rates"
+      ],
+      "type": "dashboards"
+    },
+    {
+      "icon": "external link",
+      "tags": [
         "tai-health"
       ],
       "type": "dashboards"
@@ -447,5 +454,5 @@
   "timezone": "",
   "title": "Home",
   "uid": "f2rLff8Gz",
-  "version": 1
+  "version": 2
 }
