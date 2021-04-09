@@ -9,6 +9,13 @@ defmodule Ghost.Products do
     |> Repo.all()
   end
 
+  def spot do
+    Product
+    |> Ecto.Query.where(type: "spot")
+    |> Ecto.Query.order_by(asc: :venue, asc: :symbol, asc: :type)
+    |> Repo.all()
+  end
+
   def swap do
     Product
     |> Ecto.Query.where(type: "swap")

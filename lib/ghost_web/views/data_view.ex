@@ -15,6 +15,8 @@ defmodule GhostWeb.DataView do
       <%= link "OHLC", to: Routes.ohlc_path(assigns.conn, :index), class: "hover:opacity-75" %>
       <span class="text-gray-400">|</span>
       <%= link "Funding Rates", to: Routes.funding_rate_path(assigns.conn, :index), class: "hover:opacity-75" %>
+      <span class="text-gray-400">|</span>
+      <%= link "Lending Rates", to: Routes.lending_rate_path(assigns.conn, :index), class: "hover:opacity-75" %>
     </nav>
     """
   end
