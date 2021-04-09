@@ -4,29 +4,29 @@
 
 <%= form_for @changeset, "#", [phx_submit: :save], fn f -> %>
   <table class="w-full mt-4">
-    <thead>
+    <thead class="bg-gray-200 border-t-2 border-gray-400">
       <tr>
-        <th scope="col" class="px-4 py-2">End At</th>
-        <th scope="col" class="px-4 py-2">Base</th>
-        <th scope="col" class="px-4 py-2">Quote</th>
-        <th scope="col" class="px-4 py-2">Price</th>
-        <th scope="col" class="px-4 py-2">Source</th>
-        <th scope="col" class="px-4 py-2">Actions</th>
+        <th scope="col" class="px-4 py-3 text-left text-gray-700">End At</th>
+        <th scope="col" class="px-4 py-3 text-left text-gray-700">Base</th>
+        <th scope="col" class="px-4 py-3 text-left text-gray-700">Quote</th>
+        <th scope="col" class="px-4 py-3 text-left text-gray-700">Price</th>
+        <th scope="col" class="px-4 py-3 text-left text-gray-700">Source</th>
+        <th scope="col" class="px-4 py-3 text-left text-gray-700">Actions</th>
       </tr>
     </thead>
     <tbody>
       <%= if Enum.any?(@predictions) do %>
         <%= for p <- @predictions do %>
-          <tr>
-            <td class="border px-4 py-2"><%= p.end_at %></td>
-            <td class="border px-4 py-2"><%= p.base %></td>
-            <td class="border px-4 py-2"><%= p.quote %></td>
-            <td class="border px-4 py-2"><%= p.price %></td>
-            <td class="border px-4 py-2"><%= p.source %></td>
-            <td class="border px-4 py-2 text-right">
+          <tr class="hover:bg-gray-50 border-t border-b group">
+            <td class="px-4 py-2"><%= p.end_at %></td>
+            <td class="px-4 py-2"><%= p.base %></td>
+            <td class="px-4 py-2"><%= p.quote %></td>
+            <td class="px-4 py-2"><%= p.price %></td>
+            <td class="px-4 py-2"><%= p.source %></td>
+            <td class="px-4 py-2 text-right">
               <button
                 type="button"
-                class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                class="text-red-500 opacity-75 hover:opacity-100 invisible group-hover:visible"
                 phx-click="delete"
                 phx-value-prediction-id="<%= p.id %>"
               >
@@ -42,27 +42,27 @@
       <% end %>
     </tbody>
     <tfoot>
-      <tr>
-        <td class="border px-4 py-2">
+      <tr class="border-b">
+        <td class="px-4 py-2">
           <%= text_input f, :end_at, placeholder: "2021-04-06T07:05:44.225959Z" %>
           <%= error_tag f, :end_at %>
         </td>
-        <td class="border px-4 py-2">
+        <td class="px-4 py-2">
           <%= text_input f, :base, placeholder: "btc" %>
           <%= error_tag f, :base %>
         </td>
-        <td class="border px-4 py-2">
+        <td class="px-4 py-2">
           <%= text_input f, :quote, placeholder: "usd" %>
           <%= error_tag f, :quote %>
         </td>
-        <td class="border px-4 py-2">
+        <td class="px-4 py-2">
           <%= text_input f, :price, type: :number, min: 0, step: 0.0000000000000000001, placeholder: "20000.1" %>
         </td>
-        <td class="border px-4 py-2">
+        <td class="px-4 py-2">
           <%= text_input f, :source, placeholder: "manual" %>
           <%= error_tag f, :source %>
         </td>
-        <td class="border px-4 py-2 text-right">
+        <td class="px-4 py-2 text-right">
           <button
             type="button"
             class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
