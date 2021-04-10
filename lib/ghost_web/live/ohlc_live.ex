@@ -8,6 +8,7 @@ defmodule GhostWeb.OHLCLive do
       socket
       |> assign(:ohlc, sorted_ohlc())
       |> assign(:changeset, Ghost.OHLC.changeset(%Ghost.OHLC{}, %{}))
+      |> assign(:schedules, [])
 
     {:ok, socket}
   end
@@ -47,7 +48,7 @@ defmodule GhostWeb.OHLCLive do
   end
 
   @impl true
-  def handle_event("tomorrow", params, socket) do
+  def handle_event("tomorrow", _params, socket) do
     open_at_tomorrow = Timex.today() |> Timex.to_datetime() |> Timex.shift(days: 1)
     changeset = Ecto.Changeset.put_change(socket.assigns.changeset, :time, open_at_tomorrow)
     Ghost.Repo.insert(changeset)
@@ -106,7 +107,7 @@ defmodule GhostWeb.OHLCLive do
   defp sorted_ohlc do
     Ecto.Query.from(
       b in "ohlc",
-      order_by: [asc: :time],
+      order_by: [desc: :time],
       select: [:id, :period, :time, :base, :quote, :open, :high, :low, :close, :volume, :source]
     )
     |> Ghost.Repo.all()

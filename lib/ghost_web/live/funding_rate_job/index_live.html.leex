@@ -1,0 +1,87 @@
+<div class="space-x-4">
+  <%= render GhostWeb.DataView, "_header.html", conn: @socket, section: [{"Funding Rates", Routes.funding_rate_path(@socket, :index)}, "Jobs"] %>
+</div>
+<%= render GhostWeb.DataView, "_nav.html", conn: @socket %>
+
+<div class="mt-8">
+  <h3 class="text-2xl">
+    Jobs
+  </h3>
+
+  <%= form_for @job_changeset, "#", [phx_submit: :download, class: "flex items-start mt-8"], fn f -> %>
+    <label class="font-bold">
+      from:
+      <%= date_select f, :from_date %>
+      <%= error_tag f, :from_date %>
+      <%= text_input f, :from_time, type: "time" %>
+      <%= error_tag f, :from_time %>
+    </label>
+    <label class="ml-4 font-bold">
+      to:
+      <%= date_select f, :to_date %>
+      <%= error_tag f, :to_date %>
+      <%= text_input f, :to_time, type: "time" %>
+      <%= error_tag f, :to_time %>
+    </label>
+    <%= multiple_select f, :products, @swap_products, selected: f.data.products |> Enum.map(& Jason.encode!/1), class: "ml-4" %>
+    <%= error_tag f, :products %>
+    <button class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded ml-4">
+      Download
+    </button>
+  <% end %>
+
+  <table class="w-full mt-4">
+    <thead class="bg-gray-200 border-t-2 border-gray-400">
+      <tr>
+        <th scope="col" class="px-4 py-3 text-left text-gray-700">ID</th>
+        <th scope="col" class="px-4 py-3 text-left text-gray-700">Created At</th>
+        <th scope="col" class="px-4 py-3 text-left text-gray-700">From</th>
+        <th scope="col" class="px-4 py-3 text-left text-gray-700">To</th>
+        <th scope="col" class="px-4 py-3 text-left text-gray-700">Products</th>
+        <th scope="col" class="px-4 py-3 text-left text-gray-700">Status</th>
+        <th scope="col" class="px-4 py-3 text-right text-gray-700">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= if Enum.any?(@jobs) do %>
+        <%= for j <- @jobs do %>
+          <tr class="hover:bg-gray-50 border-t border-b group">
+            <td class="px-4 py-3"><%= link j.id, to: Routes.funding_rate_job_path(@socket, :show, j.id), class: "hover:opacity-75" %></td>
+            <td class="px-4 py-3"><%= j.inserted_at %></td>
+            <td class="px-4 py-3"><%= Ghost.FundingRateHistoryJobs.FundingRateHistoryJob.from!(j) %></td>
+            <td class="px-4 py-3"><%= Ghost.FundingRateHistoryJobs.FundingRateHistoryJob.to!(j) %></td>
+            <td class="px-4 py-3"><%= format_job_products(j.products) %></td>
+            <td class="px-4 py-3">
+              <%= render GhostWeb.StatusView, "_pill.html", status: j.status %>
+            </td>
+            <td class="px-4 py-3 text-right">
+              <button
+                type="button"
+                class="text-red-500 opacity-75 hover:opacity-100 invisible group-hover:visible"
+                phx-click="cancel"
+                phx-value-history-job-id="<%= j.id %>"
+              >
+                Cancel
+              </button>
+            </td>
+          </tr>
+        <% end %>
+      <% else %>
+        <tr class="hover:bg-gray-50 border-t border-b group">
+          <td colspan="7" class="px-4 py-3">No history download jobs</td>
+        </tr>
+      <% end %>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="7" class="px-4 py-3 text-right">
+          <%= link "<<", to: Routes.funding_rate_latest_path(@socket, :index, page: @first_page), class: "border px-4 py-2 bg-gray-100 opacity-70 hover:opacity-50" %>
+          <%= link "<", to: Routes.funding_rate_latest_path(@socket, :index, page: @previous_page), class: "border px-4 py-2 bg-gray-100 opacity-70 hover:opacity-50" %>
+          <%= link @current_page, to: Routes.funding_rate_latest_path(@socket, :index, page: @current_page), class: "border px-4 py-2 bg-gray-100 opacity-70 hover:opacity-50" %>
+          <%= link ">", to: Routes.funding_rate_latest_path(@socket, :index, page: @next_page), class: "border px-4 py-2 bg-gray-100 opacity-70 hover:opacity-50" %>
+          <%= link ">>", to: Routes.funding_rate_latest_path(@socket, :index, page: @last_page), class: "border px-4 py-2 bg-gray-100 opacity-70 hover:opacity-50" %>
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+</div>

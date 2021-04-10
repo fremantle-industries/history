@@ -10,6 +10,7 @@ defmodule GhostWeb.LendingRateLive do
       socket
       |> assign(query: nil)
       |> assign(:lending_rates, LendingRates.all())
+      |> assign(:schedules, [])
       |> assign(:changeset, LendingRate.changeset(%LendingRate{}, %{}))
       |> assign(:history_downloads, LendingRateHistoryDownloads.all())
       |> assign(:history_download_changeset, LendingRateHistoryDownloads.changeset_today(%{}))
@@ -32,7 +33,6 @@ defmodule GhostWeb.LendingRateLive do
       |> Enum.map(&Jason.decode!/1)
 
     params = Map.put(params, "products", products)
-    changeset = LendingRateHistoryDownload.changeset(%LendingRateHistoryDownload{}, params)
 
     socket =
       with {:ok, history_download} <- LendingRateHistoryDownloads.insert(params) do

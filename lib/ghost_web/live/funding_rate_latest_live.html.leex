@@ -1,0 +1,65 @@
+<div class="space-x-4">
+  <%= render GhostWeb.DataView, "_header.html", conn: @socket, section: [{"Funding Rates", Routes.funding_rate_path(@socket, :index)}, "Latest"] %>
+</div>
+<%= render GhostWeb.DataView, "_nav.html", conn: @socket %>
+
+<div class="mt-8">
+  <h3 class="text-2xl">
+    Latest
+  </h3>
+
+  <form phx-change="suggest" phx-submit="search" class="mt-4">
+    <input type="text" name="q" value="<%= @query %>" placeholder="Search" autocomplete="off"/>
+  </form>
+
+  <%= form_for @changeset, "#", [phx_submit: :save, class: "mt-8"], fn _f -> %>
+    <table class="w-full mt-4">
+      <thead class="bg-gray-200 border-t-2 border-gray-400">
+        <tr>
+          <th scope="col" class="px-4 py-3 text-left text-gray-700">Time</th>
+          <th scope="col" class="px-4 py-3 text-left text-gray-700">Product</th>
+          <th scope="col" class="px-4 py-3 text-left text-gray-700">Venue</th>
+          <th scope="col" class="px-4 py-3 text-left text-gray-700">Rate</th>
+          <th scope="col" class="px-4 py-3 text-right text-gray-700">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <%= if Enum.any?(@funding_rates) do %>
+          <%= for r <- @funding_rates do %>
+            <tr class="hover:bg-gray-50 border-t border-b group">
+              <td class="px-4 py-3"><%= r.time %></td>
+              <td class="px-4 py-3"><%= r.product %></td>
+              <td class="px-4 py-3"><%= r.venue %></td>
+              <td class="px-4 py-3"><%= r.rate %></td>
+              <td class="px-4 py-3 text-right">
+                <button
+                  type="button"
+                  class="text-red-500 opacity-75 hover:opacity-100 invisible group-hover:visible"
+                  phx-click="delete"
+                  phx-value-funding-rate-id="<%= r.id %>"
+                >
+                  Delete
+                </button>
+              </td>
+            </tr>
+          <% end %>
+        <% else %>
+          <tr class="hover:bg-gray-50 border-t border-b group">
+            <td colspan="5" class="px-4 py-3">No funding rates</td>
+          </tr>
+        <% end %>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="5" class="px-4 py-3 text-right">
+            <%= link "<<", to: Routes.funding_rate_latest_path(@socket, :index, page: @first_page), class: "border px-4 py-2 bg-gray-100 opacity-70 hover:opacity-50" %>
+            <%= link "<", to: Routes.funding_rate_latest_path(@socket, :index, page: @previous_page), class: "border px-4 py-2 bg-gray-100 opacity-70 hover:opacity-50" %>
+            <%= link @current_page, to: Routes.funding_rate_latest_path(@socket, :index, page: @current_page), class: "border px-4 py-2 bg-gray-100 opacity-70 hover:opacity-50" %>
+            <%= link ">", to: Routes.funding_rate_latest_path(@socket, :index, page: @next_page), class: "border px-4 py-2 bg-gray-100 opacity-70 hover:opacity-50" %>
+            <%= link ">>", to: Routes.funding_rate_latest_path(@socket, :index, page: @last_page), class: "border px-4 py-2 bg-gray-100 opacity-70 hover:opacity-50" %>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  <% end %>
+</div>

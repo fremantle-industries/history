@@ -40,6 +40,11 @@ config :ghost, :prometheus_metrics_port, ghost_prometheus_metrics_port
 #   token_providers: %{
 #     tai: {Ghost.TokenProviders.Tai, :fetch, []}
 #   }
+config :ghost,
+  data_adapters: %{
+    ftx: Ghost.DataAdapters.Ftx,
+    binance: Ghost.DataAdapters.Binance
+  }
 
 # Workbench
 config :workbench, Workbench.Repo,
@@ -218,11 +223,11 @@ config :tai,
       adapter: Tai.VenueAdapters.Ftx,
       timeout: 60_000,
       products: ~w(
-        btc_usd
+        btc/usd
 
-        eth_usd
+        eth/usd
 
-        ltc_usd
+        ltc/usd
       ) |> Enum.join(" ")
     ]
   }

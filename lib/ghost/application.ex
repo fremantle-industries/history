@@ -1,26 +1,18 @@
 defmodule Ghost.Application do
-  # See https://hexdocs.pm/elixir/Application.html
-  # for more information on OTP Applications
   @moduledoc false
 
   use Application
 
   def start(_type, _args) do
     children = [
-      # Start the Ecto repository
       Ghost.Repo,
-      # Start the Telemetry supervisor
       GhostWeb.Telemetry,
-      # Start the PubSub system
       {Phoenix.PubSub, name: Ghost.PubSub},
-      # Start the Endpoint (http/https)
-      GhostWeb.Endpoint
-      # Start a worker by calling: Ghost.Worker.start_link(arg)
-      # {Ghost.Worker, arg}
+      GhostWeb.Endpoint,
+      Ghost.FundingRateHistoryJobs.Supervisor,
+      Ghost.LendingRateHistoryDownloads.Supervisor
     ]
 
-    # See https://hexdocs.pm/elixir/Supervisor.html
-    # for other strategies and supported options
     opts = [strategy: :one_for_one, name: Ghost.Supervisor]
     Supervisor.start_link(children, opts)
   end

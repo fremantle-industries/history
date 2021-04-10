@@ -1,9 +1,13 @@
 <div class="space-x-4">
-  <%= render GhostWeb.DataView, "_header.html", conn: @socket, section: "Funding Rates" %>
+  <%= render GhostWeb.DataView, "_header.html", conn: @socket, section: ["Funding Rates"] %>
 </div>
 <%= render GhostWeb.DataView, "_nav.html", conn: @socket %>
 
-<%= form_for @changeset, "#", [phx_submit: :save, class: "mt-8"], fn f -> %>
+<div class="mt-8">
+  <h3 class="text-2xl">
+    Latest
+  </h3>
+
   <table class="w-full mt-4">
     <thead class="bg-gray-200 border-t-2 border-gray-400">
       <tr>
@@ -11,7 +15,6 @@
         <th scope="col" class="px-4 py-3 text-left text-gray-700">Product</th>
         <th scope="col" class="px-4 py-3 text-left text-gray-700">Venue</th>
         <th scope="col" class="px-4 py-3 text-left text-gray-700">Rate</th>
-        <th scope="col" class="px-4 py-3 text-right text-gray-700">Actions</th>
       </tr>
     </thead>
     <tbody>
@@ -21,59 +24,35 @@
             <td class="px-4 py-3"><%= r.time %></td>
             <td class="px-4 py-3"><%= r.product %></td>
             <td class="px-4 py-3"><%= r.venue %></td>
-            <td class="px-4 py-3"><%= r.rate %></td>
-            <td class="px-4 py-3 text-right">
-              <button
-                type="button"
-                class="text-red-500 opacity-75 hover:opacity-100 invisible group-hover:visible"
-                phx-click="delete"
-                phx-value-funding-rate-id="<%= r.id %>"
-              >
-                Delete
-              </button>
-            </td>
+            <td class="px-4 py-3"><%= Ghost.FundingRates.FundingRate.rate_pct(r) %>%</td>
           </tr>
         <% end %>
       <% else %>
-        <tr>
-          <td colspan="5" class="px-4 py-3">No funding rates</td>
+        <tr class="hover:bg-gray-50 border-t border-b group">
+          <td colspan="4" class="px-4 py-3">No funding rates</td>
         </tr>
       <% end %>
     </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="4" class="px-4 py-3 text-right">
+          <%= link "See more...", to: Routes.funding_rate_latest_path(@socket, :index), class: "opacity-70 hover:opacity-50" %>
+        </td>
+      </tr>
+    </tfoot>
   </table>
-<% end %>
+</div>
 
 <div class="mt-4">
   <h3 class="text-2xl">
-    History
+    Schedules
   </h3>
-
-  <%= form_for @history_download_changeset, "#", [phx_submit: :download, class: "flex items-start mt-8"], fn f -> %>
-    <label class="font-bold">
-      from:
-      <%= date_select f, :from_date %>
-      <%= error_tag f, :from_date %>
-      <%= text_input f, :from_time, type: "time" %>
-      <%= error_tag f, :from_time %>
-    </label>
-    <label class="ml-4 font-bold">
-      to:
-      <%= date_select f, :to_date %>
-      <%= error_tag f, :to_date %>
-      <%= text_input f, :to_time, type: "time" %>
-      <%= error_tag f, :to_time %>
-    </label>
-    <%= multiple_select f, :products, @swap_products, selected: f.data.products |> Enum.map(& Jason.encode!/1), class: "ml-4" %>
-    <%= error_tag f, :products %>
-    <button class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded ml-4">
-      Download
-    </button>
-  <% end %>
 
   <table class="w-full mt-4">
     <thead class="bg-gray-200 border-t-2 border-gray-400">
       <tr>
         <th scope="col" class="px-4 py-3 text-left text-gray-700">Created At</th>
+        <th scope="col" class="px-4 py-3 text-left text-gray-700">Every</th>
         <th scope="col" class="px-4 py-3 text-left text-gray-700">From</th>
         <th scope="col" class="px-4 py-3 text-left text-gray-700">To</th>
         <th scope="col" class="px-4 py-3 text-left text-gray-700">Products</th>
@@ -82,13 +61,15 @@
       </tr>
     </thead>
     <tbody>
-      <%= if Enum.any?(@history_downloads) do %>
-        <%= for d <- @history_downloads do %>
+      <%= if Enum.any?(@job_schedules) do %>
+        <%= for s <- @job_schedules do %>
           <tr class="hover:bg-gray-50 border-t border-b group">
-            <td class="px-4 py-3"><%= d.inserted_at %></td>
-            <td class="px-4 py-3"><%= from(d) %></td>
-            <td class="px-4 py-3"><%= to(d) %></td>
-            <td class="px-4 py-3"><%= format_download_products(d.products) %></td>
+            <td class="px-4 py-3">TODO...</td>
+            <td class="px-4 py-3">TODO...</td>
+            <td class="px-4 py-3">TODO...</td>
+            <td class="px-4 py-3">TODO...</td>
+            <td class="px-4 py-3">TODO...</td>
+            <td class="px-4 py-3">TODO...</td>
             <td class="px-4 py-3">
               <span class="bg-yellow-50 text-yellow-400 py-2 px-4 inline-block rounded-full">pending</span>
             </td>
@@ -97,7 +78,7 @@
                 type="button"
                 class="text-red-500 opacity-75 hover:opacity-100 invisible group-hover:visible"
                 phx-click="cancel"
-                phx-value-history-download-id="<%= d.id %>"
+                phx-value-history-job-id="<%= s.id %>"
               >
                 Cancel
               </button>
@@ -105,10 +86,56 @@
           </tr>
         <% end %>
       <% else %>
-        <tr>
-          <td colspan="4" class="px-4 py-3">No history downloads</td>
+        <tr class="hover:bg-gray-50 border-t border-b group">
+          <td colspan="7" class="px-4 py-3">No schedules</td>
         </tr>
       <% end %>
     </tbody>
+  </table>
+</div>
+
+<div class="mt-8">
+  <h3 class="text-2xl">
+    Jobs
+  </h3>
+
+  <table class="w-full mt-4">
+    <thead class="bg-gray-200 border-t-2 border-gray-400">
+      <tr>
+        <th scope="col" class="px-4 py-3 text-left text-gray-700">ID</th>
+        <th scope="col" class="px-4 py-3 text-left text-gray-700">Created At</th>
+        <th scope="col" class="px-4 py-3 text-left text-gray-700">From</th>
+        <th scope="col" class="px-4 py-3 text-left text-gray-700">To</th>
+        <th scope="col" class="px-4 py-3 text-left text-gray-700">Products</th>
+        <th scope="col" class="px-4 py-3 text-left text-gray-700">Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= if Enum.any?(@jobs) do %>
+        <%= for j <- @jobs do %>
+          <tr class="hover:bg-gray-50 border-t border-b group">
+            <td class="px-4 py-3"><%= link j.id, to: Routes.funding_rate_job_path(@socket, :show, j.id), class: "hover:opacity-75" %></td>
+            <td class="px-4 py-3"><%= j.inserted_at %></td>
+            <td class="px-4 py-3"><%= Ghost.FundingRateHistoryJobs.FundingRateHistoryJob.from!(j) %></td>
+            <td class="px-4 py-3"><%= Ghost.FundingRateHistoryJobs.FundingRateHistoryJob.to!(j) %></td>
+            <td class="px-4 py-3"><%= format_job_products(j.products) %></td>
+            <td class="px-4 py-3">
+              <%= render GhostWeb.StatusView, "_pill.html", status: j.status %>
+            </td>
+          </tr>
+        <% end %>
+      <% else %>
+        <tr class="hover:bg-gray-50 border-t border-b group">
+          <td colspan="6" class="px-4 py-3">No history download jobs</td>
+        </tr>
+      <% end %>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="6" class="px-4 py-3 text-right">
+          <%= link "See more...", to: Routes.funding_rate_job_path(@socket, :index), class: "opacity-70 hover:opacity-50" %>
+        </td>
+      </tr>
+    </tfoot>
   </table>
 </div>

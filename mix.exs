@@ -26,9 +26,11 @@ defmodule Ghost.MixProject do
 
   defp deps do
     [
+      {:broadway, "~> 0.6"},
       {:ecto_enum, "~> 1.4"},
       {:ecto_sql, "~> 3.4"},
       {:gettext, "~> 0.11"},
+      {:indifferent, "~> 0.9"},
       {:jason, "~> 1.0"},
       {:master_proxy, "~> 0.1"},
       {:navigator, "~> 0.0.2"},
@@ -39,7 +41,8 @@ defmodule Ghost.MixProject do
       {:phoenix_live_view, "~> 0.15"},
       {:plug_cowboy, "~> 2.0"},
       {:postgrex, ">= 0.0.0"},
-      {:tai, "~> 0.0.63"},
+      # {:tai, "~> 0.0.63"},
+      {:tai, path: "vendor/tai_monorepo/apps/tai", override: true},
       {:telemetry_metrics, "~> 0.4"},
       {:telemetry_metrics_prometheus, "~> 1.0"},
       {:telemetry_poller, "~> 0.4"},

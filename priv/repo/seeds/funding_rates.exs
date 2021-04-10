@@ -4,7 +4,7 @@ alias Ghost.FundingRates.FundingRate
 alias Ghost.Repo
 
 [
-  %FundingRate{time: Timex.parse!("2021-04-01 00:00:00Z", "{RFC3339z}"), product: "btc/usd", base: "btc", quote: "usd", venue: "ftx", rate: Decimal.new("0.0025")},
+  %FundingRate{time: Timex.parse!("2021-04-01 00:00:00Z", "{RFC3339z}"), product: "btc/usd", venue: "ftx", rate: Decimal.new("0.0025")},
 ]
 |> Enum.map(fn funding_rate ->
   query = Ecto.Query.from(
@@ -13,7 +13,7 @@ alias Ghost.Repo
     )
 
   case Ghost.Repo.one(query) do
-    nil -> %FundingRate{time: funding_rate.time, product: funding_rate.product, base: funding_rate.base, quote: funding_rate.quote, venue: funding_rate.venue, rate: funding_rate.rate}
+    nil -> %FundingRate{time: funding_rate.time, product: funding_rate.product, venue: funding_rate.venue, rate: funding_rate.rate}
     funding_rate -> funding_rate
   end
 end)

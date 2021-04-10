@@ -16,11 +16,19 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": 7,
+  "iteration": 1618419549925,
   "links": [
     {
       "icon": "external link",
       "tags": [
         "home"
+      ],
+      "type": "dashboards"
+    },
+    {
+      "icon": "external link",
+      "tags": [
+        "large-cap-funding-rates"
       ],
       "type": "dashboards"
     }
@@ -78,7 +86,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT\n  time,\n  venue || ':' || product AS text,\n  rate\nFROM funding_rates\nWHERE\n  $__unixEpochFilter(id)\nORDER BY time",
+          "rawSql": "SELECT\n  time,\n  venue || ':' || product AS text,\n  rate * 100\nFROM funding_rates\nWHERE\n  venue IN ($venue)\n  AND product IN ($product)\nORDER BY time",
           "refId": "A",
           "select": [
             [
@@ -122,14 +130,134 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:67",
+          "decimals": null,
+          "format": "percent",
+          "label": null,
+          "logBase": 1,
+          "max": "0.3",
+          "min": "-0.1",
+          "show": true
+        },
+        {
+          "$$hashKey": "object:68",
           "format": "short",
           "label": null,
           "logBase": 1,
           "max": null,
           "min": null,
           "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "Ghost TimescaleDB",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 18,
+        "w": 24,
+        "x": 0,
+        "y": 18
+      },
+      "hiddenSeries": false,
+      "id": 4,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "7.4.2",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  time,\n  venue || ':' || product AS text,\n  rate * 24 * 365 * 100\nFROM funding_rates\nWHERE\n  venue IN ($venue)\n  AND product IN ($product)\nORDER BY time",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Annualized Funding Rate History",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:184",
+          "format": "percent",
+          "label": null,
+          "logBase": 1,
+          "max": "500",
+          "min": "-25",
+          "show": true
         },
         {
+          "$$hashKey": "object:185",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -144,21 +272,508 @@
       }
     }
   ],
+  "refresh": false,
   "schemaVersion": 27,
   "style": "dark",
   "tags": [
     "funding-rates"
   ],
   "templating": {
-    "list": []
+    "list": [
+      {
+        "allValue": null,
+        "current": {
+          "selected": true,
+          "text": [
+            "All"
+          ],
+          "value": [
+            "$__all"
+          ]
+        },
+        "datasource": "Ghost TimescaleDB",
+        "definition": "SELECT venue FROM funding_rates",
+        "description": null,
+        "error": null,
+        "hide": 0,
+        "includeAll": true,
+        "label": null,
+        "multi": true,
+        "name": "venue",
+        "options": [],
+        "query": "SELECT venue FROM funding_rates",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {
+          "selected": true,
+          "tags": [],
+          "text": [
+            "btc-perp",
+            "bnb-perp",
+            "rune-perp"
+          ],
+          "value": [
+            "btc-perp",
+            "bnb-perp",
+            "rune-perp"
+          ]
+        },
+        "datasource": "Ghost TimescaleDB",
+        "definition": "SELECT product FROM funding_rates",
+        "description": null,
+        "error": null,
+        "hide": 0,
+        "includeAll": true,
+        "label": null,
+        "multi": true,
+        "name": "product",
+        "options": [
+          {
+            "selected": false,
+            "text": "All",
+            "value": "$__all"
+          },
+          {
+            "selected": false,
+            "text": "aave-perp",
+            "value": "aave-perp"
+          },
+          {
+            "selected": false,
+            "text": "alpha-perp",
+            "value": "alpha-perp"
+          },
+          {
+            "selected": false,
+            "text": "alcx-perp",
+            "value": "alcx-perp"
+          },
+          {
+            "selected": false,
+            "text": "1inch-perp",
+            "value": "1inch-perp"
+          },
+          {
+            "selected": false,
+            "text": "bao-perp",
+            "value": "bao-perp"
+          },
+          {
+            "selected": false,
+            "text": "audio-perp",
+            "value": "audio-perp"
+          },
+          {
+            "selected": false,
+            "text": "axs-perp",
+            "value": "axs-perp"
+          },
+          {
+            "selected": false,
+            "text": "badger-perp",
+            "value": "badger-perp"
+          },
+          {
+            "selected": false,
+            "text": "bnt-perp",
+            "value": "bnt-perp"
+          },
+          {
+            "selected": false,
+            "text": "bal-perp",
+            "value": "bal-perp"
+          },
+          {
+            "selected": false,
+            "text": "band-perp",
+            "value": "band-perp"
+          },
+          {
+            "selected": false,
+            "text": "bat-perp",
+            "value": "bat-perp"
+          },
+          {
+            "selected": false,
+            "text": "bch-perp",
+            "value": "bch-perp"
+          },
+          {
+            "selected": true,
+            "text": "bnb-perp",
+            "value": "bnb-perp"
+          },
+          {
+            "selected": false,
+            "text": "brz-perp",
+            "value": "brz-perp"
+          },
+          {
+            "selected": true,
+            "text": "btc-perp",
+            "value": "btc-perp"
+          },
+          {
+            "selected": false,
+            "text": "doge-perp",
+            "value": "doge-perp"
+          },
+          {
+            "selected": false,
+            "text": "chz-perp",
+            "value": "chz-perp"
+          },
+          {
+            "selected": false,
+            "text": "btmx-perp",
+            "value": "btmx-perp"
+          },
+          {
+            "selected": false,
+            "text": "comp-perp",
+            "value": "comp-perp"
+          },
+          {
+            "selected": false,
+            "text": "conv-perp",
+            "value": "conv-perp"
+          },
+          {
+            "selected": false,
+            "text": "cream-perp",
+            "value": "cream-perp"
+          },
+          {
+            "selected": false,
+            "text": "cro-perp",
+            "value": "cro-perp"
+          },
+          {
+            "selected": false,
+            "text": "crv-perp",
+            "value": "crv-perp"
+          },
+          {
+            "selected": false,
+            "text": "dawn-perp",
+            "value": "dawn-perp"
+          },
+          {
+            "selected": false,
+            "text": "dent-perp",
+            "value": "dent-perp"
+          },
+          {
+            "selected": false,
+            "text": "dodo-perp",
+            "value": "dodo-perp"
+          },
+          {
+            "selected": false,
+            "text": "leo-perp",
+            "value": "leo-perp"
+          },
+          {
+            "selected": false,
+            "text": "ftm-perp",
+            "value": "ftm-perp"
+          },
+          {
+            "selected": false,
+            "text": "enj-perp",
+            "value": "enj-perp"
+          },
+          {
+            "selected": false,
+            "text": "eth-perp",
+            "value": "eth-perp"
+          },
+          {
+            "selected": false,
+            "text": "fida-perp",
+            "value": "fida-perp"
+          },
+          {
+            "selected": false,
+            "text": "ftt-perp",
+            "value": "ftt-perp"
+          },
+          {
+            "selected": false,
+            "text": "grt-perp",
+            "value": "grt-perp"
+          },
+          {
+            "selected": false,
+            "text": "matic-perp",
+            "value": "matic-perp"
+          },
+          {
+            "selected": false,
+            "text": "hnt-perp",
+            "value": "hnt-perp"
+          },
+          {
+            "selected": false,
+            "text": "holy-perp",
+            "value": "holy-perp"
+          },
+          {
+            "selected": false,
+            "text": "ht-perp",
+            "value": "ht-perp"
+          },
+          {
+            "selected": false,
+            "text": "hum-perp",
+            "value": "hum-perp"
+          },
+          {
+            "selected": false,
+            "text": "kin-perp",
+            "value": "kin-perp"
+          },
+          {
+            "selected": false,
+            "text": "knc-perp",
+            "value": "knc-perp"
+          },
+          {
+            "selected": false,
+            "text": "lina-perp",
+            "value": "lina-perp"
+          },
+          {
+            "selected": false,
+            "text": "link-perp",
+            "value": "link-perp"
+          },
+          {
+            "selected": false,
+            "text": "mkr-perp",
+            "value": "mkr-perp"
+          },
+          {
+            "selected": false,
+            "text": "uni-perp",
+            "value": "uni-perp"
+          },
+          {
+            "selected": false,
+            "text": "lrc-perp",
+            "value": "lrc-perp"
+          },
+          {
+            "selected": false,
+            "text": "ltc-perp",
+            "value": "ltc-perp"
+          },
+          {
+            "selected": false,
+            "text": "seco-perp",
+            "value": "seco-perp"
+          },
+          {
+            "selected": false,
+            "text": "maps-perp",
+            "value": "maps-perp"
+          },
+          {
+            "selected": false,
+            "text": "mta-perp",
+            "value": "mta-perp"
+          },
+          {
+            "selected": false,
+            "text": "mtl-perp",
+            "value": "mtl-perp"
+          },
+          {
+            "selected": false,
+            "text": "okb-perp",
+            "value": "okb-perp"
+          },
+          {
+            "selected": false,
+            "text": "omg-perp",
+            "value": "omg-perp"
+          },
+          {
+            "selected": false,
+            "text": "orbs-perp",
+            "value": "orbs-perp"
+          },
+          {
+            "selected": false,
+            "text": "oxy-perp",
+            "value": "oxy-perp"
+          },
+          {
+            "selected": false,
+            "text": "paxg-perp",
+            "value": "paxg-perp"
+          },
+          {
+            "selected": false,
+            "text": "pundix-perp",
+            "value": "pundix-perp"
+          },
+          {
+            "selected": false,
+            "text": "ray-perp",
+            "value": "ray-perp"
+          },
+          {
+            "selected": false,
+            "text": "reef-perp",
+            "value": "reef-perp"
+          },
+          {
+            "selected": false,
+            "text": "ren-perp",
+            "value": "ren-perp"
+          },
+          {
+            "selected": false,
+            "text": "rook-perp",
+            "value": "rook-perp"
+          },
+          {
+            "selected": false,
+            "text": "rsr-perp",
+            "value": "rsr-perp"
+          },
+          {
+            "selected": true,
+            "text": "rune-perp",
+            "value": "rune-perp"
+          },
+          {
+            "selected": false,
+            "text": "sand-perp",
+            "value": "sand-perp"
+          },
+          {
+            "selected": false,
+            "text": "skl-perp",
+            "value": "skl-perp"
+          },
+          {
+            "selected": false,
+            "text": "snx-perp",
+            "value": "snx-perp"
+          },
+          {
+            "selected": false,
+            "text": "sol-perp",
+            "value": "sol-perp"
+          },
+          {
+            "selected": false,
+            "text": "srm-perp",
+            "value": "srm-perp"
+          },
+          {
+            "selected": false,
+            "text": "stmx-perp",
+            "value": "stmx-perp"
+          },
+          {
+            "selected": false,
+            "text": "sushi-perp",
+            "value": "sushi-perp"
+          },
+          {
+            "selected": false,
+            "text": "storj-perp",
+            "value": "storj-perp"
+          },
+          {
+            "selected": false,
+            "text": "sxp-perp",
+            "value": "sxp-perp"
+          },
+          {
+            "selected": false,
+            "text": "tomo-perp",
+            "value": "tomo-perp"
+          },
+          {
+            "selected": false,
+            "text": "tru-perp",
+            "value": "tru-perp"
+          },
+          {
+            "selected": false,
+            "text": "trx-perp",
+            "value": "trx-perp"
+          },
+          {
+            "selected": false,
+            "text": "tryb-perp",
+            "value": "tryb-perp"
+          },
+          {
+            "selected": false,
+            "text": "waves-perp",
+            "value": "waves-perp"
+          },
+          {
+            "selected": false,
+            "text": "xaut-perp",
+            "value": "xaut-perp"
+          },
+          {
+            "selected": false,
+            "text": "xrp-perp",
+            "value": "xrp-perp"
+          },
+          {
+            "selected": false,
+            "text": "yfi-perp",
+            "value": "yfi-perp"
+          },
+          {
+            "selected": false,
+            "text": "yfii-perp",
+            "value": "yfii-perp"
+          },
+          {
+            "selected": false,
+            "text": "zrx-perp",
+            "value": "zrx-perp"
+          }
+        ],
+        "query": "SELECT product FROM funding_rates",
+        "refresh": 0,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      }
+    ]
   },
   "time": {
-    "from": "now-6h",
+    "from": "now-14d",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "Funding Rates",
   "uid": "t4j-c9lGk",
-  "version": 1
+  "version": 10
 }

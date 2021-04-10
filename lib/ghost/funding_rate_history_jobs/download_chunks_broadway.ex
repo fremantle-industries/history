@@ -1,0 +1,94 @@
+defmodule Ghost.FundingRateHistoryJobs.DownloadChunksBroadway do
+  use Broadway
+  require Logger
+  alias Broadway.Message
+  alias Ghost.FundingRateHistoryChunks
+  alias Ghost.FundingRateHistoryJobs
+  alias Ghost.FundingRates
+
+  @spec start_link(term) :: Supervisor.on_start()
+  def start_link(_) do
+    Broadway.start_link(__MODULE__,
+      name: __MODULE__,
+      producer: [
+        module: {FundingRateHistoryJobs.DownloadChunksProducer, []},
+        transformer: {__MODULE__, :transform, []}
+      ],
+      processors: [
+        default: [concurrency: 2]
+      ]
+    )
+  end
+
+  @impl true
+  def handle_message(_, message, _) do
+    message
+    |> Message.update_data(&process_data/1)
+  end
+
+  def transform(event, _opts) do
+    %Message{
+      data: event,
+      acknowledger: {__MODULE__, :ack_id, :ack_data}
+    }
+  end
+
+  def ack(:ack_id, successful, failed) do
+    # TODO: Should only update chunk as complete once all chunks have been processed
+    successful
+    |> Enum.map(fn m ->
+      FundingRateHistoryChunks.update(m.data, %{status: "complete"})
+      broadcast_update(m.data, "complete")
+    end)
+
+    # |> Enum.uniq()
+    # |> Enum.each(fn job_id ->
+    #   job = FundingRateHistoryJobs.get!(job_id)
+    #   FundingRateHistoryJobs.update(job, %{status: "complete"})
+    # end)
+
+    failed
+    |> Enum.each(fn m ->
+      Logger.error(
+        "could not download chunk - id: #{m.data.id}, venue: #{m.data.venue}, product: #{
+          m.data.product
+        }"
+      )
+
+      FundingRateHistoryChunks.update(m.data, %{status: "error"})
+      broadcast_update(m.data, "complete")
+    end)
+
+    :ok
+  end
+
+  defp process_data(chunk) do
+    {:ok, rates} = FundingRateHistoryChunks.fetch(chunk)
+
+    rates
+    |> Enum.each(fn r ->
+      {:ok, _} =
+        FundingRates.upsert(%{
+          time: r.time,
+          rate: r.rate,
+          venue: chunk.venue,
+          product: chunk.product,
+          base: "-",
+          quote: "-"
+        })
+    end)
+
+    chunk
+  end
+
+  @topic_prefix "funding_rate_history_chunk"
+  defp broadcast_update(chunk, status) do
+    topics = ["#{@topic_prefix}:*", "#{@topic_prefix}:#{chunk.id}"]
+    msg = {:funding_rate_history_chunk, :update, %{id: chunk.id, status: status}}
+
+    topics
+    |> Enum.each(fn topic ->
+      Phoenix.PubSub.broadcast(Ghost.PubSub, topic, msg)
+    end)
+  end
+end
