@@ -1,5 +1,6 @@
 defmodule GhostWeb.FundingRateJob.IndexLive do
   use GhostWeb, :live_view
+  import GhostWeb.FundingRateView
   alias Ghost.{FundingRateHistoryJobs, Products}
   alias Ghost.FundingRateHistoryJobs.FundingRateHistoryJob
 
@@ -110,11 +111,5 @@ defmodule GhostWeb.FundingRateJob.IndexLive do
         key: "#{p.venue}:#{p.symbol}"
       ]
     end)
-  end
-
-  defp format_job_products(products) do
-    products
-    |> Enum.map(&"#{&1.venue}:#{&1.symbol}")
-    |> Enum.join(", ")
   end
 end

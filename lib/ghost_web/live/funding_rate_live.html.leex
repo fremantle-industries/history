@@ -114,11 +114,19 @@
       <%= if Enum.any?(@jobs) do %>
         <%= for j <- @jobs do %>
           <tr class="hover:bg-gray-50 border-t border-b group">
-            <td class="px-4 py-3"><%= link j.id, to: Routes.funding_rate_job_path(@socket, :show, j.id), class: "hover:opacity-75" %></td>
+            <td class="px-4 py-3">
+              <%= link j.id, to: Routes.funding_rate_job_path(@socket, :show, j.id), class: "hover:opacity-75" %>
+            </td>
             <td class="px-4 py-3"><%= j.inserted_at %></td>
-            <td class="px-4 py-3"><%= Ghost.FundingRateHistoryJobs.FundingRateHistoryJob.from!(j) %></td>
-            <td class="px-4 py-3"><%= Ghost.FundingRateHistoryJobs.FundingRateHistoryJob.to!(j) %></td>
-            <td class="px-4 py-3"><%= format_job_products(j.products) %></td>
+            <td class="px-4 py-3">
+              <%= Ghost.FundingRateHistoryJobs.FundingRateHistoryJob.from!(j) %>
+            </td>
+            <td class="px-4 py-3">
+              <%= Ghost.FundingRateHistoryJobs.FundingRateHistoryJob.to!(j) %>
+            </td>
+            <td class="px-4 py-3" title="<%= products_by_group(j.products) %>">
+              <%= products_by_group(j.products, max_products: 3) %>
+            </td>
             <td class="px-4 py-3">
               <%= render GhostWeb.StatusView, "_pill.html", status: j.status %>
             </td>

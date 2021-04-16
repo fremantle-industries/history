@@ -1,5 +1,6 @@
 defmodule GhostWeb.FundingRateLive do
   use GhostWeb, :live_view
+  import GhostWeb.FundingRateView
   alias Ghost.{FundingRates, FundingRateHistoryJobs}
 
   @latest_page 0
@@ -33,11 +34,5 @@ defmodule GhostWeb.FundingRateLive do
       |> assign(:jobs, jobs)
 
     {:noreply, socket}
-  end
-
-  defp format_job_products(products) do
-    products
-    |> Enum.map(&"#{&1.venue}:#{&1.symbol}")
-    |> Enum.join(", ")
   end
 end
