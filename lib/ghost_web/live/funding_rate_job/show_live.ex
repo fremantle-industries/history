@@ -2,6 +2,8 @@ defmodule GhostWeb.FundingRateJob.ShowLive do
   use GhostWeb, :live_view
   alias Ghost.{FundingRateHistoryJobs, FundingRateHistoryChunks}
 
+  @status_colors [enqueued: "yellow", working: "purple", complete: "green", error: "red"]
+
   @impl true
   def mount(%{"id" => id}, _session, socket) do
     Phoenix.PubSub.subscribe(Ghost.PubSub, "funding_rate_history_job:*")
@@ -10,6 +12,7 @@ defmodule GhostWeb.FundingRateJob.ShowLive do
     socket =
       socket
       |> assign(job: FundingRateHistoryJobs.get!(id))
+      |> assign_chunk_status_totals()
 
     {:ok, socket}
   end
@@ -33,6 +36,7 @@ defmodule GhostWeb.FundingRateJob.ShowLive do
     socket =
       socket
       |> assign(job: FundingRateHistoryJobs.get!(socket.assigns.job.id))
+      |> assign_chunk_status_totals()
       |> assign_chunks()
 
     {:noreply, socket}
@@ -42,9 +46,22 @@ defmodule GhostWeb.FundingRateJob.ShowLive do
   def handle_info({:funding_rate_history_chunk, :update, _}, socket) do
     socket =
       socket
+      |> assign_chunk_status_totals()
       |> assign_chunks()
 
     {:noreply, socket}
+  end
+
+  def chunk_status_totals(assigns) do
+    @status_colors
+    |> Enum.map(fn {status, color} ->
+      total = assigns[:"total_#{status}"]
+
+      ~E"""
+      <span class="hover:text-<%= color %>-400 float-left" title="<%= status %>"><%= total %></span>
+      <span class="float-left">/</span>
+      """
+    end)
   end
 
   defp assign_chunks(socket) do
@@ -52,7 +69,7 @@ defmodule GhostWeb.FundingRateJob.ShowLive do
     first_page = 1
     current_page = socket.assigns.current_page
     previous_page = max(current_page - 1, first_page)
-    last_page = ceil(FundingRateHistoryChunks.count(job.id) / socket.assigns.page_size)
+    last_page = ceil(socket.assigns.total_chunks / socket.assigns.page_size)
     next_page = min(current_page + 1, last_page)
 
     socket
@@ -68,5 +85,19 @@ defmodule GhostWeb.FundingRateJob.ShowLive do
         page_size: socket.assigns.page_size
       )
     )
+  end
+
+  defp assign_chunk_status_totals(socket) do
+    job = socket.assigns.job
+
+    @status_colors
+    |> Enum.reduce(
+      socket,
+      fn {status, _color}, socket ->
+        total = FundingRateHistoryChunks.count_by_job_id_and_status(job.id, status)
+        assign(socket, :"total_#{status}", total)
+      end
+    )
+    |> assign(total_chunks: FundingRateHistoryChunks.count_by_job_id(job.id))
   end
 end

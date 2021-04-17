@@ -34,11 +34,20 @@ defmodule Ghost.FundingRateHistoryChunks do
     |> Repo.all()
   end
 
-  def count(job_id) do
+  def count_by_job_id(job_id) do
     from(
       c in FundingRateHistoryChunk,
       select: count(c.id),
       where: c.job_id == ^job_id
+    )
+    |> Repo.one()
+  end
+
+  def count_by_job_id_and_status(job_id, status) do
+    from(
+      c in FundingRateHistoryChunk,
+      select: count(c.id),
+      where: c.job_id == ^job_id and c.status == ^status
     )
     |> Repo.one()
   end

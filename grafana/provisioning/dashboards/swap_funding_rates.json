@@ -15,8 +15,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 8,
-  "iteration": 1618467357798,
+  "iteration": 1618779316852,
   "links": [
     {
       "icon": "external link",
@@ -13026,14 +13025,14 @@
   "schemaVersion": 27,
   "style": "dark",
   "tags": [
-    "large-cap-funding-rates"
+    "swap-funding-rates"
   ],
   "templating": {
     "list": [
       {
         "allValue": null,
         "current": {
-          "selected": true,
+          "selected": false,
           "text": [
             "All"
           ],
@@ -13065,15 +13064,16 @@
       {
         "allValue": null,
         "current": {
-          "selected": true,
-          "tags": [],
+          "selected": false,
           "text": [
             "btc",
-            "uni"
+            "eth",
+            "bnb"
           ],
           "value": [
             "btc",
-            "uni"
+            "eth",
+            "bnb"
           ]
         },
         "datasource": "Ghost TimescaleDB",
@@ -13100,7 +13100,7 @@
       {
         "allValue": null,
         "current": {
-          "selected": true,
+          "selected": false,
           "text": [
             "All"
           ],
@@ -13132,12 +13132,12 @@
     ]
   },
   "time": {
-    "from": "now-7d",
+    "from": "now-30d",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
-  "title": "Large Cap Funding Rates",
+  "title": "Swap Funding Rates",
   "uid": "2dkHtKXGz",
-  "version": 17
+  "version": 1
 }

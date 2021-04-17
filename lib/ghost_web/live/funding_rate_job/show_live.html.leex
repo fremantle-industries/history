@@ -11,16 +11,23 @@
 </div>
 <%= render GhostWeb.DataView, "_nav.html", conn: @socket %>
 
-<div class="flex items-center mt-4 space-x-4">
-  <span>from: <%= @job.from_date %> <%= @job.from_time %></span>
-  <span>to: <%= @job.to_date %> <%= @job.to_time %></span>
-  <%= render GhostWeb.StatusView, "_pill.html", status: @job.status %>
-</div>
-
-<div class="mt-4">
+<div class="mt-8">
   <h3 class="text-2xl">
     Chunks
   </h3>
+  <div class="flex space-x-4 items-center">
+    <div>
+      <span>from: <%= @job.from_date %> <%= @job.from_time %></span>
+      <span>to: <%= @job.to_date %> <%= @job.to_time %></span>
+    </div>
+    <div>
+      <%= render GhostWeb.StatusView, "_pill.html", status: @job.status, title: "job status" %>
+    </div>
+    <div>
+      <%= chunk_status_totals(assigns) %>
+      <span title="total">&Sigma; <%= @total_chunks %></span>
+    </div>
+  </div>
 
   <table class="w-full mt-8">
     <thead class="bg-gray-200 border-t-2 border-gray-400">
@@ -43,7 +50,7 @@
             <td class="px-4 py-3"><%= c.end_at %></td>
             <td class="px-4 py-3"><%= c.inserted_at %></td>
             <td class="px-4 py-3">
-              <%= render GhostWeb.StatusView, "_pill.html", status: c.status %>
+              <%= render GhostWeb.StatusView, "_pill.html", status: c.status, title: "chunk status" %>
             </td>
           </tr>
         <% end %>

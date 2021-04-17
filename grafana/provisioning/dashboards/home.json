@@ -15,7 +15,6 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 3,
   "links": [
     {
       "icon": "external link",
@@ -27,7 +26,7 @@
     {
       "icon": "external link",
       "tags": [
-        "funding-rates"
+        "swap-funding-rates"
       ],
       "type": "dashboards"
     },
@@ -454,5 +453,5 @@
   "timezone": "",
   "title": "Home",
   "uid": "f2rLff8Gz",
-  "version": 2
+  "version": 3
 }
