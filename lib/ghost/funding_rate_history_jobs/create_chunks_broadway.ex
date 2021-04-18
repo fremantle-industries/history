@@ -37,7 +37,7 @@ defmodule Ghost.FundingRateHistoryJobs.CreateChunksBroadway do
     successful
     |> Enum.each(fn m ->
       {:ok, _} = FundingRateHistoryJobs.update(m.data, %{status: "working"})
-      broadcast_update(m.data, "working")
+      FundingRateHistoryJobs.PubSub.broadcast_update(m.data.id, "working")
     end)
 
     failed
@@ -53,16 +53,5 @@ defmodule Ghost.FundingRateHistoryJobs.CreateChunksBroadway do
     |> FundingRateHistoryJobs.each_chunk(&FundingRateHistoryChunks.insert/1)
 
     job
-  end
-
-  @topic_prefix "funding_rate_history_job"
-  defp broadcast_update(job, status) do
-    topics = ["#{@topic_prefix}:*", "#{@topic_prefix}:#{job.id}"]
-    msg = {:funding_rate_history_job, :update, %{id: job.id, status: status}}
-
-    topics
-    |> Enum.each(fn topic ->
-      Phoenix.PubSub.broadcast(Ghost.PubSub, topic, msg)
-    end)
   end
 end

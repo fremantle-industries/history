@@ -34,18 +34,25 @@ defmodule Ghost.FundingRateHistoryJobs.DownloadChunksBroadway do
   end
 
   def ack(:ack_id, successful, failed) do
-    # TODO: Should only update chunk as complete once all chunks have been processed
     successful
     |> Enum.map(fn m ->
       FundingRateHistoryChunks.update(m.data, %{status: "complete"})
       broadcast_update(m.data, "complete")
+      m.data.job_id
     end)
+    |> Enum.uniq()
+    |> Enum.each(fn job_id ->
+      total_chunks = FundingRateHistoryChunks.count_by_job_id(job_id)
+      total_complete = FundingRateHistoryChunks.count_by_job_id_and_status(job_id, :complete)
+      total_error = FundingRateHistoryChunks.count_by_job_id_and_status(job_id, :error)
 
-    # |> Enum.uniq()
-    # |> Enum.each(fn job_id ->
-    #   job = FundingRateHistoryJobs.get!(job_id)
-    #   FundingRateHistoryJobs.update(job, %{status: "complete"})
-    # end)
+      if total_chunks == total_complete + total_error do
+        job = FundingRateHistoryJobs.get!(job_id)
+        job_status = if total_error == 0, do: "complete", else: "error"
+        FundingRateHistoryJobs.update(job, %{status: job_status})
+        FundingRateHistoryJobs.PubSub.broadcast_update(job.id, job_status)
+      end
+    end)
 
     failed
     |> Enum.each(fn m ->
