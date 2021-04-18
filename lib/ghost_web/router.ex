@@ -21,11 +21,15 @@ defmodule GhostWeb.Router do
     live "/predictions", PredictionLive, :index
     live "/data", DataLive, :index
     live "/data/ohlc", OHLCLive, :index
+    live "/data/predicted_funding", PredictedFundingRateLive, :index
     live "/data/funding", FundingRateLive, :index
     live "/data/funding/latest", FundingRateLatestLive, :index
     live "/data/funding/jobs", FundingRateJob.IndexLive, :index, as: :funding_rate_job
     live "/data/funding/jobs/:id", FundingRateJob.ShowLive, :show, as: :funding_rate_job
     live "/data/lending", LendingRateLive, :index
+    live "/data/lending/latest", LendingRateLatestLive, :index
+    live "/data/lending/jobs", LendingRateJob.IndexLive, :index, as: :lending_rate_job
+    live "/data/lending/jobs/:id", LendingRateJob.ShowLive, :show, as: :lending_rate_job
     live "/products", ProductLive, :index
     live "/tokens", TokenLive, :index
   end

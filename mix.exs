@@ -29,6 +29,7 @@ defmodule Ghost.MixProject do
       {:broadway, "~> 0.6"},
       {:ecto_enum, "~> 1.4"},
       {:ecto_sql, "~> 3.4"},
+      {:ex_ftx, "~> 0.0.9"},
       {:gettext, "~> 0.11"},
       {:indifferent, "~> 0.9"},
       {:jason, "~> 1.0"},

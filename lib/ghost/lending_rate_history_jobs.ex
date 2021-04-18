@@ -1,10 +1,10 @@
-defmodule Ghost.FundingRateHistoryJobs do
+defmodule Ghost.LendingRateHistoryJobs do
   require Ecto.Query
   require Indifferent
   import Ecto.Query
   alias Ghost.Repo
-  alias Ghost.FundingRateHistoryChunks.FundingRateHistoryChunk
-  alias Ghost.FundingRateHistoryJobs.FundingRateHistoryJob
+  alias Ghost.LendingRateHistoryChunks.LendingRateHistoryChunk
+  alias Ghost.LendingRateHistoryJobs.LendingRateHistoryJob
 
   @default_latest_page 1
   @default_latest_page_size 25
@@ -12,7 +12,7 @@ defmodule Ghost.FundingRateHistoryJobs do
 
   def get!(id) do
     from(
-      j in FundingRateHistoryJob,
+      j in LendingRateHistoryJob,
       where: j.id == ^id
     )
     |> Repo.one()
@@ -24,7 +24,7 @@ defmodule Ghost.FundingRateHistoryJobs do
     offset = page * page_size
 
     from(
-      f in FundingRateHistoryJob,
+      l in LendingRateHistoryJob,
       order_by: [desc: :inserted_at],
       offset: ^offset,
       limit: ^page_size
@@ -34,7 +34,7 @@ defmodule Ghost.FundingRateHistoryJobs do
 
   def count do
     from(
-      j in FundingRateHistoryJob,
+      j in LendingRateHistoryJob,
       select: count(j.id)
     )
     |> Repo.one()
@@ -42,7 +42,7 @@ defmodule Ghost.FundingRateHistoryJobs do
 
   def enqueued_after(id, count) do
     from(
-      f in FundingRateHistoryJob,
+      f in LendingRateHistoryJob,
       where: f.id > ^id and f.status == "enqueued",
       order_by: [asc: :id],
       limit: ^count
@@ -51,25 +51,28 @@ defmodule Ghost.FundingRateHistoryJobs do
   end
 
   def each_chunk(job, callback) do
-    {:ok, start_at} = FundingRateHistoryJob.from(job)
-    {:ok, end_at} = FundingRateHistoryJob.to(job)
+    {:ok, start_at} = LendingRateHistoryJob.from(job)
+    {:ok, end_at} = LendingRateHistoryJob.to(job)
 
-    job.products
-    |> Enum.each(fn p ->
-      adapter = adapter_for!(p.venue)
+    job.tokens
+    |> Enum.each(fn t ->
+      adapter = adapter_for!(t.venue)
 
       with {:ok, period} <- adapter.period(),
-           {:ok, periods_per_chunk} = adapter.periods_per_chunk() do
+           {:ok, periods_per_chunk} <- adapter.periods_per_chunk() do
         build_each_chunk(
           job,
-          p.venue,
-          p.symbol,
+          t.venue,
+          t.symbol,
           start_at,
           end_at,
           period,
           periods_per_chunk,
           callback
         )
+
+        # else
+        #   {:error, :not_supported} -> :ok
       end
     end)
   end
@@ -91,16 +94,16 @@ defmodule Ghost.FundingRateHistoryJobs do
         }
       )
 
-    FundingRateHistoryJob.changeset(%FundingRateHistoryJob{}, merged_params)
+    LendingRateHistoryJob.changeset(%LendingRateHistoryJob{}, merged_params)
   end
 
   def insert(params) do
-    changeset = FundingRateHistoryJob.changeset(%FundingRateHistoryJob{}, params)
+    changeset = LendingRateHistoryJob.changeset(%LendingRateHistoryJob{}, params)
     Repo.insert(changeset)
   end
 
   def update(job, params) do
-    changeset = FundingRateHistoryJob.changeset(job, params)
+    changeset = LendingRateHistoryJob.changeset(job, params)
     Repo.update(changeset)
   end
 
@@ -108,15 +111,15 @@ defmodule Ghost.FundingRateHistoryJobs do
     adapters = :ghost |> Application.get_env(:data_adapters, %{}) |> Indifferent.access()
 
     case adapters[venue] do
-      nil -> raise "funding rate adapter not found for: #{inspect(venue)}"
-      adapter -> adapter.funding_rates
+      nil -> raise "lending rate adapter not found for: #{inspect(venue)}"
+      adapter -> adapter.lending_rates
     end
   end
 
   def build_each_chunk(
         job,
         venue,
-        product_symbol,
+        token,
         start_at,
         end_at,
         period,
@@ -127,11 +130,11 @@ defmodule Ghost.FundingRateHistoryJobs do
       chunk_end_at = DateTime.add(start_at, period * periods_per_chunk, :second)
       min_chunk_end_at = Tai.DateTime.min(chunk_end_at, end_at)
 
-      chunk = %FundingRateHistoryChunk{
+      chunk = %LendingRateHistoryChunk{
         status: "enqueued",
         job: job,
         venue: venue,
-        product: product_symbol,
+        token: token,
         start_at: start_at,
         end_at: min_chunk_end_at
       }
@@ -141,7 +144,7 @@ defmodule Ghost.FundingRateHistoryJobs do
       build_each_chunk(
         job,
         venue,
-        product_symbol,
+        token,
         min_chunk_end_at,
         end_at,
         period,

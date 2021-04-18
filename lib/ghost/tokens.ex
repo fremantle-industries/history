@@ -1,11 +1,13 @@
 defmodule Ghost.Tokens do
   require Ecto.Query
+  import Ecto.Query
   alias Ghost.Repo
   alias Ghost.Tokens.Token
+  alias Ghost.Products.Product
 
   def all do
-    Ecto.Query.from(
-      "tokens",
+    from(
+      Token,
       order_by: [asc: :name],
       select: [:id, :name, :symbol]
     )
@@ -13,11 +15,23 @@ defmodule Ghost.Tokens do
   end
 
   def search(query) do
-    Ecto.Query.from(
-      t in "tokens",
+    from(
+      t in Token,
       order_by: [asc: :name],
       select: [:id, :name, :symbol],
       where: ilike(t.name, ^"%#{query}%") or ilike(t.symbol, ^"%#{query}%")
+    )
+    |> Repo.all()
+  end
+
+  def venue_tokens do
+    from(
+      t in Token,
+      join: p in Product,
+      on: p.base == t.symbol or p.quote == t.symbol,
+      group_by: [t.symbol, p.venue],
+      order_by: [asc: p.venue, asc: t.symbol],
+      select: {p.venue, t.symbol}
     )
     |> Repo.all()
   end

@@ -1,17 +1,18 @@
-defmodule GhostWeb.FundingRateJob.IndexLive do
+defmodule GhostWeb.LendingRateJob.IndexLive do
   use GhostWeb, :live_view
   import GhostWeb.RateView
-  alias Ghost.{FundingRateHistoryJobs, Products}
-  alias Ghost.FundingRateHistoryJobs.FundingRateHistoryJob
+  alias Ghost.LendingRateHistoryJobs
+  alias Ghost.LendingRateHistoryJobs.LendingRateHistoryJob
+  alias Ghost.Tokens
 
   @impl true
   def mount(_params, _session, socket) do
-    Phoenix.PubSub.subscribe(Ghost.PubSub, "funding_rate_history_job:*")
+    Phoenix.PubSub.subscribe(Ghost.PubSub, "lending_rate_history_job:*")
 
     socket =
       socket
-      |> assign(:swap_products, swap_products())
-      |> assign(:job_changeset, FundingRateHistoryJobs.job_changeset_today(%{}))
+      |> assign(:tokens, venue_tokens())
+      |> assign(:job_changeset, LendingRateHistoryJobs.job_changeset_today(%{}))
 
     {:ok, socket}
   end
@@ -31,23 +32,23 @@ defmodule GhostWeb.FundingRateJob.IndexLive do
   end
 
   @impl true
-  def handle_event("download", %{"funding_rate_history_job" => params}, socket) do
-    products =
+  def handle_event("download", %{"lending_rate_history_job" => params}, socket) do
+    tokens =
       params
-      |> Map.get("products", [])
+      |> Map.get("tokens", [])
       |> Enum.map(&Jason.decode!/1)
 
     params =
       params
-      |> Map.put("products", products)
+      |> Map.put("tokens", tokens)
       |> Map.put("status", "enqueued")
 
     socket =
-      with {:ok, job} <- FundingRateHistoryJobs.insert(params) do
+      with {:ok, job} <- LendingRateHistoryJobs.insert(params) do
         socket
         |> assign(
           :job_changeset,
-          FundingRateHistoryJob.changeset(job, %{})
+          LendingRateHistoryJob.changeset(job, %{})
         )
         |> assign_latest()
       else
@@ -67,9 +68,9 @@ defmodule GhostWeb.FundingRateJob.IndexLive do
   end
 
   @impl true
-  def handle_info({:funding_rate_history_job, :update, _}, socket) do
+  def handle_info({:lending_rate_history_job, :update, _}, socket) do
     jobs =
-      FundingRateHistoryJobs.latest(
+      LendingRateHistoryJobs.latest(
         page: socket.assigns.current_page,
         page_size: socket.assigns.page_size
       )
@@ -85,7 +86,7 @@ defmodule GhostWeb.FundingRateJob.IndexLive do
     first_page = 1
     current_page = socket.assigns.current_page
     previous_page = max(current_page - 1, first_page)
-    last_page = ceil(FundingRateHistoryJobs.count() / socket.assigns.page_size)
+    last_page = ceil(LendingRateHistoryJobs.count() / socket.assigns.page_size)
     next_page = min(current_page + 1, last_page)
 
     socket
@@ -96,19 +97,19 @@ defmodule GhostWeb.FundingRateJob.IndexLive do
     |> assign(next_page: next_page)
     |> assign(
       :jobs,
-      FundingRateHistoryJobs.latest(
+      LendingRateHistoryJobs.latest(
         page: socket.assigns.current_page,
         page_size: socket.assigns.page_size
       )
     )
   end
 
-  defp swap_products do
-    Products.swap()
-    |> Enum.map(fn p ->
+  defp venue_tokens do
+    Tokens.venue_tokens()
+    |> Enum.map(fn {venue, base} ->
       [
-        value: %{symbol: p.symbol, venue: p.venue} |> Jason.encode!(),
-        key: "#{p.venue}:#{p.symbol}"
+        value: %{symbol: base, venue: venue} |> Jason.encode!(),
+        key: "#{venue}:#{base}"
       ]
     end)
   end

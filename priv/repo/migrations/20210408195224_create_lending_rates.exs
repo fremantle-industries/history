@@ -5,7 +5,7 @@ defmodule Ghost.Repo.Migrations.CreateLendingRates do
     create table(:lending_rates) do
       add :time, :utc_datetime, null: false
       add :venue, :string, null: false
-      add :product, :string, null: false
+      add :token, :string, null: false
       add :base, :string, null: false
       add :quote, :string, null: false
       add :rate, :decimal, null: false
@@ -13,6 +13,6 @@ defmodule Ghost.Repo.Migrations.CreateLendingRates do
       timestamps()
     end
 
-    create unique_index(:lending_rates, [:time, :venue, :product])
+    create unique_index(:lending_rates, [:time, :venue, :token])
   end
 end

@@ -10,7 +10,7 @@ defmodule Ghost.Application do
       {Phoenix.PubSub, name: Ghost.PubSub},
       GhostWeb.Endpoint,
       Ghost.FundingRateHistoryJobs.Supervisor,
-      Ghost.LendingRateHistoryDownloads.Supervisor
+      Ghost.LendingRateHistoryJobs.Supervisor
     ]
 
     opts = [strategy: :one_for_one, name: Ghost.Supervisor]

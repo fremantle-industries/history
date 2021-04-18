@@ -1,8 +1,8 @@
-defmodule GhostWeb.FundingRateView do
+defmodule GhostWeb.RateView do
   use GhostWeb, :view
 
-  def products_by_group(products, opts \\ []) do
-    max_products = opts[:max_products]
+  def symbols_by_venue(products, opts \\ []) do
+    max_products = opts[:max] || opts[:max_products]
 
     products
     |> Enum.group_by(& &1.venue)
@@ -22,5 +22,9 @@ defmodule GhostWeb.FundingRateView do
       "#{venue}: #{formatted_symbols}"
     end)
     |> Enum.join(", ")
+  end
+
+  def products_by_group(products, opts \\ []) do
+    symbols_by_venue(products, opts)
   end
 end

@@ -1,6 +1,6 @@
 defmodule GhostWeb.FundingRateLive do
   use GhostWeb, :live_view
-  import GhostWeb.FundingRateView
+  import GhostWeb.RateView
   alias Ghost.{FundingRates, FundingRateHistoryJobs}
 
   @latest_page 0

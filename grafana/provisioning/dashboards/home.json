@@ -15,6 +15,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
+  "id": 3,
   "links": [
     {
       "icon": "external link",
@@ -26,7 +27,21 @@
     {
       "icon": "external link",
       "tags": [
+        "futures-premiums"
+      ],
+      "type": "dashboards"
+    },
+    {
+      "icon": "external link",
+      "tags": [
         "swap-funding-rates"
+      ],
+      "type": "dashboards"
+    },
+    {
+      "icon": "external link",
+      "tags": [
+        "spot-lending-rates"
       ],
       "type": "dashboards"
     },
@@ -453,5 +468,5 @@
   "timezone": "",
   "title": "Home",
   "uid": "f2rLff8Gz",
-  "version": 3
+  "version": 5
 }

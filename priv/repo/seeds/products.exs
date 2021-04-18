@@ -271,6 +271,8 @@ alias Ghost.Repo
   %Product{venue: "ftx", symbol: "uni/usdt", base: "uni", quote: "usdt", venue_symbol: "UNI/USDT", type: "spot"},
   %Product{venue: "ftx", symbol: "uni-perp", base: "uni", quote: "usd", venue_symbol: "UNI-PERP", type: "swap"},
 
+  %Product{venue: "ftx", symbol: "usdt/usd", base: "usdt", quote: "usd", venue_symbol: "USDT/USD", type: "spot"},
+
   %Product{venue: "ftx", symbol: "waves/usd", base: "waves", quote: "usd", venue_symbol: "WAVES/USD", type: "spot"},
   %Product{venue: "ftx", symbol: "waves-perp", base: "waves", quote: "usd", venue_symbol: "WAVES-PERP", type: "swap"},
 

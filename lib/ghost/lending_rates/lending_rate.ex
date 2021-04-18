@@ -4,7 +4,7 @@ defmodule Ghost.LendingRates.LendingRate do
 
   schema "lending_rates" do
     field :time, :utc_datetime
-    field :product, :string
+    field :token, :string
     field :base, :string
     field :quote, :string
     field :rate, :decimal
@@ -16,7 +16,14 @@ defmodule Ghost.LendingRates.LendingRate do
   @doc false
   def changeset(lending_rate, attrs) do
     lending_rate
-    |> cast(attrs, [:time, :venue, :product, :base, :quote, :rate])
-    |> validate_required([:time, :venue, :product, :base, :quote, :rate])
+    |> cast(attrs, [:time, :venue, :token, :base, :quote, :rate])
+    |> validate_required([:time, :venue, :token, :base, :quote, :rate])
+  end
+
+  @one_hundred Decimal.new(100)
+  def rate_pct(lending_rate) do
+    lending_rate.rate
+    |> Decimal.mult(@one_hundred)
+    |> Decimal.normalize()
   end
 end
