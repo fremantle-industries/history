@@ -16,7 +16,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": 11,
-  "iteration": 1618862532159,
+  "iteration": 1619021488001,
   "links": [
     {
       "icon": "external link",
@@ -87,7 +87,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT\n  funding_rates.time,\n  funding_rates.venue || ':' || funding_rates.product AS text,\n  funding_rates.rate * 24 * 365 * 100 AS rate\nFROM funding_rates\n   JOIN products ON products.symbol = funding_rates.product\nWHERE\n  funding_rates.venue IN ($venue)\n  AND products.base IN ($base)\n  AND products.quote IN ($quote)\nORDER BY funding_rates.time",
+          "rawSql": "SELECT\n  funding_rates.time,\n  funding_rates.venue || ':' || funding_rates.product AS text,\n  funding_rates.rate * 24 * 365 * 100 AS rate\nFROM funding_rates\n   JOIN products ON products.symbol = funding_rates.product\nWHERE\n  funding_rates.venue IN ($venue)\n  AND products.base IN ($base)\n  AND products.quote IN ($quote)\n  AND products.type = 'swap'\nORDER BY funding_rates.time",
           "refId": "A",
           "select": [
             [
@@ -17356,15 +17356,16 @@
         "allValue": null,
         "current": {
           "selected": true,
+          "tags": [],
           "text": [
-            "bnb",
             "btc",
-            "eth"
+            "eth",
+            "uni"
           ],
           "value": [
-            "bnb",
             "btc",
-            "eth"
+            "eth",
+            "uni"
           ]
         },
         "datasource": "Ghost TimescaleDB",
@@ -17430,5 +17431,5 @@
   "timezone": "",
   "title": "Swap Funding Rates",
   "uid": "2dkHtKXGz",
-  "version": 5
+  "version": 6
 }
