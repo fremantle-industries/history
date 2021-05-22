@@ -1,4 +1,4 @@
-defmodule GhostWeb.DataLive do
+defmodule GhostWeb.BasisLive do
   use GhostWeb, :live_view
 
   @impl true

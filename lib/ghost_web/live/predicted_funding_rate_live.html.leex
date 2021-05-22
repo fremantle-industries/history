@@ -1,0 +1,60 @@
+<div class="space-x-4">
+  <%= render GhostWeb.DataView, "_header.html", conn: @socket, section: ["Predicted Funding Rates"] %>
+</div>
+<%= render GhostWeb.DataView, "_nav.html", conn: @socket %>
+
+<div class="mt-8">
+  <h3 class="text-2xl">
+    Latest
+  </h3>
+
+  <table class="w-full mt-4">
+    <thead class="bg-gray-200 border-t-2 border-gray-400">
+      <tr>
+        <th scope="col" class="px-4 py-3 text-left text-gray-700">Time</th>
+        <th scope="col" class="px-4 py-3 text-left text-gray-700">Product</th>
+        <th scope="col" class="px-4 py-3 text-left text-gray-700">Venue</th>
+        <th scope="col" class="px-4 py-3 text-left text-gray-700">Rate</th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= if Enum.any?(@predicted_funding_rates) do %>
+        <%= for r <- @predicted_funding_rates do %>
+          <tr class="hover:bg-gray-50 border-t border-b group">
+            <td class="px-4 py-3"><%= r.time %></td>
+            <td class="px-4 py-3"><%= r.product %></td>
+            <td class="px-4 py-3"><%= r.venue %></td>
+            <td class="px-4 py-3"><%= Ghost.FundingRates.FundingRate.rate_pct(r) %>%</td>
+          </tr>
+        <% end %>
+      <% else %>
+        <tr class="hover:bg-gray-50 border-t border-b group">
+          <td colspan="4" class="px-4 py-3">No predicted funding rates</td>
+        </tr>
+      <% end %>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="4" class="px-4 py-3 text-right">
+          <%= link "See more...", to: Routes.predicted_funding_rate_path(@socket, :index), class: "opacity-70 hover:opacity-50" %>
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+</div>
+
+<div class="mt-4">
+  <h3 class="text-2xl">
+    Schedules
+  </h3>
+
+  TODO...
+</div>
+
+<div class="mt-8">
+  <h3 class="text-2xl">
+    Jobs
+  </h3>
+
+  TODO...
+</div>

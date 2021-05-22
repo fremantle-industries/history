@@ -17,6 +17,7 @@ defmodule Ghost.MixProject do
   def application do
     [
       mod: {Ghost.Application, []},
+      start_phases: [basis: []],
       extra_applications: [:logger, :runtime_tools]
     ]
   end
@@ -29,12 +30,16 @@ defmodule Ghost.MixProject do
       {:broadway, "~> 0.6"},
       {:ecto_enum, "~> 1.4"},
       {:ecto_sql, "~> 3.4"},
+      {:enumerati, "~> 0.0.8"},
+      {:etso, "~> 0.1.5"},
       {:ex_ftx, "~> 0.0.9"},
       {:gettext, "~> 0.11"},
       {:indifferent, "~> 0.9"},
       {:jason, "~> 1.0"},
       {:master_proxy, "~> 0.1"},
+      {:notified_phoenix, "~> 0.0.3"},
       {:navigator, "~> 0.0.2"},
+      {:paged_query, "~> 0.0.2"},
       {:phoenix, "~> 1.5.1"},
       {:phoenix_ecto, "~> 4.1"},
       {:phoenix_html, "~> 2.11"},
@@ -42,8 +47,8 @@ defmodule Ghost.MixProject do
       {:phoenix_live_view, "~> 0.15"},
       {:plug_cowboy, "~> 2.0"},
       {:postgrex, ">= 0.0.0"},
-      # {:tai, path: "vendor/tai_monorepo/apps/tai", override: true},
-      {:tai, "~> 0.0.65"},
+      {:stylish, "~> 0.0.1"},
+      {:tai, "~> 0.0.66"},
       {:telemetry_metrics, "~> 0.4"},
       {:telemetry_metrics_prometheus, "~> 1.0"},
       {:telemetry_poller, "~> 0.4"},

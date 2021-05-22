@@ -6,6 +6,7 @@ defmodule Ghost.Application do
   def start(_type, _args) do
     children = [
       Ghost.Repo,
+      Ghost.EtsRepo,
       GhostWeb.Telemetry,
       {Phoenix.PubSub, name: Ghost.PubSub},
       GhostWeb.Endpoint,
@@ -15,6 +16,11 @@ defmodule Ghost.Application do
 
     opts = [strategy: :one_for_one, name: Ghost.Supervisor]
     Supervisor.start_link(children, opts)
+  end
+
+  def start_phase(:basis, _start_type, _phase_args) do
+    Ghost.Basis.hydrate()
+    :ok
   end
 
   # Tell Phoenix to update the endpoint configuration

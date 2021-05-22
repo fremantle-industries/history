@@ -1,0 +1,59 @@
+<div class="flex items-center space-x-4">
+  <%= render GhostWeb.BasisView, "_header.html", conn: @socket, section: ["Swap"] %>
+</div>
+<%= render GhostWeb.BasisView, "_nav.html", conn: @socket %>
+
+<table class="w-full table-fixed mt-4">
+  <thead class="bg-gray-200 border-t-2 border-gray-400">
+    <th scope="col" class="w-2/24 text-left px-4 py-3 text-gray-700 text-sm">Spot Venue</th>
+    <th scope="col" class="w-2/24 text-left px-4 py-3 text-gray-700 text-sm">Spot Product</th>
+    <th scope="col" class="w-2/24 text-left px-4 py-3 text-gray-700 text-sm">Swap Venue</th>
+    <th scope="col" class="w-2/24 text-left px-4 py-3 text-gray-700 text-sm">Swap Product</th>
+    <th scope="col" class="w-2/24 text-left px-4 py-3 text-gray-700 text-sm">Spread</th>
+    <th scope="col" class="w-2/24 text-left px-4 py-3 text-gray-700 text-sm">Spread APR</th>
+    <th scope="col" class="w-2/24 text-left px-4 py-3 text-gray-700 text-sm">Last Rate</th>
+    <th scope="col" class="w-2/24 text-left px-4 py-3 text-gray-700 text-sm">Last Rate APR</th>
+    <th scope="col" class="w-2/24 text-left px-4 py-3 text-gray-700 text-sm">Predicted Rate</th>
+    <th scope="col" class="w-2/24 text-left px-4 py-3 text-gray-700 text-sm">Predicted Rate APR</th>
+    <th scope="col" class="w-3/24 text-left px-4 py-3 text-gray-700 text-sm">Updated At</th>
+    <th scope="col" class="w-1/24 text-left px-4 py-3 text-gray-700 text-sm">Actions</th>
+  </thead>
+  <tbody>
+    <%= if Enum.any?(@swap_basis) do %>
+      <%= Enum.map @swap_basis, fn f -> %>
+        <tr class="hover:bg-gray-50 border-t border-b group">
+          <td scope="row" class="px-4 py-3"><%= f.spot_venue %></td>
+          <td scope="row" class="px-4 py-3"><%= f.spot_product %></td>
+          <td scope="row" class="px-4 py-3"><%= f.swap_venue %></td>
+          <td scope="row" class="px-4 py-3"><%= f.swap_product %></td>
+          <td scope="row" class="px-4 py-3"><%= (f.spread && f.spread |> Decimal.to_string(:normal)) || "-" %></td>
+          <td scope="row" class="px-4 py-3"><%= (f.spread_apr && f.spread_apr |> Decimal.to_string(:normal)) || "-" %></td>
+          <td scope="row" class="px-4 py-3"><%= (f.last_rate && f.last_rate |> Decimal.to_string(:normal)) || "-" %></td>
+          <td scope="row" class="px-4 py-3"><%= (f.last_rate_apr && f.last_rate_apr |> Decimal.to_string(:normal)) || "-" %></td>
+          <td scope="row" class="px-4 py-3"><%= (f.predicted_rate && f.predicted_rate |> Decimal.to_string(:normal)) || "-" %></td>
+          <td scope="row" class="px-4 py-3"><%= (f.predicted_rate_apr && f.predicted_rate_apr |> Decimal.to_string(:normal)) || "-" %></td>
+          <td scope="row" class="px-4 py-3 text-xs"><%= f.updated_at %></td>
+          <td scope="row" class="px-4 py-3">
+            <%= link "chart", to: to_chart(f), class: "text-blue-600 hover:opacity-50" %>
+          </td>
+      <% end %>
+    <% else %>
+      <tr>
+        <td colspan="12" class="px-4 py-3">No pairs configured</td>
+      </tr>
+    <% end %>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td colspan="12" class="py-4 text-right">
+        <%= render(
+          Stylish.Table,
+          "navigation.html",
+          to: &Routes.basis_swap_path(&1, :index, page: &2),
+          conn: @socket,
+          current_page: @current_page,
+          last_page: @last_page) %>
+      </td>
+    </tr>
+  </tfoot>
+</table>

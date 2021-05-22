@@ -18,6 +18,10 @@ defmodule GhostWeb.Router do
     pipe_through :browser
 
     live "/", HomeLive, :index
+    live "/basis", BasisLive, :index
+    live "/basis/futures", BasisFutureLive, :index
+    live "/basis/swap", BasisSwapLive, :index
+    live "/arb", ArbLive, :index
     live "/predictions", PredictionLive, :index
     live "/data", DataLive, :index
     live "/data/ohlc", OHLCLive, :index

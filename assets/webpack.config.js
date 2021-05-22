@@ -10,28 +10,26 @@ module.exports = (env, options) => {
 
   return {
     optimization: {
+      minimize: !devMode,
       minimizer: [
-        new TerserPlugin(),
+        new TerserPlugin({parallel: true}),
         new CssMinimizerPlugin(),
       ]
     },
     entry: {
-      'app': glob.sync('./vendor/**/*.js').concat(['./js/app.js'])
+      'app': glob.sync('./vendor/**/*.js').concat(['./js/app.ts'])
     },
     output: {
       filename: '[name].js',
       path: path.resolve(__dirname, '../priv/static/js'),
       publicPath: '/js/'
     },
-    devtool: devMode ? 'source-map' : undefined,
+    devtool: devMode ? 'eval-cheap-module-source-map' : undefined,
     module: {
       rules: [
         {
-          test: /\.js$/,
-          exclude: /node_modules/,
-          use: {
-            loader: 'babel-loader'
-          }
+          test: /\.(j|t)sx?$/,
+          use: [{loader: "babel-loader"}, {loader: "ts-loader"}],
         },
         {
           test: /\.[s]?css$/,

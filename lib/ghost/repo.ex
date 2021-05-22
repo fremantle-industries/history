@@ -1,5 +1,4 @@
 defmodule Ghost.Repo do
-  use Ecto.Repo,
-    otp_app: :ghost,
-    adapter: Ecto.Adapters.Postgres
+  @otp_app Mix.Project.config()[:app]
+  use Ecto.Repo, otp_app: @otp_app, adapter: Ecto.Adapters.Postgres
 end
