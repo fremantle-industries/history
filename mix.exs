@@ -38,7 +38,7 @@ defmodule Ghost.MixProject do
       {:jason, "~> 1.0"},
       {:master_proxy, "~> 0.1"},
       {:notified_phoenix, "~> 0.0.3"},
-      {:navigator, "~> 0.0.2"},
+      {:navigator, "~> 0.0.4"},
       {:paged_query, "~> 0.0.2"},
       {:phoenix, "~> 1.5.1"},
       {:phoenix_ecto, "~> 4.1"},

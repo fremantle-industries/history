@@ -333,6 +333,14 @@ config :navigator,
       %{
         label: "Workbench",
         link: {WorkbenchWeb.Router.Helpers, :balance_all_url, [WorkbenchWeb.Endpoint, :index]}
+      },
+      %{
+        label: "Grafana",
+        link: "http://grafana.localhost:3000"
+      },
+      %{
+        label: "Prometheus",
+        link: "http://prometheus.localhost:9090"
       }
     ],
     workbench: [
@@ -380,6 +388,14 @@ config :navigator,
       %{
         label: "Ghost",
         link: {GhostWeb.Router.Helpers, :home_url, [GhostWeb.Endpoint, :index]}
+      },
+      %{
+        label: "Grafana",
+        link: "http://grafana.localhost:3000"
+      },
+      %{
+        label: "Prometheus",
+        link: "http://prometheus.localhost:9090"
       }
     ]
   }
