@@ -34,7 +34,7 @@
     "sass-loader": "^11.0.1",
     "tailwindcss": "^2.1.2",
     "tailwindcss-empty": "^1.0.0",
-    "terser-webpack-plugin": "^5.1.1",
+    "terser-webpack-plugin": "^5.1.3",
     "ts-loader": "^9.2.2",
     "typescript": "^4.3.2",
     "webpack": "~5.38.1",
