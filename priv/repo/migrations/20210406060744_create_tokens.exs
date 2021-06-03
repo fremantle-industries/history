@@ -5,6 +5,8 @@ defmodule Ghost.Repo.Migrations.CreateTokens do
     create table(:tokens) do
       add :name, :string
       add :symbol, :string
+      add :collateral, :boolean, null: false
+      add :collateral_weight, :decimal, null: false
 
       timestamps()
     end
