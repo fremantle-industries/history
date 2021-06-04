@@ -40,6 +40,7 @@ require Ecto.Query
   %Ghost.Tokens.Token{name: "Huobi Token", symbol: "ht", collateral: true, collateral_weight: Decimal.new("0.9")},
   %Ghost.Tokens.Token{name: "Kin", symbol: "kin", collateral: true, collateral_weight: Decimal.new("0.85")},
   %Ghost.Tokens.Token{name: "Kyber Network", symbol: "knc", collateral: true, collateral_weight: Decimal.new("0.95")},
+  %Ghost.Tokens.Token{name: "KeeperDAO", symbol: "rook", collateral: false, collateral_weight: Decimal.new(0)},
   %Ghost.Tokens.Token{name: "LEO", symbol: "leo", collateral: true, collateral_weight: Decimal.new("0.85")},
   %Ghost.Tokens.Token{name: "Litecoin", symbol: "ltc", collateral: true, collateral_weight: Decimal.new("0.95")},
   %Ghost.Tokens.Token{name: "Loopring", symbol: "lrc", collateral: true, collateral_weight: Decimal.new("0.85")},
