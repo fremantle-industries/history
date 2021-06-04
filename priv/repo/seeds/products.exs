@@ -17,6 +17,9 @@ alias Ghost.Repo
   %Product{venue: "ftx", symbol: "alpha/usd", base: "alpha", quote: "usd", venue_symbol: "ALPHA/USD", type: "spot"},
   %Product{venue: "ftx", symbol: "alpha-perp", base: "alpha", quote: "usd", venue_symbol: "ALPHA-PERP", type: "swap"},
 
+  %Product{venue: "ftx", symbol: "asd/usd", base: "asd", quote: "usd", venue_symbol: "ASD/USD", type: "spot"},
+  %Product{venue: "ftx", symbol: "asd-perp", base: "asd", quote: "usd", venue_symbol: "ASD-PERP", type: "swap"},
+
   %Product{venue: "ftx", symbol: "audio/usd", base: "audio", quote: "usd", venue_symbol: "AUDIO/USD", type: "spot"},
   %Product{venue: "ftx", symbol: "audio/usdt", base: "audio", quote: "usdt", venue_symbol: "AUDIO/USDT", type: "spot"},
   %Product{venue: "ftx", symbol: "audio-perp", base: "audio", quote: "usd", venue_symbol: "AUDIO-PERP", type: "swap"},
@@ -59,9 +62,6 @@ alias Ghost.Repo
   %Product{venue: "ftx", symbol: "btc/usd", base: "btc", quote: "usd", venue_symbol: "BTC/USD", type: "spot"},
   %Product{venue: "ftx", symbol: "btc/usdt", base: "btc", quote: "usdt", venue_symbol: "BTC/USDT", type: "spot"},
   %Product{venue: "ftx", symbol: "btc-perp", base: "btc", quote: "usd", venue_symbol: "BTC-PERP", type: "swap"},
-
-  %Product{venue: "ftx", symbol: "btmx/usd", base: "btmx", quote: "usd", venue_symbol: "BTMX/USD", type: "spot"},
-  %Product{venue: "ftx", symbol: "btmx-perp", base: "btmx", quote: "usd", venue_symbol: "BTMX-PERP", type: "swap"},
 
   %Product{venue: "ftx", symbol: "chz/usd", base: "chz", quote: "usd", venue_symbol: "CHZ/USD", type: "spot"},
   %Product{venue: "ftx", symbol: "chz/usdt", base: "chz", quote: "usdt", venue_symbol: "CHZ/USDT", type: "spot"},
