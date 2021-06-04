@@ -53,6 +53,7 @@ require Ecto.Query
   %Ghost.Tokens.Token{name: "Paxos Standard", symbol: "pax", collateral: true, collateral_weight: Decimal.new(1)},
   %Ghost.Tokens.Token{name: "Polkadot", symbol: "dot", collateral: false, collateral_weight: Decimal.new(0)},
   %Ghost.Tokens.Token{name: "Polygon", symbol: "matic", collateral: true, collateral_weight: Decimal.new("0.85")},
+  %Ghost.Tokens.Token{name: "Pundi X", symbol: "pundix", collateral: false, collateral_weight: Decimal.new(0)},
   %Ghost.Tokens.Token{name: "REN", symbol: "ren", collateral: true, collateral_weight: Decimal.new("0.9")},
   %Ghost.Tokens.Token{name: "Raydium", symbol: "ray", collateral: true, collateral_weight: Decimal.new("0.85")},
   %Ghost.Tokens.Token{name: "Reef Finance", symbol: "reef", collateral: false, collateral_weight: Decimal.new(0)},
