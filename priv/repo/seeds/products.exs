@@ -224,6 +224,9 @@ alias Ghost.Repo
   %Product{venue: "ftx", symbol: "seco/usd", base: "seco", quote: "usd", venue_symbol: "SECO/USD", type: "spot"},
   %Product{venue: "ftx", symbol: "seco-perp", base: "seco", quote: "usd", venue_symbol: "SECO-PERP", type: "swap"},
 
+  %Product{venue: "ftx", symbol: "shib/usd", base: "shib", quote: "usd", venue_symbol: "SHIB/USD", type: "spot"},
+  %Product{venue: "ftx", symbol: "shib-perp", base: "shib", quote: "usd", venue_symbol: "SHIB-PERP", type: "swap"},
+
   %Product{venue: "ftx", symbol: "skl/usd", base: "skl", quote: "usd", venue_symbol: "SKL/USD", type: "spot"},
   %Product{venue: "ftx", symbol: "skl-perp", base: "skl", quote: "usd", venue_symbol: "SKL-PERP", type: "swap"},
 

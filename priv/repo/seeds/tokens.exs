@@ -57,6 +57,7 @@ require Ecto.Query
   %Ghost.Tokens.Token{name: "REN", symbol: "ren", collateral: true, collateral_weight: Decimal.new("0.9")},
   %Ghost.Tokens.Token{name: "Raydium", symbol: "ray", collateral: true, collateral_weight: Decimal.new("0.85")},
   %Ghost.Tokens.Token{name: "Reef Finance", symbol: "reef", collateral: false, collateral_weight: Decimal.new(0)},
+  %Ghost.Tokens.Token{name: "Shiba Inu", symbol: "shib", collateral: false, collateral_weight: Decimal.new(0)},
   %Ghost.Tokens.Token{name: "SKALE", symbol: "skl", collateral: false, collateral_weight: Decimal.new(0)},
   %Ghost.Tokens.Token{name: "Serum", symbol: "srm", collateral: true, collateral_weight: Decimal.new("0.9")},
   %Ghost.Tokens.Token{name: "Solana", symbol: "sol", collateral: true, collateral_weight: Decimal.new("0.9")},
