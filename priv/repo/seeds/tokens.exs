@@ -25,6 +25,7 @@ require Ecto.Query
   %Ghost.Tokens.Token{name: "Chiliz", symbol: "comp", collateral: true, collateral_weight: Decimal.new("0.9")},
   %Ghost.Tokens.Token{name: "Compound USDT", symbol: "cusdt", collateral: true, collateral_weight: Decimal.new("0.95")},
   %Ghost.Tokens.Token{name: "Compound", symbol: "chz", collateral: false, collateral_weight: Decimal.new(0)},
+  %Ghost.Tokens.Token{name: "Convergence", symbol: "conv", collateral: false, collateral_weight: Decimal.new(0)},
   %Ghost.Tokens.Token{name: "Crypto.com", symbol: "cro", collateral: false, collateral_weight: Decimal.new(0)},
   %Ghost.Tokens.Token{name: "Curve DAO Token", symbol: "crv", collateral: false, collateral_weight: Decimal.new(0)},
   %Ghost.Tokens.Token{name: "DODO", symbol: "dodo", collateral: false, collateral_weight: Decimal.new(0)},
