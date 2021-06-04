@@ -13073,7 +13073,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT\n  NOW() - interval '4 hours' AS time,\n  venue || ':' || product AS text,\n  AVG(rate) * 24 * 365 * 100 AS rate\nFROM funding_rates\nWHERE\n  time >= NOW() - interval '4 hours'\n  AND product = 'btmx-perp'\nGROUP BY venue, product",
+          "rawSql": "SELECT\n  NOW() - interval '4 hours' AS time,\n  venue || ':' || product AS text,\n  AVG(rate) * 24 * 365 * 100 AS rate\nFROM funding_rates\nWHERE\n  time >= NOW() - interval '4 hours'\n  AND product = 'asd-perp'\nGROUP BY venue, product",
           "refId": "A",
           "select": [
             [
@@ -13097,7 +13097,7 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "BTMX/USD 4h APR",
+      "title": "ASD/USD 4h APR",
       "type": "gauge"
     },
     {
@@ -13151,7 +13151,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT\n  NOW() - interval '24 hours' AS time,\n  venue || ':' || product AS text,\n  AVG(rate) * 24 * 365 * 100 AS rate\nFROM funding_rates\nWHERE\n  time >= NOW() - interval '24 hours'\n  AND product = 'btmx-perp'\nGROUP BY venue, product",
+          "rawSql": "SELECT\n  NOW() - interval '24 hours' AS time,\n  venue || ':' || product AS text,\n  AVG(rate) * 24 * 365 * 100 AS rate\nFROM funding_rates\nWHERE\n  time >= NOW() - interval '24 hours'\n  AND product = 'asd-perp'\nGROUP BY venue, product",
           "refId": "A",
           "select": [
             [
@@ -13175,7 +13175,7 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "BTMX/USD 24h APR",
+      "title": "ASD/USD 24h APR",
       "type": "gauge"
     },
     {
@@ -13229,7 +13229,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT\n  NOW() - interval '7 days' AS time,\n  venue || ':' || product AS text,\n  AVG(rate) * 24 * 365 * 100 AS rate\nFROM funding_rates\nWHERE\n  time >= NOW() - interval '7 days'\n  AND product = 'btmx-perp'\nGROUP BY venue, product",
+          "rawSql": "SELECT\n  NOW() - interval '7 days' AS time,\n  venue || ':' || product AS text,\n  AVG(rate) * 24 * 365 * 100 AS rate\nFROM funding_rates\nWHERE\n  time >= NOW() - interval '7 days'\n  AND product = 'asd-perp'\nGROUP BY venue, product",
           "refId": "A",
           "select": [
             [
@@ -13253,7 +13253,7 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "BTMX/USD 1w APR",
+      "title": "ASD/USD 1w APR",
       "type": "gauge"
     },
     {
@@ -13307,7 +13307,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT\n  NOW() - interval '1 month' AS time,\n  venue || ':' || product AS text,\n  AVG(rate) * 24 * 365 * 100 AS rate\nFROM funding_rates\nWHERE\n  time >= NOW() - interval '1 month'\n  AND product = 'btmx-perp'\nGROUP BY venue, product",
+          "rawSql": "SELECT\n  NOW() - interval '1 month' AS time,\n  venue || ':' || product AS text,\n  AVG(rate) * 24 * 365 * 100 AS rate\nFROM funding_rates\nWHERE\n  time >= NOW() - interval '1 month'\n  AND product = 'asd-perp'\nGROUP BY venue, product",
           "refId": "A",
           "select": [
             [
@@ -13331,7 +13331,7 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "BTMX/USD 1m APR",
+      "title": "ASD/USD 1m APR",
       "type": "gauge"
     },
     {
@@ -13385,7 +13385,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT\n  NOW() - interval '1 year' AS time,\n  venue || ':' || product AS text,\n  AVG(rate) * 24 * 365 * 100 AS rate\nFROM funding_rates\nWHERE\n  time >= NOW() - interval '1 year'\n  AND product = 'btmx-perp'\nGROUP BY venue, product",
+          "rawSql": "SELECT\n  NOW() - interval '1 year' AS time,\n  venue || ':' || product AS text,\n  AVG(rate) * 24 * 365 * 100 AS rate\nFROM funding_rates\nWHERE\n  time >= NOW() - interval '1 year'\n  AND product = 'asd-perp'\nGROUP BY venue, product",
           "refId": "A",
           "select": [
             [
@@ -13409,7 +13409,7 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "BTMX/USD 1y APR",
+      "title": "ASD/USD 1y APR",
       "type": "gauge"
     },
     {

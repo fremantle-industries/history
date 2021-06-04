@@ -16,7 +16,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": 11,
-  "iteration": 1622790474984,
+  "iteration": 1622849357939,
   "links": [
     {
       "icon": "external link",
@@ -15626,6 +15626,474 @@
         "x": 0,
         "y": 147
       },
+      "id": 105,
+      "options": {
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "text": {}
+      },
+      "pluginVersion": "7.4.2",
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  NOW() - interval '1 hours' AS time,\n  funding_rates.venue || ':' || product AS text,\n  AVG(funding_rates.rate) * 24 * 365 * 100 AS \"1x\",\n  AVG(funding_rates.rate) * 24 * 365 * 100 * (1 / (1 - tokens.collateral_weight)) AS \"nX\"\nFROM funding_rates\n  LEFT JOIN products ON products.symbol = funding_rates.product AND products.venue = funding_rates.venue AND products.type = 'swap'\n  LEFT JOIN tokens ON tokens.symbol = products.base\nWHERE\n  funding_rates.time >= NOW() - interval '1 hours'\n  AND funding_rates.product = 'asd-perp'\nGROUP BY funding_rates.venue, funding_rates.product, tokens.collateral_weight",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "ASD/USD 1h APR",
+      "type": "gauge"
+    },
+    {
+      "datasource": "Ghost TimescaleDB",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "continuous-RdYlGr"
+          },
+          "custom": {},
+          "mappings": [],
+          "max": 400,
+          "min": -50,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "light-blue",
+                "value": null
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 4,
+        "y": 147
+      },
+      "id": 272,
+      "options": {
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "text": {}
+      },
+      "pluginVersion": "7.4.2",
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  NOW() - interval '4 hours' AS time,\n  funding_rates.venue || ':' || product AS text,\n  AVG(funding_rates.rate) * 24 * 365 * 100 AS \"1x\",\n  AVG(funding_rates.rate) * 24 * 365 * 100 * (1 / (1 - tokens.collateral_weight)) AS \"nX\"\nFROM funding_rates\n  LEFT JOIN products ON products.symbol = funding_rates.product AND products.venue = funding_rates.venue AND products.type = 'swap'\n  LEFT JOIN tokens ON tokens.symbol = products.base\nWHERE\n  funding_rates.time >= NOW() - interval '4 hours'\n  AND funding_rates.product = 'asd-perp'\nGROUP BY funding_rates.venue, funding_rates.product, tokens.collateral_weight",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "ASD/USD 4h APR",
+      "type": "gauge"
+    },
+    {
+      "datasource": "Ghost TimescaleDB",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "continuous-RdYlGr"
+          },
+          "custom": {},
+          "mappings": [],
+          "max": 400,
+          "min": -50,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "light-blue",
+                "value": null
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 8,
+        "y": 147
+      },
+      "id": 165,
+      "options": {
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "text": {}
+      },
+      "pluginVersion": "7.4.2",
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  NOW() - interval '24 hours' AS time,\n  funding_rates.venue || ':' || product AS text,\n  AVG(funding_rates.rate) * 24 * 365 * 100 AS \"1x\",\n  AVG(funding_rates.rate) * 24 * 365 * 100 * (1 / (1 - tokens.collateral_weight)) AS \"nX\"\nFROM funding_rates\n  LEFT JOIN products ON products.symbol = funding_rates.product AND products.venue = funding_rates.venue AND products.type = 'swap'\n  LEFT JOIN tokens ON tokens.symbol = products.base\nWHERE\n  funding_rates.time >= NOW() - interval '24 hours'\n  AND funding_rates.product = 'asd-perp'\nGROUP BY funding_rates.venue, funding_rates.product, tokens.collateral_weight",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "ASD/USD 24h APR",
+      "type": "gauge"
+    },
+    {
+      "datasource": "Ghost TimescaleDB",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "continuous-RdYlGr"
+          },
+          "custom": {},
+          "mappings": [],
+          "max": 400,
+          "min": -50,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "light-blue",
+                "value": null
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 12,
+        "y": 147
+      },
+      "id": 134,
+      "options": {
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "text": {}
+      },
+      "pluginVersion": "7.4.2",
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  NOW() - interval '7 days' AS time,\n  funding_rates.venue || ':' || product AS text,\n  AVG(funding_rates.rate) * 24 * 365 * 100 AS \"1x\",\n  AVG(funding_rates.rate) * 24 * 365 * 100 * (1 / (1 - tokens.collateral_weight)) AS \"nX\"\nFROM funding_rates\n  LEFT JOIN products ON products.symbol = funding_rates.product AND products.venue = funding_rates.venue AND products.type = 'swap'\n  LEFT JOIN tokens ON tokens.symbol = products.base\nWHERE\n  funding_rates.time >= NOW() - interval '7 days'\n  AND funding_rates.product = 'asd-perp'\nGROUP BY funding_rates.venue, funding_rates.product, tokens.collateral_weight",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "ASD/USD 1w APR",
+      "type": "gauge"
+    },
+    {
+      "datasource": "Ghost TimescaleDB",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "continuous-RdYlGr"
+          },
+          "custom": {},
+          "mappings": [],
+          "max": 400,
+          "min": -50,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "light-blue",
+                "value": null
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 16,
+        "y": 147
+      },
+      "id": 150,
+      "options": {
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "text": {}
+      },
+      "pluginVersion": "7.4.2",
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  NOW() - interval '1 month' AS time,\n  funding_rates.venue || ':' || product AS text,\n  AVG(funding_rates.rate) * 24 * 365 * 100 AS \"1x\",\n  AVG(funding_rates.rate) * 24 * 365 * 100 * (1 / (1 - tokens.collateral_weight)) AS \"nX\"\nFROM funding_rates\n  LEFT JOIN products ON products.symbol = funding_rates.product AND products.venue = funding_rates.venue AND products.type = 'swap'\n  LEFT JOIN tokens ON tokens.symbol = products.base\nWHERE\n  funding_rates.time >= NOW() - interval '1 month'\n  AND funding_rates.product = 'asd-perp'\nGROUP BY funding_rates.venue, funding_rates.product, tokens.collateral_weight",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "ASD/USD 1m APR",
+      "type": "gauge"
+    },
+    {
+      "datasource": "Ghost TimescaleDB",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "continuous-RdYlGr"
+          },
+          "custom": {},
+          "mappings": [],
+          "max": 400,
+          "min": -50,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "light-blue",
+                "value": null
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 20,
+        "y": 147
+      },
+      "id": 156,
+      "options": {
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "text": {}
+      },
+      "pluginVersion": "7.4.2",
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  NOW() - interval '1 year' AS time,\n  funding_rates.venue || ':' || product AS text,\n  AVG(funding_rates.rate) * 24 * 365 * 100 AS \"1x\",\n  AVG(funding_rates.rate) * 24 * 365 * 100 * (1 / (1 - tokens.collateral_weight)) AS \"nX\"\nFROM funding_rates\n  LEFT JOIN products ON products.symbol = funding_rates.product AND products.venue = funding_rates.venue AND products.type = 'swap'\n  LEFT JOIN tokens ON tokens.symbol = products.base\nWHERE\n  funding_rates.time >= NOW() - interval '1 year'\n  AND funding_rates.product = 'asd-perp'\nGROUP BY funding_rates.venue, funding_rates.product, tokens.collateral_weight",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "ASD/USD 1y APR",
+      "type": "gauge"
+    },
+    {
+      "datasource": "Ghost TimescaleDB",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "continuous-RdYlGr"
+          },
+          "custom": {},
+          "mappings": [],
+          "max": 400,
+          "min": -50,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "light-blue",
+                "value": null
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 0,
+        "y": 151
+      },
       "id": 57,
       "options": {
         "orientation": "auto",
@@ -15702,7 +16170,7 @@
         "h": 4,
         "w": 4,
         "x": 4,
-        "y": 147
+        "y": 151
       },
       "id": 254,
       "options": {
@@ -15780,7 +16248,7 @@
         "h": 4,
         "w": 4,
         "x": 8,
-        "y": 147
+        "y": 151
       },
       "id": 52,
       "options": {
@@ -15858,7 +16326,7 @@
         "h": 4,
         "w": 4,
         "x": 12,
-        "y": 147
+        "y": 151
       },
       "id": 61,
       "options": {
@@ -15936,7 +16404,7 @@
         "h": 4,
         "w": 4,
         "x": 16,
-        "y": 147
+        "y": 151
       },
       "id": 62,
       "options": {
@@ -16014,1879 +16482,7 @@
         "h": 4,
         "w": 4,
         "x": 20,
-        "y": 147
-      },
-      "id": 63,
-      "options": {
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true,
-        "text": {}
-      },
-      "pluginVersion": "7.4.2",
-      "targets": [
-        {
-          "format": "time_series",
-          "group": [],
-          "metricColumn": "none",
-          "rawQuery": true,
-          "rawSql": "SELECT\n  NOW() - interval '1 year' AS time,\n  funding_rates.venue || ':' || product AS text,\n  AVG(funding_rates.rate) * 24 * 365 * 100 AS \"1x\",\n  AVG(funding_rates.rate) * 24 * 365 * 100 * (1 / (1 - tokens.collateral_weight)) AS \"nX\"\nFROM funding_rates\n  LEFT JOIN products ON products.symbol = funding_rates.product AND products.venue = funding_rates.venue AND products.type = 'swap'\n  LEFT JOIN tokens ON tokens.symbol = products.base\nWHERE\n  funding_rates.time >= NOW() - interval '1 year'\n  AND funding_rates.product = 'cro-perp'\nGROUP BY funding_rates.venue, funding_rates.product, tokens.collateral_weight",
-          "refId": "A",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "column"
-              }
-            ]
-          ],
-          "timeColumn": "time",
-          "where": [
-            {
-              "name": "$__timeFilter",
-              "params": [],
-              "type": "macro"
-            }
-          ]
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "CRO/USD 1y APR",
-      "type": "gauge"
-    },
-    {
-      "datasource": "Ghost TimescaleDB",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "continuous-RdYlGr"
-          },
-          "custom": {},
-          "mappings": [],
-          "max": 400,
-          "min": -50,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "light-blue",
-                "value": null
-              }
-            ]
-          },
-          "unit": "percent"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 4,
-        "x": 0,
         "y": 151
-      },
-      "id": 49,
-      "options": {
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true,
-        "text": {}
-      },
-      "pluginVersion": "7.4.2",
-      "targets": [
-        {
-          "format": "time_series",
-          "group": [],
-          "metricColumn": "none",
-          "rawQuery": true,
-          "rawSql": "SELECT\n  NOW() - interval '1 hours' AS time,\n  funding_rates.venue || ':' || product AS text,\n  AVG(funding_rates.rate) * 24 * 365 * 100 AS \"1x\",\n  AVG(funding_rates.rate) * 24 * 365 * 100 * (1 / (1 - tokens.collateral_weight)) AS \"nX\"\nFROM funding_rates\n  LEFT JOIN products ON products.symbol = funding_rates.product AND products.venue = funding_rates.venue AND products.type = 'swap'\n  LEFT JOIN tokens ON tokens.symbol = products.base\nWHERE\n  funding_rates.time >= NOW() - interval '1 hours'\n  AND funding_rates.product = 'trx-perp'\nGROUP BY funding_rates.venue, funding_rates.product, tokens.collateral_weight",
-          "refId": "A",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "column"
-              }
-            ]
-          ],
-          "timeColumn": "time",
-          "where": [
-            {
-              "name": "$__timeFilter",
-              "params": [],
-              "type": "macro"
-            }
-          ]
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "TRX/USD 1h APR",
-      "type": "gauge"
-    },
-    {
-      "datasource": "Ghost TimescaleDB",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "continuous-RdYlGr"
-          },
-          "custom": {},
-          "mappings": [],
-          "max": 400,
-          "min": -50,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "light-blue",
-                "value": null
-              }
-            ]
-          },
-          "unit": "percent"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 4,
-        "x": 4,
-        "y": 151
-      },
-      "id": 252,
-      "options": {
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true,
-        "text": {}
-      },
-      "pluginVersion": "7.4.2",
-      "targets": [
-        {
-          "format": "time_series",
-          "group": [],
-          "metricColumn": "none",
-          "rawQuery": true,
-          "rawSql": "SELECT\n  NOW() - interval '4 hours' AS time,\n  funding_rates.venue || ':' || product AS text,\n  AVG(funding_rates.rate) * 24 * 365 * 100 AS \"1x\",\n  AVG(funding_rates.rate) * 24 * 365 * 100 * (1 / (1 - tokens.collateral_weight)) AS \"nX\"\nFROM funding_rates\n  LEFT JOIN products ON products.symbol = funding_rates.product AND products.venue = funding_rates.venue AND products.type = 'swap'\n  LEFT JOIN tokens ON tokens.symbol = products.base\nWHERE\n  funding_rates.time >= NOW() - interval '4 hours'\n  AND funding_rates.product = 'trx-perp'\nGROUP BY funding_rates.venue, funding_rates.product, tokens.collateral_weight",
-          "refId": "A",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "column"
-              }
-            ]
-          ],
-          "timeColumn": "time",
-          "where": [
-            {
-              "name": "$__timeFilter",
-              "params": [],
-              "type": "macro"
-            }
-          ]
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "TRX/USD 4h APR",
-      "type": "gauge"
-    },
-    {
-      "datasource": "Ghost TimescaleDB",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "continuous-RdYlGr"
-          },
-          "custom": {},
-          "mappings": [],
-          "max": 400,
-          "min": -50,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "light-blue",
-                "value": null
-              }
-            ]
-          },
-          "unit": "percent"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 4,
-        "x": 8,
-        "y": 151
-      },
-      "id": 50,
-      "options": {
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true,
-        "text": {}
-      },
-      "pluginVersion": "7.4.2",
-      "targets": [
-        {
-          "format": "time_series",
-          "group": [],
-          "metricColumn": "none",
-          "rawQuery": true,
-          "rawSql": "SELECT\n  NOW() - interval '24 hours' AS time,\n  funding_rates.venue || ':' || product AS text,\n  AVG(funding_rates.rate) * 24 * 365 * 100 AS \"1x\",\n  AVG(funding_rates.rate) * 24 * 365 * 100 * (1 / (1 - tokens.collateral_weight)) AS \"nX\"\nFROM funding_rates\n  LEFT JOIN products ON products.symbol = funding_rates.product AND products.venue = funding_rates.venue AND products.type = 'swap'\n  LEFT JOIN tokens ON tokens.symbol = products.base\nWHERE\n  funding_rates.time >= NOW() - interval '24 hours'\n  AND funding_rates.product = 'trx-perp'\nGROUP BY funding_rates.venue, funding_rates.product, tokens.collateral_weight",
-          "refId": "A",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "column"
-              }
-            ]
-          ],
-          "timeColumn": "time",
-          "where": [
-            {
-              "name": "$__timeFilter",
-              "params": [],
-              "type": "macro"
-            }
-          ]
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "TRX/USD 24h APR",
-      "type": "gauge"
-    },
-    {
-      "datasource": "Ghost TimescaleDB",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "continuous-RdYlGr"
-          },
-          "custom": {},
-          "mappings": [],
-          "max": 400,
-          "min": -50,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "light-blue",
-                "value": null
-              }
-            ]
-          },
-          "unit": "percent"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 4,
-        "x": 12,
-        "y": 151
-      },
-      "id": 53,
-      "options": {
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true,
-        "text": {}
-      },
-      "pluginVersion": "7.4.2",
-      "targets": [
-        {
-          "format": "time_series",
-          "group": [],
-          "metricColumn": "none",
-          "rawQuery": true,
-          "rawSql": "SELECT\n  NOW() - interval '7 days' AS time,\n  funding_rates.venue || ':' || product AS text,\n  AVG(funding_rates.rate) * 24 * 365 * 100 AS \"1x\",\n  AVG(funding_rates.rate) * 24 * 365 * 100 * (1 / (1 - tokens.collateral_weight)) AS \"nX\"\nFROM funding_rates\n  LEFT JOIN products ON products.symbol = funding_rates.product AND products.venue = funding_rates.venue AND products.type = 'swap'\n  LEFT JOIN tokens ON tokens.symbol = products.base\nWHERE\n  funding_rates.time >= NOW() - interval '7 days'\n  AND funding_rates.product = 'trx-perp'\nGROUP BY funding_rates.venue, funding_rates.product, tokens.collateral_weight",
-          "refId": "A",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "column"
-              }
-            ]
-          ],
-          "timeColumn": "time",
-          "where": [
-            {
-              "name": "$__timeFilter",
-              "params": [],
-              "type": "macro"
-            }
-          ]
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "TRX/USD 1w APR",
-      "type": "gauge"
-    },
-    {
-      "datasource": "Ghost TimescaleDB",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "continuous-RdYlGr"
-          },
-          "custom": {},
-          "mappings": [],
-          "max": 400,
-          "min": -50,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "light-blue",
-                "value": null
-              }
-            ]
-          },
-          "unit": "percent"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 4,
-        "x": 16,
-        "y": 151
-      },
-      "id": 54,
-      "options": {
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true,
-        "text": {}
-      },
-      "pluginVersion": "7.4.2",
-      "targets": [
-        {
-          "format": "time_series",
-          "group": [],
-          "metricColumn": "none",
-          "rawQuery": true,
-          "rawSql": "SELECT\n  NOW() - interval '1 month' AS time,\n  funding_rates.venue || ':' || product AS text,\n  AVG(funding_rates.rate) * 24 * 365 * 100 AS \"1x\",\n  AVG(funding_rates.rate) * 24 * 365 * 100 * (1 / (1 - tokens.collateral_weight)) AS \"nX\"\nFROM funding_rates\n  LEFT JOIN products ON products.symbol = funding_rates.product AND products.venue = funding_rates.venue AND products.type = 'swap'\n  LEFT JOIN tokens ON tokens.symbol = products.base\nWHERE\n  funding_rates.time >= NOW() - interval '1 month'\n  AND funding_rates.product = 'trx-perp'\nGROUP BY funding_rates.venue, funding_rates.product, tokens.collateral_weight",
-          "refId": "A",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "column"
-              }
-            ]
-          ],
-          "timeColumn": "time",
-          "where": [
-            {
-              "name": "$__timeFilter",
-              "params": [],
-              "type": "macro"
-            }
-          ]
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "TRX/USD 1m APR",
-      "type": "gauge"
-    },
-    {
-      "datasource": "Ghost TimescaleDB",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "continuous-RdYlGr"
-          },
-          "custom": {},
-          "mappings": [],
-          "max": 400,
-          "min": -50,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "light-blue",
-                "value": null
-              }
-            ]
-          },
-          "unit": "percent"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 4,
-        "x": 20,
-        "y": 151
-      },
-      "id": 55,
-      "options": {
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true,
-        "text": {}
-      },
-      "pluginVersion": "7.4.2",
-      "targets": [
-        {
-          "format": "time_series",
-          "group": [],
-          "metricColumn": "none",
-          "rawQuery": true,
-          "rawSql": "SELECT\n  NOW() - interval '1 year' AS time,\n  funding_rates.venue || ':' || product AS text,\n  AVG(funding_rates.rate) * 24 * 365 * 100 AS \"1x\",\n  AVG(funding_rates.rate) * 24 * 365 * 100 * (1 / (1 - tokens.collateral_weight)) AS \"nX\"\nFROM funding_rates\n  LEFT JOIN products ON products.symbol = funding_rates.product AND products.venue = funding_rates.venue AND products.type = 'swap'\n  LEFT JOIN tokens ON tokens.symbol = products.base\nWHERE\n  funding_rates.time >= NOW() - interval '1 year'\n  AND funding_rates.product = 'trx-perp'\nGROUP BY funding_rates.venue, funding_rates.product, tokens.collateral_weight",
-          "refId": "A",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "column"
-              }
-            ]
-          ],
-          "timeColumn": "time",
-          "where": [
-            {
-              "name": "$__timeFilter",
-              "params": [],
-              "type": "macro"
-            }
-          ]
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "TRX/USD 1y APR",
-      "type": "gauge"
-    },
-    {
-      "datasource": "Ghost TimescaleDB",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "continuous-RdYlGr"
-          },
-          "custom": {},
-          "mappings": [],
-          "max": 400,
-          "min": -50,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "light-blue",
-                "value": null
-              }
-            ]
-          },
-          "unit": "percent"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 4,
-        "x": 0,
-        "y": 155
-      },
-      "id": 79,
-      "options": {
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true,
-        "text": {}
-      },
-      "pluginVersion": "7.4.2",
-      "targets": [
-        {
-          "format": "time_series",
-          "group": [],
-          "metricColumn": "none",
-          "rawQuery": true,
-          "rawSql": "SELECT\n  NOW() - interval '1 hours' AS time,\n  funding_rates.venue || ':' || product AS text,\n  AVG(funding_rates.rate) * 24 * 365 * 100 AS \"1x\",\n  AVG(funding_rates.rate) * 24 * 365 * 100 * (1 / (1 - tokens.collateral_weight)) AS \"nX\"\nFROM funding_rates\n  LEFT JOIN products ON products.symbol = funding_rates.product AND products.venue = funding_rates.venue AND products.type = 'swap'\n  LEFT JOIN tokens ON tokens.symbol = products.base\nWHERE\n  funding_rates.time >= NOW() - interval '1 hours'\n  AND funding_rates.product = 'chz-perp'\nGROUP BY funding_rates.venue, funding_rates.product, tokens.collateral_weight",
-          "refId": "A",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "column"
-              }
-            ]
-          ],
-          "timeColumn": "time",
-          "where": [
-            {
-              "name": "$__timeFilter",
-              "params": [],
-              "type": "macro"
-            }
-          ]
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "CHZ/USD 1h APR",
-      "type": "gauge"
-    },
-    {
-      "datasource": "Ghost TimescaleDB",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "continuous-RdYlGr"
-          },
-          "custom": {},
-          "mappings": [],
-          "max": 400,
-          "min": -50,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "light-blue",
-                "value": null
-              }
-            ]
-          },
-          "unit": "percent"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 4,
-        "x": 4,
-        "y": 155
-      },
-      "id": 260,
-      "options": {
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true,
-        "text": {}
-      },
-      "pluginVersion": "7.4.2",
-      "targets": [
-        {
-          "format": "time_series",
-          "group": [],
-          "metricColumn": "none",
-          "rawQuery": true,
-          "rawSql": "SELECT\n  NOW() - interval '4 hours' AS time,\n  funding_rates.venue || ':' || product AS text,\n  AVG(funding_rates.rate) * 24 * 365 * 100 AS \"1x\",\n  AVG(funding_rates.rate) * 24 * 365 * 100 * (1 / (1 - tokens.collateral_weight)) AS \"nX\"\nFROM funding_rates\n  LEFT JOIN products ON products.symbol = funding_rates.product AND products.venue = funding_rates.venue AND products.type = 'swap'\n  LEFT JOIN tokens ON tokens.symbol = products.base\nWHERE\n  funding_rates.time >= NOW() - interval '4 hours'\n  AND funding_rates.product = 'chz-perp'\nGROUP BY funding_rates.venue, funding_rates.product, tokens.collateral_weight",
-          "refId": "A",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "column"
-              }
-            ]
-          ],
-          "timeColumn": "time",
-          "where": [
-            {
-              "name": "$__timeFilter",
-              "params": [],
-              "type": "macro"
-            }
-          ]
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "CHZ/USD 4h APR",
-      "type": "gauge"
-    },
-    {
-      "datasource": "Ghost TimescaleDB",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "continuous-RdYlGr"
-          },
-          "custom": {},
-          "mappings": [],
-          "max": 400,
-          "min": -50,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "light-blue",
-                "value": null
-              }
-            ]
-          },
-          "unit": "percent"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 4,
-        "x": 8,
-        "y": 155
-      },
-      "id": 80,
-      "options": {
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true,
-        "text": {}
-      },
-      "pluginVersion": "7.4.2",
-      "targets": [
-        {
-          "format": "time_series",
-          "group": [],
-          "metricColumn": "none",
-          "rawQuery": true,
-          "rawSql": "SELECT\n  NOW() - interval '24 hours' AS time,\n  funding_rates.venue || ':' || product AS text,\n  AVG(funding_rates.rate) * 24 * 365 * 100 AS \"1x\",\n  AVG(funding_rates.rate) * 24 * 365 * 100 * (1 / (1 - tokens.collateral_weight)) AS \"nX\"\nFROM funding_rates\n  LEFT JOIN products ON products.symbol = funding_rates.product AND products.venue = funding_rates.venue AND products.type = 'swap'\n  LEFT JOIN tokens ON tokens.symbol = products.base\nWHERE\n  funding_rates.time >= NOW() - interval '24 hours'\n  AND funding_rates.product = 'chz-perp'\nGROUP BY funding_rates.venue, funding_rates.product, tokens.collateral_weight",
-          "refId": "A",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "column"
-              }
-            ]
-          ],
-          "timeColumn": "time",
-          "where": [
-            {
-              "name": "$__timeFilter",
-              "params": [],
-              "type": "macro"
-            }
-          ]
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "CHZ/USD 24h APR",
-      "type": "gauge"
-    },
-    {
-      "datasource": "Ghost TimescaleDB",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "continuous-RdYlGr"
-          },
-          "custom": {},
-          "mappings": [],
-          "max": 400,
-          "min": -50,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "light-blue",
-                "value": null
-              }
-            ]
-          },
-          "unit": "percent"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 4,
-        "x": 12,
-        "y": 155
-      },
-      "id": 81,
-      "options": {
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true,
-        "text": {}
-      },
-      "pluginVersion": "7.4.2",
-      "targets": [
-        {
-          "format": "time_series",
-          "group": [],
-          "metricColumn": "none",
-          "rawQuery": true,
-          "rawSql": "SELECT\n  NOW() - interval '7 days' AS time,\n  funding_rates.venue || ':' || product AS text,\n  AVG(funding_rates.rate) * 24 * 365 * 100 AS \"1x\",\n  AVG(funding_rates.rate) * 24 * 365 * 100 * (1 / (1 - tokens.collateral_weight)) AS \"nX\"\nFROM funding_rates\n  LEFT JOIN products ON products.symbol = funding_rates.product AND products.venue = funding_rates.venue AND products.type = 'swap'\n  LEFT JOIN tokens ON tokens.symbol = products.base\nWHERE\n  funding_rates.time >= NOW() - interval '7 days'\n  AND funding_rates.product = 'chz-perp'\nGROUP BY funding_rates.venue, funding_rates.product, tokens.collateral_weight",
-          "refId": "A",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "column"
-              }
-            ]
-          ],
-          "timeColumn": "time",
-          "where": [
-            {
-              "name": "$__timeFilter",
-              "params": [],
-              "type": "macro"
-            }
-          ]
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "CHZ/USD 1w APR",
-      "type": "gauge"
-    },
-    {
-      "datasource": "Ghost TimescaleDB",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "continuous-RdYlGr"
-          },
-          "custom": {},
-          "mappings": [],
-          "max": 400,
-          "min": -50,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "light-blue",
-                "value": null
-              }
-            ]
-          },
-          "unit": "percent"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 4,
-        "x": 16,
-        "y": 155
-      },
-      "id": 82,
-      "options": {
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true,
-        "text": {}
-      },
-      "pluginVersion": "7.4.2",
-      "targets": [
-        {
-          "format": "time_series",
-          "group": [],
-          "metricColumn": "none",
-          "rawQuery": true,
-          "rawSql": "SELECT\n  NOW() - interval '1 month' AS time,\n  funding_rates.venue || ':' || product AS text,\n  AVG(funding_rates.rate) * 24 * 365 * 100 AS \"1x\",\n  AVG(funding_rates.rate) * 24 * 365 * 100 * (1 / (1 - tokens.collateral_weight)) AS \"nX\"\nFROM funding_rates\n  LEFT JOIN products ON products.symbol = funding_rates.product AND products.venue = funding_rates.venue AND products.type = 'swap'\n  LEFT JOIN tokens ON tokens.symbol = products.base\nWHERE\n  funding_rates.time >= NOW() - interval '1 month'\n  AND funding_rates.product = 'chz-perp'\nGROUP BY funding_rates.venue, funding_rates.product, tokens.collateral_weight",
-          "refId": "A",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "column"
-              }
-            ]
-          ],
-          "timeColumn": "time",
-          "where": [
-            {
-              "name": "$__timeFilter",
-              "params": [],
-              "type": "macro"
-            }
-          ]
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "CHZ/USD 1m APR",
-      "type": "gauge"
-    },
-    {
-      "datasource": "Ghost TimescaleDB",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "continuous-RdYlGr"
-          },
-          "custom": {},
-          "mappings": [],
-          "max": 400,
-          "min": -50,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "light-blue",
-                "value": null
-              }
-            ]
-          },
-          "unit": "percent"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 4,
-        "x": 20,
-        "y": 155
-      },
-      "id": 83,
-      "options": {
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true,
-        "text": {}
-      },
-      "pluginVersion": "7.4.2",
-      "targets": [
-        {
-          "format": "time_series",
-          "group": [],
-          "metricColumn": "none",
-          "rawQuery": true,
-          "rawSql": "SELECT\n  NOW() - interval '1 year' AS time,\n  funding_rates.venue || ':' || product AS text,\n  AVG(funding_rates.rate) * 24 * 365 * 100 AS \"1x\",\n  AVG(funding_rates.rate) * 24 * 365 * 100 * (1 / (1 - tokens.collateral_weight)) AS \"nX\"\nFROM funding_rates\n  LEFT JOIN products ON products.symbol = funding_rates.product AND products.venue = funding_rates.venue AND products.type = 'swap'\n  LEFT JOIN tokens ON tokens.symbol = products.base\nWHERE\n  funding_rates.time >= NOW() - interval '1 year'\n  AND funding_rates.product = 'chz-perp'\nGROUP BY funding_rates.venue, funding_rates.product, tokens.collateral_weight",
-          "refId": "A",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "column"
-              }
-            ]
-          ],
-          "timeColumn": "time",
-          "where": [
-            {
-              "name": "$__timeFilter",
-              "params": [],
-              "type": "macro"
-            }
-          ]
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "CHZ/USD 1y APR",
-      "type": "gauge"
-    },
-    {
-      "datasource": "Ghost TimescaleDB",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "continuous-RdYlGr"
-          },
-          "custom": {},
-          "mappings": [],
-          "max": 400,
-          "min": -50,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "light-blue",
-                "value": null
-              }
-            ]
-          },
-          "unit": "percent"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 4,
-        "x": 0,
-        "y": 159
-      },
-      "id": 89,
-      "options": {
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true,
-        "text": {}
-      },
-      "pluginVersion": "7.4.2",
-      "targets": [
-        {
-          "format": "time_series",
-          "group": [],
-          "metricColumn": "none",
-          "rawQuery": true,
-          "rawSql": "SELECT\n  NOW() - interval '1 hours' AS time,\n  funding_rates.venue || ':' || product AS text,\n  AVG(funding_rates.rate) * 24 * 365 * 100 AS \"1x\",\n  AVG(funding_rates.rate) * 24 * 365 * 100 * (1 / (1 - tokens.collateral_weight)) AS \"nX\"\nFROM funding_rates\n  LEFT JOIN products ON products.symbol = funding_rates.product AND products.venue = funding_rates.venue AND products.type = 'swap'\n  LEFT JOIN tokens ON tokens.symbol = products.base\nWHERE\n  funding_rates.time >= NOW() - interval '1 hours'\n  AND funding_rates.product = 'enj-perp'\nGROUP BY funding_rates.venue, funding_rates.product, tokens.collateral_weight",
-          "refId": "A",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "column"
-              }
-            ]
-          ],
-          "timeColumn": "time",
-          "where": [
-            {
-              "name": "$__timeFilter",
-              "params": [],
-              "type": "macro"
-            }
-          ]
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "ENJ/USD 1h APR",
-      "type": "gauge"
-    },
-    {
-      "datasource": "Ghost TimescaleDB",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "continuous-RdYlGr"
-          },
-          "custom": {},
-          "mappings": [],
-          "max": 400,
-          "min": -50,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "light-blue",
-                "value": null
-              }
-            ]
-          },
-          "unit": "percent"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 4,
-        "x": 4,
-        "y": 159
-      },
-      "id": 262,
-      "options": {
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true,
-        "text": {}
-      },
-      "pluginVersion": "7.4.2",
-      "targets": [
-        {
-          "format": "time_series",
-          "group": [],
-          "metricColumn": "none",
-          "rawQuery": true,
-          "rawSql": "SELECT\n  NOW() - interval '1 hours' AS time,\n  funding_rates.venue || ':' || product AS text,\n  AVG(funding_rates.rate) * 24 * 365 * 100 AS \"1x\",\n  AVG(funding_rates.rate) * 24 * 365 * 100 * (1 / (1 - tokens.collateral_weight)) AS \"nX\"\nFROM funding_rates\n  LEFT JOIN products ON products.symbol = funding_rates.product AND products.venue = funding_rates.venue AND products.type = 'swap'\n  LEFT JOIN tokens ON tokens.symbol = products.base\nWHERE\n  funding_rates.time >= NOW() - interval '1 hours'\n  AND funding_rates.product = 'enj-perp'\nGROUP BY funding_rates.venue, funding_rates.product, tokens.collateral_weight",
-          "refId": "A",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "column"
-              }
-            ]
-          ],
-          "timeColumn": "time",
-          "where": [
-            {
-              "name": "$__timeFilter",
-              "params": [],
-              "type": "macro"
-            }
-          ]
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "ENJ/USD 4h APR",
-      "type": "gauge"
-    },
-    {
-      "datasource": "Ghost TimescaleDB",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "continuous-RdYlGr"
-          },
-          "custom": {},
-          "mappings": [],
-          "max": 400,
-          "min": -50,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "light-blue",
-                "value": null
-              }
-            ]
-          },
-          "unit": "percent"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 4,
-        "x": 8,
-        "y": 159
-      },
-      "id": 90,
-      "options": {
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true,
-        "text": {}
-      },
-      "pluginVersion": "7.4.2",
-      "targets": [
-        {
-          "format": "time_series",
-          "group": [],
-          "metricColumn": "none",
-          "rawQuery": true,
-          "rawSql": "SELECT\n  NOW() - interval '24 hours' AS time,\n  funding_rates.venue || ':' || product AS text,\n  AVG(funding_rates.rate) * 24 * 365 * 100 AS \"1x\",\n  AVG(funding_rates.rate) * 24 * 365 * 100 * (1 / (1 - tokens.collateral_weight)) AS \"nX\"\nFROM funding_rates\n  LEFT JOIN products ON products.symbol = funding_rates.product AND products.venue = funding_rates.venue AND products.type = 'swap'\n  LEFT JOIN tokens ON tokens.symbol = products.base\nWHERE\n  funding_rates.time >= NOW() - interval '24 hours'\n  AND funding_rates.product = 'enj-perp'\nGROUP BY funding_rates.venue, funding_rates.product, tokens.collateral_weight",
-          "refId": "A",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "column"
-              }
-            ]
-          ],
-          "timeColumn": "time",
-          "where": [
-            {
-              "name": "$__timeFilter",
-              "params": [],
-              "type": "macro"
-            }
-          ]
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "ENJ/USD 24h APR",
-      "type": "gauge"
-    },
-    {
-      "datasource": "Ghost TimescaleDB",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "continuous-RdYlGr"
-          },
-          "custom": {},
-          "mappings": [],
-          "max": 400,
-          "min": -50,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "light-blue",
-                "value": null
-              }
-            ]
-          },
-          "unit": "percent"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 4,
-        "x": 12,
-        "y": 159
-      },
-      "id": 91,
-      "options": {
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true,
-        "text": {}
-      },
-      "pluginVersion": "7.4.2",
-      "targets": [
-        {
-          "format": "time_series",
-          "group": [],
-          "metricColumn": "none",
-          "rawQuery": true,
-          "rawSql": "SELECT\n  NOW() - interval '7 days' AS time,\n  funding_rates.venue || ':' || product AS text,\n  AVG(funding_rates.rate) * 24 * 365 * 100 AS \"1x\",\n  AVG(funding_rates.rate) * 24 * 365 * 100 * (1 / (1 - tokens.collateral_weight)) AS \"nX\"\nFROM funding_rates\n  LEFT JOIN products ON products.symbol = funding_rates.product AND products.venue = funding_rates.venue AND products.type = 'swap'\n  LEFT JOIN tokens ON tokens.symbol = products.base\nWHERE\n  funding_rates.time >= NOW() - interval '7 days'\n  AND funding_rates.product = 'enj-perp'\nGROUP BY funding_rates.venue, funding_rates.product, tokens.collateral_weight",
-          "refId": "A",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "column"
-              }
-            ]
-          ],
-          "timeColumn": "time",
-          "where": [
-            {
-              "name": "$__timeFilter",
-              "params": [],
-              "type": "macro"
-            }
-          ]
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "ENJ/USD 1w APR",
-      "type": "gauge"
-    },
-    {
-      "datasource": "Ghost TimescaleDB",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "continuous-RdYlGr"
-          },
-          "custom": {},
-          "mappings": [],
-          "max": 400,
-          "min": -50,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "light-blue",
-                "value": null
-              }
-            ]
-          },
-          "unit": "percent"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 4,
-        "x": 16,
-        "y": 159
-      },
-      "id": 92,
-      "options": {
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true,
-        "text": {}
-      },
-      "pluginVersion": "7.4.2",
-      "targets": [
-        {
-          "format": "time_series",
-          "group": [],
-          "metricColumn": "none",
-          "rawQuery": true,
-          "rawSql": "SELECT\n  NOW() - interval '1 month' AS time,\n  funding_rates.venue || ':' || product AS text,\n  AVG(funding_rates.rate) * 24 * 365 * 100 AS \"1x\",\n  AVG(funding_rates.rate) * 24 * 365 * 100 * (1 / (1 - tokens.collateral_weight)) AS \"nX\"\nFROM funding_rates\n  LEFT JOIN products ON products.symbol = funding_rates.product AND products.venue = funding_rates.venue AND products.type = 'swap'\n  LEFT JOIN tokens ON tokens.symbol = products.base\nWHERE\n  funding_rates.time >= NOW() - interval '1 month'\n  AND funding_rates.product = 'enj-perp'\nGROUP BY funding_rates.venue, funding_rates.product, tokens.collateral_weight",
-          "refId": "A",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "column"
-              }
-            ]
-          ],
-          "timeColumn": "time",
-          "where": [
-            {
-              "name": "$__timeFilter",
-              "params": [],
-              "type": "macro"
-            }
-          ]
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "ENJ/USD 1m APR",
-      "type": "gauge"
-    },
-    {
-      "datasource": "Ghost TimescaleDB",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "continuous-RdYlGr"
-          },
-          "custom": {},
-          "mappings": [],
-          "max": 400,
-          "min": -50,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "light-blue",
-                "value": null
-              }
-            ]
-          },
-          "unit": "percent"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 4,
-        "x": 20,
-        "y": 159
-      },
-      "id": 93,
-      "options": {
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true,
-        "text": {}
-      },
-      "pluginVersion": "7.4.2",
-      "targets": [
-        {
-          "format": "time_series",
-          "group": [],
-          "metricColumn": "none",
-          "rawQuery": true,
-          "rawSql": "SELECT\n  NOW() - interval '1 year' AS time,\n  funding_rates.venue || ':' || product AS text,\n  AVG(funding_rates.rate) * 24 * 365 * 100 AS \"1x\",\n  AVG(funding_rates.rate) * 24 * 365 * 100 * (1 / (1 - tokens.collateral_weight)) AS \"nX\"\nFROM funding_rates\n  LEFT JOIN products ON products.symbol = funding_rates.product AND products.venue = funding_rates.venue AND products.type = 'swap'\n  LEFT JOIN tokens ON tokens.symbol = products.base\nWHERE\n  funding_rates.time >= NOW() - interval '1 year'\n  AND funding_rates.product = 'enj-perp'\nGROUP BY funding_rates.venue, funding_rates.product, tokens.collateral_weight",
-          "refId": "A",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "column"
-              }
-            ]
-          ],
-          "timeColumn": "time",
-          "where": [
-            {
-              "name": "$__timeFilter",
-              "params": [],
-              "type": "macro"
-            }
-          ]
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "ENJ/USD 1y APR",
-      "type": "gauge"
-    },
-    {
-      "datasource": "Ghost TimescaleDB",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "continuous-RdYlGr"
-          },
-          "custom": {},
-          "mappings": [],
-          "max": 400,
-          "min": -50,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "light-blue",
-                "value": null
-              }
-            ]
-          },
-          "unit": "percent"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 4,
-        "x": 0,
-        "y": 163
-      },
-      "id": 111,
-      "options": {
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true,
-        "text": {}
-      },
-      "pluginVersion": "7.4.2",
-      "targets": [
-        {
-          "format": "time_series",
-          "group": [],
-          "metricColumn": "none",
-          "rawQuery": true,
-          "rawSql": "SELECT\n  NOW() - interval '1 hours' AS time,\n  funding_rates.venue || ':' || product AS text,\n  AVG(funding_rates.rate) * 24 * 365 * 100 AS \"1x\",\n  AVG(funding_rates.rate) * 24 * 365 * 100 * (1 / (1 - tokens.collateral_weight)) AS \"nX\"\nFROM funding_rates\n  LEFT JOIN products ON products.symbol = funding_rates.product AND products.venue = funding_rates.venue AND products.type = 'swap'\n  LEFT JOIN tokens ON tokens.symbol = products.base\nWHERE\n  funding_rates.time >= NOW() - interval '1 hours'\n  AND funding_rates.product = 'waves-perp'\nGROUP BY funding_rates.venue, funding_rates.product, tokens.collateral_weight",
-          "refId": "A",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "column"
-              }
-            ]
-          ],
-          "timeColumn": "time",
-          "where": [
-            {
-              "name": "$__timeFilter",
-              "params": [],
-              "type": "macro"
-            }
-          ]
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "WAVES/USD 1h APR",
-      "type": "gauge"
-    },
-    {
-      "datasource": "Ghost TimescaleDB",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "continuous-RdYlGr"
-          },
-          "custom": {},
-          "mappings": [],
-          "max": 400,
-          "min": -50,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "light-blue",
-                "value": null
-              }
-            ]
-          },
-          "unit": "percent"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 4,
-        "x": 4,
-        "y": 163
-      },
-      "id": 124,
-      "options": {
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true,
-        "text": {}
-      },
-      "pluginVersion": "7.4.2",
-      "targets": [
-        {
-          "format": "time_series",
-          "group": [],
-          "metricColumn": "none",
-          "rawQuery": true,
-          "rawSql": "SELECT\n  NOW() - interval '4 hours' AS time,\n  funding_rates.venue || ':' || product AS text,\n  AVG(funding_rates.rate) * 24 * 365 * 100 AS \"1x\",\n  AVG(funding_rates.rate) * 24 * 365 * 100 * (1 / (1 - tokens.collateral_weight)) AS \"nX\"\nFROM funding_rates\n  LEFT JOIN products ON products.symbol = funding_rates.product AND products.venue = funding_rates.venue AND products.type = 'swap'\n  LEFT JOIN tokens ON tokens.symbol = products.base\nWHERE\n  funding_rates.time >= NOW() - interval '4 hours'\n  AND funding_rates.product = 'waves-perp'\nGROUP BY funding_rates.venue, funding_rates.product, tokens.collateral_weight",
-          "refId": "A",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "column"
-              }
-            ]
-          ],
-          "timeColumn": "time",
-          "where": [
-            {
-              "name": "$__timeFilter",
-              "params": [],
-              "type": "macro"
-            }
-          ]
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "WAVES/USD 4h APR",
-      "type": "gauge"
-    },
-    {
-      "datasource": "Ghost TimescaleDB",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "continuous-RdYlGr"
-          },
-          "custom": {},
-          "mappings": [],
-          "max": 400,
-          "min": -50,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "light-blue",
-                "value": null
-              }
-            ]
-          },
-          "unit": "percent"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 4,
-        "x": 8,
-        "y": 163
-      },
-      "id": 267,
-      "options": {
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true,
-        "text": {}
-      },
-      "pluginVersion": "7.4.2",
-      "targets": [
-        {
-          "format": "time_series",
-          "group": [],
-          "metricColumn": "none",
-          "rawQuery": true,
-          "rawSql": "SELECT\n  NOW() - interval '24 hours' AS time,\n  funding_rates.venue || ':' || product AS text,\n  AVG(funding_rates.rate) * 24 * 365 * 100 AS \"1x\",\n  AVG(funding_rates.rate) * 24 * 365 * 100 * (1 / (1 - tokens.collateral_weight)) AS \"nX\"\nFROM funding_rates\n  LEFT JOIN products ON products.symbol = funding_rates.product AND products.venue = funding_rates.venue AND products.type = 'swap'\n  LEFT JOIN tokens ON tokens.symbol = products.base\nWHERE\n  funding_rates.time >= NOW() - interval '24 hours'\n  AND funding_rates.product = 'waves-perp'\nGROUP BY funding_rates.venue, funding_rates.product, tokens.collateral_weight",
-          "refId": "A",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "column"
-              }
-            ]
-          ],
-          "timeColumn": "time",
-          "where": [
-            {
-              "name": "$__timeFilter",
-              "params": [],
-              "type": "macro"
-            }
-          ]
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "WAVES/USD 24h APR",
-      "type": "gauge"
-    },
-    {
-      "datasource": "Ghost TimescaleDB",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "continuous-RdYlGr"
-          },
-          "custom": {},
-          "mappings": [],
-          "max": 400,
-          "min": -50,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "light-blue",
-                "value": null
-              }
-            ]
-          },
-          "unit": "percent"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 4,
-        "x": 12,
-        "y": 163
-      },
-      "id": 128,
-      "options": {
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true,
-        "text": {}
-      },
-      "pluginVersion": "7.4.2",
-      "targets": [
-        {
-          "format": "time_series",
-          "group": [],
-          "metricColumn": "none",
-          "rawQuery": true,
-          "rawSql": "SELECT\n  NOW() - interval '7 days' AS time,\n  funding_rates.venue || ':' || product AS text,\n  AVG(funding_rates.rate) * 24 * 365 * 100 AS \"1x\",\n  AVG(funding_rates.rate) * 24 * 365 * 100 * (1 / (1 - tokens.collateral_weight)) AS \"nX\"\nFROM funding_rates\n  LEFT JOIN products ON products.symbol = funding_rates.product AND products.venue = funding_rates.venue AND products.type = 'swap'\n  LEFT JOIN tokens ON tokens.symbol = products.base\nWHERE\n  funding_rates.time >= NOW() - interval '7 days'\n  AND funding_rates.product = 'waves-perp'\nGROUP BY funding_rates.venue, funding_rates.product, tokens.collateral_weight",
-          "refId": "A",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "column"
-              }
-            ]
-          ],
-          "timeColumn": "time",
-          "where": [
-            {
-              "name": "$__timeFilter",
-              "params": [],
-              "type": "macro"
-            }
-          ]
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "WAVES/USD 1w APR",
-      "type": "gauge"
-    },
-    {
-      "datasource": "Ghost TimescaleDB",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "continuous-RdYlGr"
-          },
-          "custom": {},
-          "mappings": [],
-          "max": 400,
-          "min": -50,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "light-blue",
-                "value": null
-              }
-            ]
-          },
-          "unit": "percent"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 4,
-        "x": 16,
-        "y": 163
-      },
-      "id": 144,
-      "options": {
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true,
-        "text": {}
-      },
-      "pluginVersion": "7.4.2",
-      "targets": [
-        {
-          "format": "time_series",
-          "group": [],
-          "metricColumn": "none",
-          "rawQuery": true,
-          "rawSql": "SELECT\n  NOW() - interval '1 month' AS time,\n  funding_rates.venue || ':' || product AS text,\n  AVG(funding_rates.rate) * 24 * 365 * 100 AS \"1x\",\n  AVG(funding_rates.rate) * 24 * 365 * 100 * (1 / (1 - tokens.collateral_weight)) AS \"nX\"\nFROM funding_rates\n  LEFT JOIN products ON products.symbol = funding_rates.product AND products.venue = funding_rates.venue AND products.type = 'swap'\n  LEFT JOIN tokens ON tokens.symbol = products.base\nWHERE\n  funding_rates.time >= NOW() - interval '1 month'\n  AND funding_rates.product = 'waves-perp'\nGROUP BY funding_rates.venue, funding_rates.product, tokens.collateral_weight",
-          "refId": "A",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "column"
-              }
-            ]
-          ],
-          "timeColumn": "time",
-          "where": [
-            {
-              "name": "$__timeFilter",
-              "params": [],
-              "type": "macro"
-            }
-          ]
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "WAVES/USD 1m APR",
-      "type": "gauge"
-    },
-    {
-      "datasource": "Ghost TimescaleDB",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "continuous-RdYlGr"
-          },
-          "custom": {},
-          "mappings": [],
-          "max": 400,
-          "min": -50,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "light-blue",
-                "value": null
-              }
-            ]
-          },
-          "unit": "percent"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 4,
-        "x": 20,
-        "y": 163
       },
       "id": 162,
       "options": {
@@ -17964,7 +16560,1879 @@
         "h": 4,
         "w": 4,
         "x": 0,
+        "y": 155
+      },
+      "id": 49,
+      "options": {
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "text": {}
+      },
+      "pluginVersion": "7.4.2",
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  NOW() - interval '1 hours' AS time,\n  funding_rates.venue || ':' || product AS text,\n  AVG(funding_rates.rate) * 24 * 365 * 100 AS \"1x\",\n  AVG(funding_rates.rate) * 24 * 365 * 100 * (1 / (1 - tokens.collateral_weight)) AS \"nX\"\nFROM funding_rates\n  LEFT JOIN products ON products.symbol = funding_rates.product AND products.venue = funding_rates.venue AND products.type = 'swap'\n  LEFT JOIN tokens ON tokens.symbol = products.base\nWHERE\n  funding_rates.time >= NOW() - interval '1 hours'\n  AND funding_rates.product = 'trx-perp'\nGROUP BY funding_rates.venue, funding_rates.product, tokens.collateral_weight",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "TRX/USD 1h APR",
+      "type": "gauge"
+    },
+    {
+      "datasource": "Ghost TimescaleDB",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "continuous-RdYlGr"
+          },
+          "custom": {},
+          "mappings": [],
+          "max": 400,
+          "min": -50,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "light-blue",
+                "value": null
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 4,
+        "y": 155
+      },
+      "id": 252,
+      "options": {
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "text": {}
+      },
+      "pluginVersion": "7.4.2",
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  NOW() - interval '4 hours' AS time,\n  funding_rates.venue || ':' || product AS text,\n  AVG(funding_rates.rate) * 24 * 365 * 100 AS \"1x\",\n  AVG(funding_rates.rate) * 24 * 365 * 100 * (1 / (1 - tokens.collateral_weight)) AS \"nX\"\nFROM funding_rates\n  LEFT JOIN products ON products.symbol = funding_rates.product AND products.venue = funding_rates.venue AND products.type = 'swap'\n  LEFT JOIN tokens ON tokens.symbol = products.base\nWHERE\n  funding_rates.time >= NOW() - interval '4 hours'\n  AND funding_rates.product = 'trx-perp'\nGROUP BY funding_rates.venue, funding_rates.product, tokens.collateral_weight",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "TRX/USD 4h APR",
+      "type": "gauge"
+    },
+    {
+      "datasource": "Ghost TimescaleDB",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "continuous-RdYlGr"
+          },
+          "custom": {},
+          "mappings": [],
+          "max": 400,
+          "min": -50,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "light-blue",
+                "value": null
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 8,
+        "y": 155
+      },
+      "id": 50,
+      "options": {
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "text": {}
+      },
+      "pluginVersion": "7.4.2",
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  NOW() - interval '24 hours' AS time,\n  funding_rates.venue || ':' || product AS text,\n  AVG(funding_rates.rate) * 24 * 365 * 100 AS \"1x\",\n  AVG(funding_rates.rate) * 24 * 365 * 100 * (1 / (1 - tokens.collateral_weight)) AS \"nX\"\nFROM funding_rates\n  LEFT JOIN products ON products.symbol = funding_rates.product AND products.venue = funding_rates.venue AND products.type = 'swap'\n  LEFT JOIN tokens ON tokens.symbol = products.base\nWHERE\n  funding_rates.time >= NOW() - interval '24 hours'\n  AND funding_rates.product = 'trx-perp'\nGROUP BY funding_rates.venue, funding_rates.product, tokens.collateral_weight",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "TRX/USD 24h APR",
+      "type": "gauge"
+    },
+    {
+      "datasource": "Ghost TimescaleDB",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "continuous-RdYlGr"
+          },
+          "custom": {},
+          "mappings": [],
+          "max": 400,
+          "min": -50,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "light-blue",
+                "value": null
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 12,
+        "y": 155
+      },
+      "id": 53,
+      "options": {
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "text": {}
+      },
+      "pluginVersion": "7.4.2",
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  NOW() - interval '7 days' AS time,\n  funding_rates.venue || ':' || product AS text,\n  AVG(funding_rates.rate) * 24 * 365 * 100 AS \"1x\",\n  AVG(funding_rates.rate) * 24 * 365 * 100 * (1 / (1 - tokens.collateral_weight)) AS \"nX\"\nFROM funding_rates\n  LEFT JOIN products ON products.symbol = funding_rates.product AND products.venue = funding_rates.venue AND products.type = 'swap'\n  LEFT JOIN tokens ON tokens.symbol = products.base\nWHERE\n  funding_rates.time >= NOW() - interval '7 days'\n  AND funding_rates.product = 'trx-perp'\nGROUP BY funding_rates.venue, funding_rates.product, tokens.collateral_weight",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "TRX/USD 1w APR",
+      "type": "gauge"
+    },
+    {
+      "datasource": "Ghost TimescaleDB",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "continuous-RdYlGr"
+          },
+          "custom": {},
+          "mappings": [],
+          "max": 400,
+          "min": -50,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "light-blue",
+                "value": null
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 16,
+        "y": 155
+      },
+      "id": 54,
+      "options": {
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "text": {}
+      },
+      "pluginVersion": "7.4.2",
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  NOW() - interval '1 month' AS time,\n  funding_rates.venue || ':' || product AS text,\n  AVG(funding_rates.rate) * 24 * 365 * 100 AS \"1x\",\n  AVG(funding_rates.rate) * 24 * 365 * 100 * (1 / (1 - tokens.collateral_weight)) AS \"nX\"\nFROM funding_rates\n  LEFT JOIN products ON products.symbol = funding_rates.product AND products.venue = funding_rates.venue AND products.type = 'swap'\n  LEFT JOIN tokens ON tokens.symbol = products.base\nWHERE\n  funding_rates.time >= NOW() - interval '1 month'\n  AND funding_rates.product = 'trx-perp'\nGROUP BY funding_rates.venue, funding_rates.product, tokens.collateral_weight",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "TRX/USD 1m APR",
+      "type": "gauge"
+    },
+    {
+      "datasource": "Ghost TimescaleDB",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "continuous-RdYlGr"
+          },
+          "custom": {},
+          "mappings": [],
+          "max": 400,
+          "min": -50,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "light-blue",
+                "value": null
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 20,
+        "y": 155
+      },
+      "id": 55,
+      "options": {
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "text": {}
+      },
+      "pluginVersion": "7.4.2",
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  NOW() - interval '1 year' AS time,\n  funding_rates.venue || ':' || product AS text,\n  AVG(funding_rates.rate) * 24 * 365 * 100 AS \"1x\",\n  AVG(funding_rates.rate) * 24 * 365 * 100 * (1 / (1 - tokens.collateral_weight)) AS \"nX\"\nFROM funding_rates\n  LEFT JOIN products ON products.symbol = funding_rates.product AND products.venue = funding_rates.venue AND products.type = 'swap'\n  LEFT JOIN tokens ON tokens.symbol = products.base\nWHERE\n  funding_rates.time >= NOW() - interval '1 year'\n  AND funding_rates.product = 'trx-perp'\nGROUP BY funding_rates.venue, funding_rates.product, tokens.collateral_weight",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "TRX/USD 1y APR",
+      "type": "gauge"
+    },
+    {
+      "datasource": "Ghost TimescaleDB",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "continuous-RdYlGr"
+          },
+          "custom": {},
+          "mappings": [],
+          "max": 400,
+          "min": -50,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "light-blue",
+                "value": null
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 0,
+        "y": 159
+      },
+      "id": 79,
+      "options": {
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "text": {}
+      },
+      "pluginVersion": "7.4.2",
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  NOW() - interval '1 hours' AS time,\n  funding_rates.venue || ':' || product AS text,\n  AVG(funding_rates.rate) * 24 * 365 * 100 AS \"1x\",\n  AVG(funding_rates.rate) * 24 * 365 * 100 * (1 / (1 - tokens.collateral_weight)) AS \"nX\"\nFROM funding_rates\n  LEFT JOIN products ON products.symbol = funding_rates.product AND products.venue = funding_rates.venue AND products.type = 'swap'\n  LEFT JOIN tokens ON tokens.symbol = products.base\nWHERE\n  funding_rates.time >= NOW() - interval '1 hours'\n  AND funding_rates.product = 'chz-perp'\nGROUP BY funding_rates.venue, funding_rates.product, tokens.collateral_weight",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "CHZ/USD 1h APR",
+      "type": "gauge"
+    },
+    {
+      "datasource": "Ghost TimescaleDB",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "continuous-RdYlGr"
+          },
+          "custom": {},
+          "mappings": [],
+          "max": 400,
+          "min": -50,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "light-blue",
+                "value": null
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 4,
+        "y": 159
+      },
+      "id": 260,
+      "options": {
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "text": {}
+      },
+      "pluginVersion": "7.4.2",
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  NOW() - interval '4 hours' AS time,\n  funding_rates.venue || ':' || product AS text,\n  AVG(funding_rates.rate) * 24 * 365 * 100 AS \"1x\",\n  AVG(funding_rates.rate) * 24 * 365 * 100 * (1 / (1 - tokens.collateral_weight)) AS \"nX\"\nFROM funding_rates\n  LEFT JOIN products ON products.symbol = funding_rates.product AND products.venue = funding_rates.venue AND products.type = 'swap'\n  LEFT JOIN tokens ON tokens.symbol = products.base\nWHERE\n  funding_rates.time >= NOW() - interval '4 hours'\n  AND funding_rates.product = 'chz-perp'\nGROUP BY funding_rates.venue, funding_rates.product, tokens.collateral_weight",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "CHZ/USD 4h APR",
+      "type": "gauge"
+    },
+    {
+      "datasource": "Ghost TimescaleDB",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "continuous-RdYlGr"
+          },
+          "custom": {},
+          "mappings": [],
+          "max": 400,
+          "min": -50,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "light-blue",
+                "value": null
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 8,
+        "y": 159
+      },
+      "id": 80,
+      "options": {
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "text": {}
+      },
+      "pluginVersion": "7.4.2",
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  NOW() - interval '24 hours' AS time,\n  funding_rates.venue || ':' || product AS text,\n  AVG(funding_rates.rate) * 24 * 365 * 100 AS \"1x\",\n  AVG(funding_rates.rate) * 24 * 365 * 100 * (1 / (1 - tokens.collateral_weight)) AS \"nX\"\nFROM funding_rates\n  LEFT JOIN products ON products.symbol = funding_rates.product AND products.venue = funding_rates.venue AND products.type = 'swap'\n  LEFT JOIN tokens ON tokens.symbol = products.base\nWHERE\n  funding_rates.time >= NOW() - interval '24 hours'\n  AND funding_rates.product = 'chz-perp'\nGROUP BY funding_rates.venue, funding_rates.product, tokens.collateral_weight",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "CHZ/USD 24h APR",
+      "type": "gauge"
+    },
+    {
+      "datasource": "Ghost TimescaleDB",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "continuous-RdYlGr"
+          },
+          "custom": {},
+          "mappings": [],
+          "max": 400,
+          "min": -50,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "light-blue",
+                "value": null
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 12,
+        "y": 159
+      },
+      "id": 81,
+      "options": {
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "text": {}
+      },
+      "pluginVersion": "7.4.2",
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  NOW() - interval '7 days' AS time,\n  funding_rates.venue || ':' || product AS text,\n  AVG(funding_rates.rate) * 24 * 365 * 100 AS \"1x\",\n  AVG(funding_rates.rate) * 24 * 365 * 100 * (1 / (1 - tokens.collateral_weight)) AS \"nX\"\nFROM funding_rates\n  LEFT JOIN products ON products.symbol = funding_rates.product AND products.venue = funding_rates.venue AND products.type = 'swap'\n  LEFT JOIN tokens ON tokens.symbol = products.base\nWHERE\n  funding_rates.time >= NOW() - interval '7 days'\n  AND funding_rates.product = 'chz-perp'\nGROUP BY funding_rates.venue, funding_rates.product, tokens.collateral_weight",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "CHZ/USD 1w APR",
+      "type": "gauge"
+    },
+    {
+      "datasource": "Ghost TimescaleDB",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "continuous-RdYlGr"
+          },
+          "custom": {},
+          "mappings": [],
+          "max": 400,
+          "min": -50,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "light-blue",
+                "value": null
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 16,
+        "y": 159
+      },
+      "id": 82,
+      "options": {
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "text": {}
+      },
+      "pluginVersion": "7.4.2",
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  NOW() - interval '1 month' AS time,\n  funding_rates.venue || ':' || product AS text,\n  AVG(funding_rates.rate) * 24 * 365 * 100 AS \"1x\",\n  AVG(funding_rates.rate) * 24 * 365 * 100 * (1 / (1 - tokens.collateral_weight)) AS \"nX\"\nFROM funding_rates\n  LEFT JOIN products ON products.symbol = funding_rates.product AND products.venue = funding_rates.venue AND products.type = 'swap'\n  LEFT JOIN tokens ON tokens.symbol = products.base\nWHERE\n  funding_rates.time >= NOW() - interval '1 month'\n  AND funding_rates.product = 'chz-perp'\nGROUP BY funding_rates.venue, funding_rates.product, tokens.collateral_weight",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "CHZ/USD 1m APR",
+      "type": "gauge"
+    },
+    {
+      "datasource": "Ghost TimescaleDB",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "continuous-RdYlGr"
+          },
+          "custom": {},
+          "mappings": [],
+          "max": 400,
+          "min": -50,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "light-blue",
+                "value": null
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 20,
+        "y": 159
+      },
+      "id": 83,
+      "options": {
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "text": {}
+      },
+      "pluginVersion": "7.4.2",
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  NOW() - interval '1 year' AS time,\n  funding_rates.venue || ':' || product AS text,\n  AVG(funding_rates.rate) * 24 * 365 * 100 AS \"1x\",\n  AVG(funding_rates.rate) * 24 * 365 * 100 * (1 / (1 - tokens.collateral_weight)) AS \"nX\"\nFROM funding_rates\n  LEFT JOIN products ON products.symbol = funding_rates.product AND products.venue = funding_rates.venue AND products.type = 'swap'\n  LEFT JOIN tokens ON tokens.symbol = products.base\nWHERE\n  funding_rates.time >= NOW() - interval '1 year'\n  AND funding_rates.product = 'chz-perp'\nGROUP BY funding_rates.venue, funding_rates.product, tokens.collateral_weight",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "CHZ/USD 1y APR",
+      "type": "gauge"
+    },
+    {
+      "datasource": "Ghost TimescaleDB",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "continuous-RdYlGr"
+          },
+          "custom": {},
+          "mappings": [],
+          "max": 400,
+          "min": -50,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "light-blue",
+                "value": null
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 0,
+        "y": 163
+      },
+      "id": 89,
+      "options": {
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "text": {}
+      },
+      "pluginVersion": "7.4.2",
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  NOW() - interval '1 hours' AS time,\n  funding_rates.venue || ':' || product AS text,\n  AVG(funding_rates.rate) * 24 * 365 * 100 AS \"1x\",\n  AVG(funding_rates.rate) * 24 * 365 * 100 * (1 / (1 - tokens.collateral_weight)) AS \"nX\"\nFROM funding_rates\n  LEFT JOIN products ON products.symbol = funding_rates.product AND products.venue = funding_rates.venue AND products.type = 'swap'\n  LEFT JOIN tokens ON tokens.symbol = products.base\nWHERE\n  funding_rates.time >= NOW() - interval '1 hours'\n  AND funding_rates.product = 'enj-perp'\nGROUP BY funding_rates.venue, funding_rates.product, tokens.collateral_weight",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "ENJ/USD 1h APR",
+      "type": "gauge"
+    },
+    {
+      "datasource": "Ghost TimescaleDB",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "continuous-RdYlGr"
+          },
+          "custom": {},
+          "mappings": [],
+          "max": 400,
+          "min": -50,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "light-blue",
+                "value": null
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 4,
+        "y": 163
+      },
+      "id": 262,
+      "options": {
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "text": {}
+      },
+      "pluginVersion": "7.4.2",
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  NOW() - interval '1 hours' AS time,\n  funding_rates.venue || ':' || product AS text,\n  AVG(funding_rates.rate) * 24 * 365 * 100 AS \"1x\",\n  AVG(funding_rates.rate) * 24 * 365 * 100 * (1 / (1 - tokens.collateral_weight)) AS \"nX\"\nFROM funding_rates\n  LEFT JOIN products ON products.symbol = funding_rates.product AND products.venue = funding_rates.venue AND products.type = 'swap'\n  LEFT JOIN tokens ON tokens.symbol = products.base\nWHERE\n  funding_rates.time >= NOW() - interval '1 hours'\n  AND funding_rates.product = 'enj-perp'\nGROUP BY funding_rates.venue, funding_rates.product, tokens.collateral_weight",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "ENJ/USD 4h APR",
+      "type": "gauge"
+    },
+    {
+      "datasource": "Ghost TimescaleDB",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "continuous-RdYlGr"
+          },
+          "custom": {},
+          "mappings": [],
+          "max": 400,
+          "min": -50,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "light-blue",
+                "value": null
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 8,
+        "y": 163
+      },
+      "id": 90,
+      "options": {
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "text": {}
+      },
+      "pluginVersion": "7.4.2",
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  NOW() - interval '24 hours' AS time,\n  funding_rates.venue || ':' || product AS text,\n  AVG(funding_rates.rate) * 24 * 365 * 100 AS \"1x\",\n  AVG(funding_rates.rate) * 24 * 365 * 100 * (1 / (1 - tokens.collateral_weight)) AS \"nX\"\nFROM funding_rates\n  LEFT JOIN products ON products.symbol = funding_rates.product AND products.venue = funding_rates.venue AND products.type = 'swap'\n  LEFT JOIN tokens ON tokens.symbol = products.base\nWHERE\n  funding_rates.time >= NOW() - interval '24 hours'\n  AND funding_rates.product = 'enj-perp'\nGROUP BY funding_rates.venue, funding_rates.product, tokens.collateral_weight",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "ENJ/USD 24h APR",
+      "type": "gauge"
+    },
+    {
+      "datasource": "Ghost TimescaleDB",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "continuous-RdYlGr"
+          },
+          "custom": {},
+          "mappings": [],
+          "max": 400,
+          "min": -50,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "light-blue",
+                "value": null
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 12,
+        "y": 163
+      },
+      "id": 91,
+      "options": {
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "text": {}
+      },
+      "pluginVersion": "7.4.2",
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  NOW() - interval '7 days' AS time,\n  funding_rates.venue || ':' || product AS text,\n  AVG(funding_rates.rate) * 24 * 365 * 100 AS \"1x\",\n  AVG(funding_rates.rate) * 24 * 365 * 100 * (1 / (1 - tokens.collateral_weight)) AS \"nX\"\nFROM funding_rates\n  LEFT JOIN products ON products.symbol = funding_rates.product AND products.venue = funding_rates.venue AND products.type = 'swap'\n  LEFT JOIN tokens ON tokens.symbol = products.base\nWHERE\n  funding_rates.time >= NOW() - interval '7 days'\n  AND funding_rates.product = 'enj-perp'\nGROUP BY funding_rates.venue, funding_rates.product, tokens.collateral_weight",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "ENJ/USD 1w APR",
+      "type": "gauge"
+    },
+    {
+      "datasource": "Ghost TimescaleDB",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "continuous-RdYlGr"
+          },
+          "custom": {},
+          "mappings": [],
+          "max": 400,
+          "min": -50,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "light-blue",
+                "value": null
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 16,
+        "y": 163
+      },
+      "id": 92,
+      "options": {
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "text": {}
+      },
+      "pluginVersion": "7.4.2",
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  NOW() - interval '1 month' AS time,\n  funding_rates.venue || ':' || product AS text,\n  AVG(funding_rates.rate) * 24 * 365 * 100 AS \"1x\",\n  AVG(funding_rates.rate) * 24 * 365 * 100 * (1 / (1 - tokens.collateral_weight)) AS \"nX\"\nFROM funding_rates\n  LEFT JOIN products ON products.symbol = funding_rates.product AND products.venue = funding_rates.venue AND products.type = 'swap'\n  LEFT JOIN tokens ON tokens.symbol = products.base\nWHERE\n  funding_rates.time >= NOW() - interval '1 month'\n  AND funding_rates.product = 'enj-perp'\nGROUP BY funding_rates.venue, funding_rates.product, tokens.collateral_weight",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "ENJ/USD 1m APR",
+      "type": "gauge"
+    },
+    {
+      "datasource": "Ghost TimescaleDB",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "continuous-RdYlGr"
+          },
+          "custom": {},
+          "mappings": [],
+          "max": 400,
+          "min": -50,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "light-blue",
+                "value": null
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 20,
+        "y": 163
+      },
+      "id": 63,
+      "options": {
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "text": {}
+      },
+      "pluginVersion": "7.4.2",
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  NOW() - interval '1 year' AS time,\n  funding_rates.venue || ':' || product AS text,\n  AVG(funding_rates.rate) * 24 * 365 * 100 AS \"1x\",\n  AVG(funding_rates.rate) * 24 * 365 * 100 * (1 / (1 - tokens.collateral_weight)) AS \"nX\"\nFROM funding_rates\n  LEFT JOIN products ON products.symbol = funding_rates.product AND products.venue = funding_rates.venue AND products.type = 'swap'\n  LEFT JOIN tokens ON tokens.symbol = products.base\nWHERE\n  funding_rates.time >= NOW() - interval '1 year'\n  AND funding_rates.product = 'cro-perp'\nGROUP BY funding_rates.venue, funding_rates.product, tokens.collateral_weight",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "CRO/USD 1y APR",
+      "type": "gauge"
+    },
+    {
+      "datasource": "Ghost TimescaleDB",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "continuous-RdYlGr"
+          },
+          "custom": {},
+          "mappings": [],
+          "max": 400,
+          "min": -50,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "light-blue",
+                "value": null
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 0,
         "y": 167
+      },
+      "id": 111,
+      "options": {
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "text": {}
+      },
+      "pluginVersion": "7.4.2",
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  NOW() - interval '1 hours' AS time,\n  funding_rates.venue || ':' || product AS text,\n  AVG(funding_rates.rate) * 24 * 365 * 100 AS \"1x\",\n  AVG(funding_rates.rate) * 24 * 365 * 100 * (1 / (1 - tokens.collateral_weight)) AS \"nX\"\nFROM funding_rates\n  LEFT JOIN products ON products.symbol = funding_rates.product AND products.venue = funding_rates.venue AND products.type = 'swap'\n  LEFT JOIN tokens ON tokens.symbol = products.base\nWHERE\n  funding_rates.time >= NOW() - interval '1 hours'\n  AND funding_rates.product = 'waves-perp'\nGROUP BY funding_rates.venue, funding_rates.product, tokens.collateral_weight",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "WAVES/USD 1h APR",
+      "type": "gauge"
+    },
+    {
+      "datasource": "Ghost TimescaleDB",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "continuous-RdYlGr"
+          },
+          "custom": {},
+          "mappings": [],
+          "max": 400,
+          "min": -50,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "light-blue",
+                "value": null
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 4,
+        "y": 167
+      },
+      "id": 124,
+      "options": {
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "text": {}
+      },
+      "pluginVersion": "7.4.2",
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  NOW() - interval '4 hours' AS time,\n  funding_rates.venue || ':' || product AS text,\n  AVG(funding_rates.rate) * 24 * 365 * 100 AS \"1x\",\n  AVG(funding_rates.rate) * 24 * 365 * 100 * (1 / (1 - tokens.collateral_weight)) AS \"nX\"\nFROM funding_rates\n  LEFT JOIN products ON products.symbol = funding_rates.product AND products.venue = funding_rates.venue AND products.type = 'swap'\n  LEFT JOIN tokens ON tokens.symbol = products.base\nWHERE\n  funding_rates.time >= NOW() - interval '4 hours'\n  AND funding_rates.product = 'waves-perp'\nGROUP BY funding_rates.venue, funding_rates.product, tokens.collateral_weight",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "WAVES/USD 4h APR",
+      "type": "gauge"
+    },
+    {
+      "datasource": "Ghost TimescaleDB",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "continuous-RdYlGr"
+          },
+          "custom": {},
+          "mappings": [],
+          "max": 400,
+          "min": -50,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "light-blue",
+                "value": null
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 8,
+        "y": 167
+      },
+      "id": 267,
+      "options": {
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "text": {}
+      },
+      "pluginVersion": "7.4.2",
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  NOW() - interval '24 hours' AS time,\n  funding_rates.venue || ':' || product AS text,\n  AVG(funding_rates.rate) * 24 * 365 * 100 AS \"1x\",\n  AVG(funding_rates.rate) * 24 * 365 * 100 * (1 / (1 - tokens.collateral_weight)) AS \"nX\"\nFROM funding_rates\n  LEFT JOIN products ON products.symbol = funding_rates.product AND products.venue = funding_rates.venue AND products.type = 'swap'\n  LEFT JOIN tokens ON tokens.symbol = products.base\nWHERE\n  funding_rates.time >= NOW() - interval '24 hours'\n  AND funding_rates.product = 'waves-perp'\nGROUP BY funding_rates.venue, funding_rates.product, tokens.collateral_weight",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "WAVES/USD 24h APR",
+      "type": "gauge"
+    },
+    {
+      "datasource": "Ghost TimescaleDB",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "continuous-RdYlGr"
+          },
+          "custom": {},
+          "mappings": [],
+          "max": 400,
+          "min": -50,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "light-blue",
+                "value": null
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 12,
+        "y": 167
+      },
+      "id": 128,
+      "options": {
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "text": {}
+      },
+      "pluginVersion": "7.4.2",
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  NOW() - interval '7 days' AS time,\n  funding_rates.venue || ':' || product AS text,\n  AVG(funding_rates.rate) * 24 * 365 * 100 AS \"1x\",\n  AVG(funding_rates.rate) * 24 * 365 * 100 * (1 / (1 - tokens.collateral_weight)) AS \"nX\"\nFROM funding_rates\n  LEFT JOIN products ON products.symbol = funding_rates.product AND products.venue = funding_rates.venue AND products.type = 'swap'\n  LEFT JOIN tokens ON tokens.symbol = products.base\nWHERE\n  funding_rates.time >= NOW() - interval '7 days'\n  AND funding_rates.product = 'waves-perp'\nGROUP BY funding_rates.venue, funding_rates.product, tokens.collateral_weight",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "WAVES/USD 1w APR",
+      "type": "gauge"
+    },
+    {
+      "datasource": "Ghost TimescaleDB",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "continuous-RdYlGr"
+          },
+          "custom": {},
+          "mappings": [],
+          "max": 400,
+          "min": -50,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "light-blue",
+                "value": null
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 16,
+        "y": 167
+      },
+      "id": 144,
+      "options": {
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "text": {}
+      },
+      "pluginVersion": "7.4.2",
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  NOW() - interval '1 month' AS time,\n  funding_rates.venue || ':' || product AS text,\n  AVG(funding_rates.rate) * 24 * 365 * 100 AS \"1x\",\n  AVG(funding_rates.rate) * 24 * 365 * 100 * (1 / (1 - tokens.collateral_weight)) AS \"nX\"\nFROM funding_rates\n  LEFT JOIN products ON products.symbol = funding_rates.product AND products.venue = funding_rates.venue AND products.type = 'swap'\n  LEFT JOIN tokens ON tokens.symbol = products.base\nWHERE\n  funding_rates.time >= NOW() - interval '1 month'\n  AND funding_rates.product = 'waves-perp'\nGROUP BY funding_rates.venue, funding_rates.product, tokens.collateral_weight",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "WAVES/USD 1m APR",
+      "type": "gauge"
+    },
+    {
+      "datasource": "Ghost TimescaleDB",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "continuous-RdYlGr"
+          },
+          "custom": {},
+          "mappings": [],
+          "max": 400,
+          "min": -50,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "light-blue",
+                "value": null
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 20,
+        "y": 167
+      },
+      "id": 93,
+      "options": {
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "text": {}
+      },
+      "pluginVersion": "7.4.2",
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  NOW() - interval '1 year' AS time,\n  funding_rates.venue || ':' || product AS text,\n  AVG(funding_rates.rate) * 24 * 365 * 100 AS \"1x\",\n  AVG(funding_rates.rate) * 24 * 365 * 100 * (1 / (1 - tokens.collateral_weight)) AS \"nX\"\nFROM funding_rates\n  LEFT JOIN products ON products.symbol = funding_rates.product AND products.venue = funding_rates.venue AND products.type = 'swap'\n  LEFT JOIN tokens ON tokens.symbol = products.base\nWHERE\n  funding_rates.time >= NOW() - interval '1 year'\n  AND funding_rates.product = 'enj-perp'\nGROUP BY funding_rates.venue, funding_rates.product, tokens.collateral_weight",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "ENJ/USD 1y APR",
+      "type": "gauge"
+    },
+    {
+      "datasource": "Ghost TimescaleDB",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "continuous-RdYlGr"
+          },
+          "custom": {},
+          "mappings": [],
+          "max": 400,
+          "min": -50,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "light-blue",
+                "value": null
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 0,
+        "y": 171
       },
       "id": 107,
       "options": {
@@ -18042,7 +18510,7 @@
         "h": 4,
         "w": 4,
         "x": 4,
-        "y": 167
+        "y": 171
       },
       "id": 270,
       "options": {
@@ -18120,7 +18588,7 @@
         "h": 4,
         "w": 4,
         "x": 8,
-        "y": 167
+        "y": 171
       },
       "id": 117,
       "options": {
@@ -18198,7 +18666,7 @@
         "h": 4,
         "w": 4,
         "x": 12,
-        "y": 167
+        "y": 171
       },
       "id": 132,
       "options": {
@@ -18276,7 +18744,7 @@
         "h": 4,
         "w": 4,
         "x": 16,
-        "y": 167
+        "y": 171
       },
       "id": 148,
       "options": {
@@ -18354,7 +18822,7 @@
         "h": 4,
         "w": 4,
         "x": 20,
-        "y": 167
+        "y": 171
       },
       "id": 158,
       "options": {
@@ -18402,474 +18870,6 @@
       "timeFrom": null,
       "timeShift": null,
       "title": "DENT/USD 1y APR",
-      "type": "gauge"
-    },
-    {
-      "datasource": "Ghost TimescaleDB",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "continuous-RdYlGr"
-          },
-          "custom": {},
-          "mappings": [],
-          "max": 400,
-          "min": -50,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "light-blue",
-                "value": null
-              }
-            ]
-          },
-          "unit": "percent"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 4,
-        "x": 0,
-        "y": 171
-      },
-      "id": 105,
-      "options": {
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true,
-        "text": {}
-      },
-      "pluginVersion": "7.4.2",
-      "targets": [
-        {
-          "format": "time_series",
-          "group": [],
-          "metricColumn": "none",
-          "rawQuery": true,
-          "rawSql": "SELECT\n  NOW() - interval '1 hours' AS time,\n  funding_rates.venue || ':' || product AS text,\n  AVG(funding_rates.rate) * 24 * 365 * 100 AS \"1x\",\n  AVG(funding_rates.rate) * 24 * 365 * 100 * (1 / (1 - tokens.collateral_weight)) AS \"nX\"\nFROM funding_rates\n  LEFT JOIN products ON products.symbol = funding_rates.product AND products.venue = funding_rates.venue AND products.type = 'swap'\n  LEFT JOIN tokens ON tokens.symbol = products.base\nWHERE\n  funding_rates.time >= NOW() - interval '1 hours'\n  AND funding_rates.product = 'btmx-perp'\nGROUP BY funding_rates.venue, funding_rates.product, tokens.collateral_weight",
-          "refId": "A",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "column"
-              }
-            ]
-          ],
-          "timeColumn": "time",
-          "where": [
-            {
-              "name": "$__timeFilter",
-              "params": [],
-              "type": "macro"
-            }
-          ]
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "BTMX/USD 1h APR",
-      "type": "gauge"
-    },
-    {
-      "datasource": "Ghost TimescaleDB",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "continuous-RdYlGr"
-          },
-          "custom": {},
-          "mappings": [],
-          "max": 400,
-          "min": -50,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "light-blue",
-                "value": null
-              }
-            ]
-          },
-          "unit": "percent"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 4,
-        "x": 4,
-        "y": 171
-      },
-      "id": 272,
-      "options": {
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true,
-        "text": {}
-      },
-      "pluginVersion": "7.4.2",
-      "targets": [
-        {
-          "format": "time_series",
-          "group": [],
-          "metricColumn": "none",
-          "rawQuery": true,
-          "rawSql": "SELECT\n  NOW() - interval '4 hours' AS time,\n  venue || ':' || product AS text,\n  AVG(rate) * 24 * 365 * 100 AS rate\nFROM funding_rates\nWHERE\n  time >= NOW() - interval '4 hours'\n  AND product = 'btmx-perp'\nGROUP BY venue, product",
-          "refId": "A",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "column"
-              }
-            ]
-          ],
-          "timeColumn": "time",
-          "where": [
-            {
-              "name": "$__timeFilter",
-              "params": [],
-              "type": "macro"
-            }
-          ]
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "BTMX/USD 4h APR",
-      "type": "gauge"
-    },
-    {
-      "datasource": "Ghost TimescaleDB",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "continuous-RdYlGr"
-          },
-          "custom": {},
-          "mappings": [],
-          "max": 400,
-          "min": -50,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "light-blue",
-                "value": null
-              }
-            ]
-          },
-          "unit": "percent"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 4,
-        "x": 8,
-        "y": 171
-      },
-      "id": 165,
-      "options": {
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true,
-        "text": {}
-      },
-      "pluginVersion": "7.4.2",
-      "targets": [
-        {
-          "format": "time_series",
-          "group": [],
-          "metricColumn": "none",
-          "rawQuery": true,
-          "rawSql": "SELECT\n  NOW() - interval '24 hours' AS time,\n  venue || ':' || product AS text,\n  AVG(rate) * 24 * 365 * 100 AS rate\nFROM funding_rates\nWHERE\n  time >= NOW() - interval '24 hours'\n  AND product = 'btmx-perp'\nGROUP BY venue, product",
-          "refId": "A",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "column"
-              }
-            ]
-          ],
-          "timeColumn": "time",
-          "where": [
-            {
-              "name": "$__timeFilter",
-              "params": [],
-              "type": "macro"
-            }
-          ]
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "BTMX/USD 24h APR",
-      "type": "gauge"
-    },
-    {
-      "datasource": "Ghost TimescaleDB",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "continuous-RdYlGr"
-          },
-          "custom": {},
-          "mappings": [],
-          "max": 400,
-          "min": -50,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "light-blue",
-                "value": null
-              }
-            ]
-          },
-          "unit": "percent"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 4,
-        "x": 12,
-        "y": 171
-      },
-      "id": 134,
-      "options": {
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true,
-        "text": {}
-      },
-      "pluginVersion": "7.4.2",
-      "targets": [
-        {
-          "format": "time_series",
-          "group": [],
-          "metricColumn": "none",
-          "rawQuery": true,
-          "rawSql": "SELECT\n  NOW() - interval '7 days' AS time,\n  venue || ':' || product AS text,\n  AVG(rate) * 24 * 365 * 100 AS rate\nFROM funding_rates\nWHERE\n  time >= NOW() - interval '7 days'\n  AND product = 'btmx-perp'\nGROUP BY venue, product",
-          "refId": "A",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "column"
-              }
-            ]
-          ],
-          "timeColumn": "time",
-          "where": [
-            {
-              "name": "$__timeFilter",
-              "params": [],
-              "type": "macro"
-            }
-          ]
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "BTMX/USD 1w APR",
-      "type": "gauge"
-    },
-    {
-      "datasource": "Ghost TimescaleDB",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "continuous-RdYlGr"
-          },
-          "custom": {},
-          "mappings": [],
-          "max": 400,
-          "min": -50,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "light-blue",
-                "value": null
-              }
-            ]
-          },
-          "unit": "percent"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 4,
-        "x": 16,
-        "y": 171
-      },
-      "id": 150,
-      "options": {
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true,
-        "text": {}
-      },
-      "pluginVersion": "7.4.2",
-      "targets": [
-        {
-          "format": "time_series",
-          "group": [],
-          "metricColumn": "none",
-          "rawQuery": true,
-          "rawSql": "SELECT\n  NOW() - interval '1 month' AS time,\n  venue || ':' || product AS text,\n  AVG(rate) * 24 * 365 * 100 AS rate\nFROM funding_rates\nWHERE\n  time >= NOW() - interval '1 month'\n  AND product = 'btmx-perp'\nGROUP BY venue, product",
-          "refId": "A",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "column"
-              }
-            ]
-          ],
-          "timeColumn": "time",
-          "where": [
-            {
-              "name": "$__timeFilter",
-              "params": [],
-              "type": "macro"
-            }
-          ]
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "BTMX/USD 1m APR",
-      "type": "gauge"
-    },
-    {
-      "datasource": "Ghost TimescaleDB",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "continuous-RdYlGr"
-          },
-          "custom": {},
-          "mappings": [],
-          "max": 400,
-          "min": -50,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "light-blue",
-                "value": null
-              }
-            ]
-          },
-          "unit": "percent"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 4,
-        "x": 20,
-        "y": 171
-      },
-      "id": 156,
-      "options": {
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true,
-        "text": {}
-      },
-      "pluginVersion": "7.4.2",
-      "targets": [
-        {
-          "format": "time_series",
-          "group": [],
-          "metricColumn": "none",
-          "rawQuery": true,
-          "rawSql": "SELECT\n  NOW() - interval '1 year' AS time,\n  venue || ':' || product AS text,\n  AVG(rate) * 24 * 365 * 100 AS rate\nFROM funding_rates\nWHERE\n  time >= NOW() - interval '1 year'\n  AND product = 'btmx-perp'\nGROUP BY venue, product",
-          "refId": "A",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "column"
-              }
-            ]
-          ],
-          "timeColumn": "time",
-          "where": [
-            {
-              "name": "$__timeFilter",
-              "params": [],
-              "type": "macro"
-            }
-          ]
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "BTMX/USD 1y APR",
       "type": "gauge"
     },
     {
@@ -22262,5 +22262,5 @@
   "timezone": "",
   "title": "Swap Funding Rates",
   "uid": "2dkHtKXGz",
-  "version": 24
+  "version": 25
 }

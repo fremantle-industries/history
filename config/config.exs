@@ -71,8 +71,8 @@ config :ghost,
     [spot: {:ftx, :btcusdt}, future: {:ftx, :btc0625}],
     [spot: {:ftx, :btcusdt}, future: {:ftx, :btc0924}],
     [spot: {:ftx, :btcusdt}, future: {:ftx, :btc1231}],
-    # btmx
-    [spot: {:ftx, :btmxusd}, future: {:ftx, :btmx0625}],
+    # asd
+    [spot: {:ftx, :asdusd}, future: {:ftx, :asd0625}],
     # chz
     [spot: {:ftx, :chzusd}, future: {:ftx, :chz0625}],
     [spot: {:ftx, :chzusdt}, future: {:ftx, :chz0625}],
@@ -142,8 +142,8 @@ config :ghost,
     [spot: {:ftx, :bnbusd}, swap: {:ftx, :bnbperp}],
     # bnt
     [spot: {:ftx, :bntusd}, swap: {:ftx, :bntperp}],
-    # btmx
-    [spot: {:ftx, :btmxusd}, swap: {:ftx, :btmxperp}],
+    # asd
+    [spot: {:ftx, :asdusd}, swap: {:ftx, :asdperp}],
     # btc
     [spot: {:ftx, :btcusd}, swap: {:ftx, :btcperp}],
     [spot: {:ftx, :btcusdt}, swap: {:ftx, :btcperp}],
@@ -485,9 +485,9 @@ config :tai,
         btc-0924
         btc-1231
 
-        btmx/usd
-        btmx-perp
-        btmx-0625
+        asd/usd
+        asd-perp
+        asd-0625
 
         chz/usd
         chz/usdt
