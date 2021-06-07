@@ -26,6 +26,13 @@ defmodule GhostWeb.Router do
     live "/data", DataLive, :index
     live "/data/ohlc", OHLCLive, :index
     live "/data/predicted_funding", PredictedFundingRateLive, :index
+
+    live "/data/predicted_funding/jobs", PredictedFundingRateJob.IndexLive, :index,
+      as: :predicted_funding_rate_job
+
+    # live "/data/predicted_funding/jobs/:id", PredictedFundingRateJob.ShowLive, :show,
+    #   as: :predicted_funding_rate_job
+
     live "/data/funding", FundingRateLive, :index
     live "/data/funding/latest", FundingRateLatestLive, :index
     live "/data/funding/jobs", FundingRateJob.IndexLive, :index, as: :funding_rate_job
@@ -36,6 +43,15 @@ defmodule GhostWeb.Router do
     live "/data/lending/jobs/:id", LendingRateJob.ShowLive, :show, as: :lending_rate_job
     live "/products", ProductLive, :index
     live "/tokens", TokenLive, :index
+  end
+
+  scope "/", NotifiedPhoenix do
+    pipe_through :browser
+
+    live("/notifications", ListLive, :index,
+      as: :notification,
+      layout: {GhostWeb.LayoutView, :root}
+    )
   end
 
   # Other scopes may use custom stacks.
