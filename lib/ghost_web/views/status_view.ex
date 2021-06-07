@@ -5,14 +5,19 @@ defmodule GhostWeb.StatusView do
     title = Map.get(assigns, :title, "status")
 
     ~E"""
-    <span class="bg-<%= color(assigns.status) %>-50 text-<%= color(assigns.status) %>-400 py-2 px-4 inline-block rounded-full" title="<%= title %>">
+    <span class="<%= bg_color(assigns.status) %> <%= text_color(assigns.status) %> py-2 px-4 inline-block rounded-full" title="<%= title %>">
       <%= assigns.status %>
     </span>
     """
   end
 
-  defp color(:enqueued), do: "yellow"
-  defp color(:error), do: "red"
-  defp color(:working), do: "purple"
-  defp color(:complete), do: "green"
+  defp bg_color(:enqueued), do: "bg-yellow-50"
+  defp bg_color(:error), do: "bg-red-50"
+  defp bg_color(:working), do: "bg-purple-50"
+  defp bg_color(:complete), do: "bg-green-50"
+
+  defp text_color(:enqueued), do: "text-yellow-400"
+  defp text_color(:error), do: "text-red-400"
+  defp text_color(:working), do: "text-purple-400"
+  defp text_color(:complete), do: "text-green-400"
 end
