@@ -1,0 +1,75 @@
+<div class="space-x-4">
+  <%= render GhostWeb.DataView, "_header.html", conn: @socket, section: [{"Predicted Funding Rates", Routes.predicted_funding_rate_path(@socket, :index)}, "Jobs"] %>
+</div>
+<%= render GhostWeb.DataView, "_nav.html", conn: @socket %>
+
+<div class="mt-8">
+  <h3 class="text-2xl">
+    Jobs
+  </h3>
+
+  <%= form_for @job_changeset, "#", [phx_submit: :download, class: "flex items-start mt-8"], fn f -> %>
+    <%= multiple_select f, :products, @swap_products, selected: f.data.products |> Enum.map(& Jason.encode!/1) %>
+    <%= error_tag f, :products %>
+    <button class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded ml-4">
+      Download
+    </button>
+  <% end %>
+
+  <table class="w-full mt-4">
+    <thead class="bg-gray-200 border-t-2 border-gray-400">
+      <tr>
+        <th scope="col" class="px-4 py-3 text-left text-gray-700">ID</th>
+        <th scope="col" class="px-4 py-3 text-left text-gray-700">Created At</th>
+        <th scope="col" class="px-4 py-3 text-left text-gray-700">Products</th>
+        <th scope="col" class="px-4 py-3 text-left text-gray-700">Status</th>
+        <th scope="col" class="px-4 py-3 text-right text-gray-700">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= if Enum.any?(@jobs) do %>
+        <%= for j <- @jobs do %>
+          <tr class="hover:bg-gray-50 border-t border-b group">
+            <td class="px-4 py-3"><%= link j.id, to: Routes.predicted_funding_rate_job_path(@socket, :show, j.id), class: "hover:opacity-75" %></td>
+            <td class="px-4 py-3"><%= j.inserted_at %></td>
+            <td class="px-4 py-3" title="<%= products_by_group(j.products) %>">
+              <%= products_by_group(j.products, max_products: 3) %>
+            </td>
+            <td class="px-4 py-3">
+              <%= render GhostWeb.StatusView, "_pill.html", status: j.status %>
+            </td>
+            <td class="px-4 py-3 text-right">
+              <button
+                type="button"
+                class="text-red-500 opacity-75 hover:opacity-100 invisible group-hover:visible"
+                phx-click="cancel"
+                phx-value-history-job-id="<%= j.id %>"
+              >
+                Cancel
+              </button>
+            </td>
+          </tr>
+        <% end %>
+      <% else %>
+        <tr class="hover:bg-gray-50 border-t border-b group">
+          <td colspan="7" class="px-4 py-3">No predicted rate download jobs</td>
+        </tr>
+      <% end %>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="7" class="px-4 py-3 text-right">
+          <%= render(
+            Stylish.Table,
+            "navigation.html",
+            to: &Routes.predicted_funding_rate_job_path(&1, :index, page: &2),
+            conn: @socket,
+            previous_page: @previous_page,
+            current_page: @current_page,
+            next_page: @next_page,
+            last_page: @last_page) %>
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+</div>

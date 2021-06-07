@@ -30,8 +30,8 @@ defmodule GhostWeb.Router do
     live "/data/predicted_funding/jobs", PredictedFundingRateJob.IndexLive, :index,
       as: :predicted_funding_rate_job
 
-    # live "/data/predicted_funding/jobs/:id", PredictedFundingRateJob.ShowLive, :show,
-    #   as: :predicted_funding_rate_job
+    live "/data/predicted_funding/jobs/:id", PredictedFundingRateJob.ShowLive, :show,
+      as: :predicted_funding_rate_job
 
     live "/data/funding", FundingRateLive, :index
     live "/data/funding/latest", FundingRateLatestLive, :index

@@ -11,6 +11,7 @@ defmodule Ghost.Application do
       {Phoenix.PubSub, name: Ghost.PubSub},
       GhostWeb.Endpoint,
       Ghost.FundingRateHistoryJobs.Supervisor,
+      Ghost.PredictedFundingRates.Supervisor,
       Ghost.LendingRateHistoryJobs.Supervisor
     ]
 
