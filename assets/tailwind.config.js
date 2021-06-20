@@ -3,6 +3,7 @@ const defaultTheme = require('tailwindcss/defaultTheme')
 module.exports = {
   mode: "jit",
   purge: [
+    '../config/runtime.exs',
     '../lib/ghost_web/views/**/*.ex',
     '../lib/ghost_web/live/**/*.ex',
     '../lib/ghost_web/live/**/*.leex',
