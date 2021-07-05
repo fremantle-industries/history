@@ -87,6 +87,8 @@ alias Ghost.Repo
   %Product{venue: "ftx", symbol: "dawn/usd", base: "dawn", quote: "usd", venue_symbol: "DAWN/USD", type: "spot"},
   %Product{venue: "ftx", symbol: "dawn-perp", base: "dawn", quote: "usd", venue_symbol: "DAWN-PERP", type: "swap"},
 
+  %Product{venue: "ftx", symbol: "defi-perp", base: "defi", quote: "usd", venue_symbol: "DEFI-PERP", type: "swap"},
+
   %Product{venue: "ftx", symbol: "dent/usd", base: "dent", quote: "usd", venue_symbol: "DENT/USD", type: "spot"},
   %Product{venue: "ftx", symbol: "dent-perp", base: "dent", quote: "usd", venue_symbol: "DENT-PERP", type: "swap"},
 
