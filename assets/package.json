@@ -20,7 +20,7 @@
     "@types/nprogress": "^0.2.0",
     "@types/phoenix": "^1.5.1",
     "@types/phoenix_live_view": "^0.15.0",
-    "autoprefixer": "^10.2.6",
+    "autoprefixer": "^10.3.1",
     "babel-loader": "^8.2.2",
     "copy-webpack-plugin": "^9.0.1",
     "css-loader": "^5.2.6",
