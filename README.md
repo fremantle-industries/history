@@ -1,13 +1,13 @@
-# Ghost
-[![Build Status](https://github.com/fremantle-industries/ghost/workflows/test/badge.svg?branch=main)](https://github.com/fremantle-industries/ghost/actions?query=workflow%3Atest)
+# Historian (Previously Ghost)
+[![Build Status](https://github.com/fremantle-industries/historian/workflows/test/badge.svg?branch=main)](https://github.com/fremantle-industries/historian/actions?query=workflow%3Atest)
 
-[`ghost.localhost:4000`](http://ghost.localhost:4000)
+[`historian.localhost:4000`](http://historian.localhost:4000)
 
 ## Install
 
 ```bash
-$ git clone git@github.com:fremantle-industries/ghost.git
-$ cd ghost
+$ git clone git@github.com:fremantle-industries/historian.git
+$ cd historian
 $ docker-compose up db
 $ mix setup
 ```
