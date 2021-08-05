@@ -1,5 +1,6 @@
 # History
 [![Build Status](https://github.com/fremantle-industries/history/workflows/test/badge.svg?branch=main)](https://github.com/fremantle-industries/history/actions?query=workflow%3Atest)
+[![hex.pm version](https://img.shields.io/hexpm/v/history.svg?style=flat)](https://hex.pm/packages/history)
 
 Download and warehouse historical trading data
 
