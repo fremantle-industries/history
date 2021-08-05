@@ -20,11 +20,6 @@ defmodule History.Application do
     Supervisor.start_link(children, opts)
   end
 
-  def start_phase(:basis, _start_type, _phase_args) do
-    History.Basis.hydrate()
-    :ok
-  end
-
   # Tell Phoenix to update the endpoint configuration
   # whenever the application is updated.
   def config_change(changed, _new, removed) do

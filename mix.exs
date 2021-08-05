@@ -19,7 +19,6 @@ defmodule History.MixProject do
   def application do
     [
       mod: {History.Application, []},
-      start_phases: [basis: []],
       extra_applications: [:logger, :runtime_tools]
     ]
   end
