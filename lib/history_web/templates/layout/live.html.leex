@@ -1,0 +1,9 @@
+<p class="empty:hidden bg-green-50 text-green-500" role="alert"
+  phx-click="lv:clear-flash"
+  phx-value-key="info"><%= live_flash(@flash, :info) %></p>
+
+<p class="empty:hidden bg-red-50 text-red-500" role="alert"
+  phx-click="lv:clear-flash"
+  phx-value-key="error"><%= live_flash(@flash, :error) %></p>
+
+<%= @inner_content %>

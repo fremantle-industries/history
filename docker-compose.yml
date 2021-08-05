@@ -1,0 +1,96 @@
+version: '3.8'
+
+services:
+  db:
+    image: timescale/timescaledb:2.4.0-pg13
+    ports:
+      - "5432:5432"
+    volumes:
+      - "db_data:/var/lib/postgresql/data"
+    environment:
+      PGDATA: /var/lib/postgresql/data/pgdata
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_HOST_AUTH_METHOD: trust
+
+  web:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+      target: builder
+    ports:
+      - "${HOST_PORT:-4000}:${PORT:-4000}"
+      - "${WORKBENCH_PROMETHEUS_METRICS_PORT:-9568}:${WORKBENCH_PROMETHEUS_METRICS_PORT:-9568}"
+      - "${HISTORY_PROMETHEUS_METRICS_PORT:-9569}:${HISTORY_PROMETHEUS_METRICS_PORT:-9569}"
+      - "4369:4369"
+      - "9999:9999"
+    depends_on:
+      - db
+    environment:
+      - PORT
+      - HOST_PORT
+      - HOST
+      - REPLACE_OS_VARS=true
+      - NODE_COOKIE
+      - WORKBENCH_PROMETHEUS_METRICS_PORT
+      - HISTORY_PROMETHEUS_METRICS_PORT
+      - SECRET_KEY_BASE
+      - LIVE_VIEW_SIGNING_SALT
+      - GOOGLE_CLOUD_PROJECT
+      - GOOGLE_COMPUTE_ENGINE_INSTANCE
+      - GOOGLE_COMPUTE_ENGINE_ZONE
+      - BALANCE_SNAPSHOT_ENABLED
+      - BALANCE_SNAPSHOT_BTC_USD_VENUE
+      - BALANCE_SNAPSHOT_BTC_USD_SYMBOL
+      - BALANCE_SNAPSHOT_USD_QUOTE_VENUE
+      - BALANCE_SNAPSHOT_USD_QUOTE_ASSET
+      - DATABASE_URL
+    volumes:
+      - web_build:/app/_build
+      - ./.env:/app/.env
+      - ./mix.exs:/app/mix.exs
+      - ./mix.lock:/app/mix.lock
+      - ./assets/css:/app/assets/css
+      - ./assets/js:/app/assets/js
+      - ./assets/static:/app/assets/static
+      - ./assets/package.json:/app/assets/package.json
+      - ./assets/package-lock.json:/app/assets/package-lock.json
+      - ./assets/webpack.config.js:/app/assets/webpack.config.js
+      - ./assets/tsconfig.json:/app/assets/tsconfig.json
+      - ./config:/app/config
+      - ./lib:/app/lib
+      - ./priv/repo:/app/priv/repo
+    entrypoint: "sh -c 'mix setup.deps && mix phx.server'"
+
+  prometheus:
+    image: 'prom/prometheus:v2.28.1'
+    restart: always
+    ports:
+      - 9090:9090
+    volumes:
+      - ./prometheus/:/etc/prometheus/
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
+
+  grafana:
+    image: 'grafana/grafana:8.1.0'
+    restart: always
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./grafana/provisioning/:/etc/grafana/provisioning/
+    env_file:
+      - ./grafana/config.monitoring
+
+volumes:
+  db_data:
+  web_build:
+  prometheus_data:
+  grafana_data:

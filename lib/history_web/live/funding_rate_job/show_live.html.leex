@@ -1,0 +1,75 @@
+<div class="space-x-4">
+  <%= render(
+    HistoryWeb.DataView,
+    "_header.html",
+    conn: @socket,
+    section: [
+      {"Funding Rates", Routes.funding_rate_path(@socket, :index)},
+      {"Jobs", Routes.funding_rate_job_path(@socket, :index)},
+      @job.id
+    ]) %>
+</div>
+<%= render HistoryWeb.DataView, "_nav.html", conn: @socket %>
+
+<div class="mt-8">
+  <h3 class="text-2xl">
+    Chunks
+  </h3>
+  <div class="flex space-x-4 items-center">
+    <div>
+      <span>from: <%= @job.from_date %> <%= @job.from_time %></span>
+      <span>to: <%= @job.to_date %> <%= @job.to_time %></span>
+    </div>
+    <div>
+      <%= render HistoryWeb.StatusView, "_pill.html", status: @job.status, title: "job status" %>
+    </div>
+    <div>
+      <%= chunk_status_totals(assigns) %>
+      <span title="total">&Sigma; <%= @total_chunks %></span>
+    </div>
+  </div>
+
+  <table class="w-full mt-8">
+    <thead class="bg-gray-200 border-t-2 border-gray-400">
+      <tr>
+        <th scope="col" class="px-4 py-3 text-left text-gray-700">Venue</th>
+        <th scope="col" class="px-4 py-3 text-left text-gray-700">Product</th>
+        <th scope="col" class="px-4 py-3 text-left text-gray-700">Start At</th>
+        <th scope="col" class="px-4 py-3 text-left text-gray-700">End At</th>
+        <th scope="col" class="px-4 py-3 text-left text-gray-700">Created At</th>
+        <th scope="col" class="px-4 py-3 text-left text-gray-700">Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= if Enum.any?(@chunks) do %>
+        <%= for c <- @chunks do %>
+          <tr class="hover:bg-gray-50 border-t border-b group">
+            <td class="px-4 py-3"><%= c.venue %></td>
+            <td class="px-4 py-3"><%= c.product %></td>
+            <td class="px-4 py-3"><%= c.start_at %></td>
+            <td class="px-4 py-3"><%= c.end_at %></td>
+            <td class="px-4 py-3"><%= c.inserted_at %></td>
+            <td class="px-4 py-3">
+              <%= render HistoryWeb.StatusView, "_pill.html", status: c.status, title: "chunk status" %>
+            </td>
+          </tr>
+        <% end %>
+      <% else %>
+        <tr class="hover:bg-gray-50 border-t border-b group">
+          <td colspan="6" class="px-4 py-3">Creating download chunks...</td>
+        </tr>
+      <% end %>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="6" class="px-4 py-3 text-right">
+          <%= link "<<", to: Routes.funding_rate_job_path(@socket, :show, @job.id, page: @first_page), class: "border px-4 py-2 bg-gray-100 opacity-70 hover:opacity-50" %>
+          <%= link "<", to: Routes.funding_rate_job_path(@socket, :show, @job.id, page: @previous_page), class: "border px-4 py-2 bg-gray-100 opacity-70 hover:opacity-50" %>
+          <%= link @current_page, to: Routes.funding_rate_job_path(@socket, :show, @job.id, page: @current_page), class: "border px-4 py-2 bg-gray-100 opacity-70 hover:opacity-50" %>
+          <%= link ">", to: Routes.funding_rate_job_path(@socket, :show, @job.id, page: @next_page), class: "border px-4 py-2 bg-gray-100 opacity-70 hover:opacity-50" %>
+          <%= link ">>", to: Routes.funding_rate_job_path(@socket, :show, @job.id, page: @last_page), class: "border px-4 py-2 bg-gray-100 opacity-70 hover:opacity-50" %>
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+</div>

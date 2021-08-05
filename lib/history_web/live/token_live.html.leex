@@ -1,0 +1,71 @@
+<h2 class="text-3xl">Tokens</h2>
+
+<form phx-change="suggest" phx-submit="search" class="mt-4">
+  <input type="text" name="q" value="<%= @query %>" placeholder="Live token search" list="tokens" autocomplete="off"/>
+  <datalist id="tokens">
+    <%= for t <- @tokens do %>
+      <option value="<%= t.name %>"><%= t.name %></option>
+    <% end %>
+  </datalist>
+  <button disabled type="button" phx-click="download" phx-disable-with="Downloading..." class="disabled:opacity-50 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
+    Download
+  </button>
+</form>
+
+<%= form_for @changeset, "#", [phx_submit: :save, class: "mt-4"], fn f -> %>
+  <table class="mt-4">
+    <thead class="bg-gray-200 border-t-2 border-gray-400">
+      <th scope="col" class="px-4 py-3 text-left text-gray-700">Name</th>
+      <th scope="col" class="px-4 py-3 text-left text-gray-700">Symbol</th>
+      <th scope="col" class="px-4 py-3 text-left text-gray-700">Actions</th>
+    </thead>
+    <tbody>
+      <%= if Enum.any?(@tokens) do %>
+        <%= Enum.map @tokens, fn t -> %>
+          <tr class="hover:bg-gray-50 border-t border-b group">
+            <td class="px-4 py-2"><%= t.name %></td>
+            <td class="px-4 py-2"><%= t.symbol %></td>
+            <td class="px-4 py-2 text-right">
+              <button
+                type="button"
+                class="text-red-500 opacity-75 hover:opacity-100 invisible group-hover:visible"
+                phx-click="delete"
+                phx-value-token-id="<%= t.id %>"
+              >
+                Delete
+              </button>
+            </td>
+          </tr>
+        <% end %>
+      <% else %>
+        <tr>
+          <td colspan="4" class="border px-4 py-2">
+            <%= if @query == nil do %>
+              No tokens. Add some below
+            <% else %>
+              No tokens found matching "<%= @query %>"
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+    <tfoot>
+      <tr class="border-t border-b">
+        <td class="px-4 py-2">
+          <%= text_input f, :name, placeholder: "Bitcoin" %>
+          <%= error_tag f, :name %>
+        </td>
+        <td class="px-4 py-2">
+          <%= text_input f, :symbol, placeholder: "btc" %>
+          <%= error_tag f, :symbol %>
+        </td>
+        <td class="px-4 py-2"></td>
+      </tr>
+      <tr>
+        <td colspan="4" class="px-4 py-2">
+          <button class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">Add</button>
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+<% end %>
