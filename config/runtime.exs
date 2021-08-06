@@ -21,7 +21,7 @@ config :history, HistoryWeb.Endpoint,
   server: true,
   url: [host: "history.localhost", port: http_port],
   render_errors: [view: HistoryWeb.ErrorView, accepts: ~w(html json), layout: false],
-  pubsub_server: History.PubSub,
+  pubsub_server: Tai.PubSub,
   secret_key_base: "IKVflq8U85wcqXU8o9X9X1PblMh2WZ7ejOfhN9pSOOui0COkoqSQZIU5fJTGoaqO",
   live_view: [signing_salt: "qzNpEtaM"]
 
@@ -47,7 +47,7 @@ config :workbench, Workbench.Repo,
 
 config :workbench, WorkbenchWeb.Endpoint,
   url: [host: "workbench.localhost", port: http_port],
-  pubsub_server: History.PubSub,
+  pubsub_server: Tai.PubSub,
   live_view: [signing_salt: "3kcyIROlwEycfF3Ea+Y33dH+g2S5pg4c"],
   secret_key_base: "fZUpnPa+1UWIZw8eHVLDMuB7+hYyvxJVYu9+LZpQCrpon/kWUjp5b2Eehz03dQ4t",
   server: false
@@ -182,7 +182,7 @@ config :navigator,
   }
 
 # Notifications
-config :notified, pubsub_server: History.PubSub
+config :notified, pubsub_server: Tai.PubSub
 
 config :notified,
   receivers: [

@@ -10,7 +10,6 @@ defmodule History.Application do
       History.Repo,
       History.EtsRepo,
       HistoryWeb.Telemetry,
-      {Phoenix.PubSub, name: History.PubSub},
       HistoryWeb.Endpoint,
       History.Trades.Supervisor,
       History.FundingRates.Supervisor,

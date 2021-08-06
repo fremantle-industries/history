@@ -106,7 +106,7 @@ defmodule History.FundingRateHistoryJobs.DownloadChunksBroadway do
 
     topics
     |> Enum.each(fn topic ->
-      Phoenix.PubSub.broadcast(History.PubSub, topic, msg)
+      Phoenix.PubSub.broadcast(Tai.PubSub, topic, msg)
     end)
   end
 end

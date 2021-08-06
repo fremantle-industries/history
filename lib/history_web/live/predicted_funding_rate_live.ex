@@ -8,7 +8,7 @@ defmodule HistoryWeb.PredictedFundingRateLive do
 
   @impl true
   def mount(_params, _session, socket) do
-    Phoenix.PubSub.subscribe(History.PubSub, "predicted_funding_rate_job:*")
+    Phoenix.PubSub.subscribe(Tai.PubSub, "predicted_funding_rate_job:*")
 
     predicted_funding_rates =
       PredictedFundingRates.search_latest(page: @latest_page, page_size: @latest_page_size)

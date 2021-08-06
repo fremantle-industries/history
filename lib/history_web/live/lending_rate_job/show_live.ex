@@ -6,8 +6,8 @@ defmodule HistoryWeb.LendingRateJob.ShowLive do
 
   @impl true
   def mount(%{"id" => id}, _session, socket) do
-    Phoenix.PubSub.subscribe(History.PubSub, "lending_rate_history_job:*")
-    Phoenix.PubSub.subscribe(History.PubSub, "lending_rate_history_chunk:*")
+    Phoenix.PubSub.subscribe(Tai.PubSub, "lending_rate_history_job:*")
+    Phoenix.PubSub.subscribe(Tai.PubSub, "lending_rate_history_chunk:*")
 
     socket =
       socket
