@@ -25,10 +25,13 @@ defmodule HistoryWeb.Telemetry do
     [
       # Phoenix Metrics
       last_value("phoenix.endpoint.stop.duration",
+        tags: [:method, :request_path],
+        tag_values: &tag_method_and_request_path/1,
         unit: {:native, :millisecond}
       ),
       last_value("phoenix.router_dispatch.stop.duration",
-        tags: [:route],
+        tags: [:controller_action],
+        tag_values: &tag_controller_action/1,
         unit: {:native, :millisecond}
       ),
 
@@ -47,5 +50,19 @@ defmodule HistoryWeb.Telemetry do
 
   defp prometheus_metrics_port do
     Application.get_env(:history, :prometheus_metrics_port, 9569)
+  end
+
+  # Extracts labels like "GET /"
+  defp tag_method_and_request_path(metadata) do
+    Map.take(metadata.conn, [:method, :request_path])
+  end
+
+  # Extracts controller#action from route dispatch
+  defp tag_controller_action(%{plug: plug, plug_opts: plug_opts}) when is_atom(plug_opts) do
+    %{controller_action: "#{inspect(plug)}##{plug_opts}"}
+  end
+
+  defp tag_controller_action(%{plug: plug}) do
+    %{controller_action: inspect(plug)}
   end
 end
