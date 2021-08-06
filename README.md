@@ -24,6 +24,10 @@ $ docker-compose up
 
 Visit [`history.localhost:4000`](http://history.localhost:4000)
 
+## Requirements
+
+`history` requires Elixir 1.11+ & Erlang/OTP 22+
+
 ## Features
 
 ### Import Products From Tai
