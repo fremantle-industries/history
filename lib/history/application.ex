@@ -4,6 +4,8 @@ defmodule History.Application do
   use Application
 
   def start(_type, _args) do
+    Confex.resolve_env!(:history)
+
     children = [
       History.Repo,
       History.EtsRepo,
