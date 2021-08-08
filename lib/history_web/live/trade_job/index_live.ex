@@ -1,8 +1,7 @@
 defmodule HistoryWeb.TradeJob.IndexLive do
   use HistoryWeb, :live_view
   import HistoryWeb.JobView
-  alias History.{TradeHistoryJobs, Products}
-  alias History.Trades
+  alias History.{Products, Trades, TradeHistoryJobs}
 
   @impl true
   def mount(_params, _session, socket) do
@@ -10,7 +9,8 @@ defmodule HistoryWeb.TradeJob.IndexLive do
 
     socket =
       socket
-      |> assign(:products, products())
+      |> assign(:query, nil)
+      |> assign_products()
       |> assign(:job_changeset, TradeHistoryJobs.job_changeset_today(%{}))
 
     {:ok, socket}
@@ -23,8 +23,8 @@ defmodule HistoryWeb.TradeJob.IndexLive do
 
     socket =
       socket
-      |> assign(page_size: page_size)
-      |> assign(current_page: page)
+      |> assign(:page_size, page_size)
+      |> assign(:current_page, page)
       |> assign_latest()
 
     {:noreply, socket}
@@ -108,13 +108,10 @@ defmodule HistoryWeb.TradeJob.IndexLive do
     )
   end
 
-  defp products do
-    Products.all()
-    |> Enum.map(fn p ->
-      [
-        value: %{symbol: p.symbol, venue: p.venue} |> Jason.encode!(),
-        key: "#{p.venue}:#{p.symbol}"
-      ]
-    end)
+  defp assign_products(socket) do
+    products = Products.search(nil)
+
+    socket
+    |> assign(:products, products)
   end
 end

@@ -55,6 +55,9 @@ module.exports = (env, options) => {
         }
       ]
     },
+    resolve: {
+      extensions: [".tsx", ".ts", ".jsx", ".js"]
+    },
     plugins: [
       new MiniCssExtractPlugin({filename: '../css/app.css'}),
       new CopyWebpackPlugin({

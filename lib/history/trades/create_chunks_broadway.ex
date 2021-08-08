@@ -2,8 +2,7 @@ defmodule History.Trades.CreateChunksBroadway do
   use Broadway
   require Logger
   alias Broadway.Message
-  alias History.{TradeHistoryJobs, TradeHistoryChunks}
-  alias History.Trades
+  alias History.{Trades, TradeHistoryJobs, TradeHistoryChunks}
 
   @spec start_link(term) :: Supervisor.on_start()
   def start_link(_) do

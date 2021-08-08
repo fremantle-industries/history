@@ -4,30 +4,163 @@
 <%= render HistoryWeb.DataView, "_nav.html", conn: @socket %>
 
 <div class="mt-8">
-  <h3 class="text-2xl">
-    Jobs
-  </h3>
+  <h3 class="text-2xl">Jobs</h3>
 
-  <%= form_for @job_changeset, "#", [phx_submit: :download, class: "flex items-start mt-8"], fn f -> %>
-    <label class="font-bold">
-      from:
-      <%= date_select f, :from_date %>
-      <%= error_tag f, :from_date %>
-      <%= text_input f, :from_time, type: "time" %>
-      <%= error_tag f, :from_time %>
-    </label>
-    <label class="ml-4 font-bold">
-      to:
-      <%= date_select f, :to_date %>
-      <%= error_tag f, :to_date %>
-      <%= text_input f, :to_time, type: "time" %>
-      <%= error_tag f, :to_time %>
-    </label>
-    <%= multiple_select f, :products, @products, selected: f.data.products |> Enum.map(& Jason.encode!/1), class: "ml-4" %>
-    <%= error_tag f, :products %>
-    <button class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded ml-4">
-      Download
-    </button>
+  <%= form_for @job_changeset, "#", [phx_submit: :download, class: "flex items-start mt-4"], fn f -> %>
+    <div class="w-5/12 flex space-x-2">
+      <label for="products-search" class="font-bold mt-2">Products:</label>
+      <div
+        class="flex-grow"
+        x-data="{
+          products: <%= @products |> Enum.map(&Map.take(&1, [:id, :venue, :symbol])) |> Jason.encode!() %>,
+          selections: [],
+          isOpen: false,
+          focus: 0,
+          searchTerm: '',
+          searchableProducts() {
+            const unselectedProducts =  this.products.filter(p => !this.selections.includes(p))
+            const searchTerms = this.searchTerm.split(' ').filter(t => t !== '')
+
+            if (searchTerms.length === 0) {
+              return unselectedProducts
+            }
+            return unselectedProducts.filter(p => {
+              const match = searchTerms.some(t => p.venue.includes(t)) || searchTerms.some(t => p.symbol.includes(t))
+              if (match) { return true }
+
+              const venueAndProductSearchTerms = searchTerms.map(t => t.split(':')).filter(t => t.length === 2)
+              return venueAndProductSearchTerms.some(([v, s]) => p.venue === v && p.symbol.includes(s))
+            })
+          },
+
+          open() {
+            this.isOpen = true
+          },
+          close() {
+            this.isOpen = false
+            this.focus = 0
+          },
+          scrollTo(idx) {
+            document.querySelector(`[ref='item-${idx}']`)?.scrollIntoView(false)
+          },
+          deselect(product) { this.selections = this.selections.filter(p => p !== product) },
+          setFocus(idx) {
+            this.focus = idx
+          },
+          focusPrev(event) {
+            this.setFocus(Math.max(this.focus-1, 0))
+            this.scrollTo(this.focus)
+            event.preventDefault()
+          },
+          focusNext(event) {
+            const products = this.searchableProducts()
+            this.setFocus(Math.min(this.focus+1, products.length-1))
+            this.scrollTo(this.focus)
+            event.preventDefault()
+          },
+          select(product) {
+            this.selections.push(product)
+          },
+          selectFocused(event) {
+            const product = this.searchableProducts()[this.focus]
+            if (product) {
+              this.selections.push(product)
+            } else {
+              const segments = this.searchTerm.split(':')
+              if (segments.length === 2) {
+                this.selections.push({ venue: segments[0], symbol: segments[1] })
+                this.searchTerm = ''
+              }
+            }
+            event.preventDefault()
+          },
+          pop(event) {
+            if (this.searchTerm === '' && (event.key === 'Backspace' || event.code === 'Backspace')) {
+              this.selections.pop()
+            }
+          }
+        }"
+        @click="$refs.search.focus()"
+        @click.away="close()"
+      >
+        <div class="flex flex-wrap space-x-1 space-y-1 border border-gray-600">
+          <template x-for="product in selections">
+            <div class="flex place-self-center text-xs">
+              <span class="border border-blue-700 rounded-l-lg bg-blue-700 text-white px-2 py-1" x-text="product.venue"></span>
+              <span class="border-t border-b px-2 py-1" x-text="product.symbol"></span>
+
+              <label class="border rounded-r-lg px-2 py-1 cursor-pointer align-center">
+                <input
+                  type="checkbox"
+                  name="trade_history_job[products][]"
+                  checked
+                  x-bind:value="JSON.stringify({ venue: product.venue, symbol: product.symbol })"
+                  @change="deselect(product)"
+                  class="hidden" />
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 20 14" fill="currentColor">
+                  <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                </svg>
+              </label>
+            </div>
+          </template>
+
+          <input
+            type="text"
+            id="products-search"
+            class="text-sm flex-grow border-0 m-0 px-2 py-2 focus:outline-none focus:ring-transparent"
+            x-ref="search"
+            x-model="searchTerm"
+            @focus="open()"
+            @keydown.arrow-up="focusPrev($event)"
+            @keydown.arrow-down="focusNext($event)"
+            @keydown.enter="selectFocused($event)"
+            @keydown="pop($event)" />
+        </div>
+        <div
+          class="absolute w-96 max-h-64 bg-white shadow-md overflow-y-auto"
+          style="display: none"
+          x-show="isOpen"
+        >
+          <template x-for="(product, index) in searchableProducts()">
+            <label
+              class="block"
+              :class="index === focus ? 'bg-gray-200 opacity-50' : ''"
+              :ref="`item-${index}`"
+              @mouseover="setFocus(index)"
+            >
+              <input
+                class="hidden"
+                type="checkbox"
+                @change="select(product)" />
+              <span class="inline-block bg-blue-700 text-white px-2 py-2" x-text="product.venue"></span>
+              <span class="inline-block pl-2 py-2" x-text="product.symbol"></span>
+            </label>
+          </template>
+        </div>
+      </div>
+      <%= error_tag f, :products %>
+    </div>
+
+    <div class="w-7/12 text-right">
+      <label class="font-bold">
+        from:
+        <%= date_select f, :from_date %>
+        <%= error_tag f, :from_date %>
+        <%= text_input f, :from_time, type: "time" %>
+        <%= error_tag f, :from_time %>
+      </label>
+      <label class="ml-4 font-bold">
+        to:
+        <%= date_select f, :to_date %>
+        <%= error_tag f, :to_date %>
+        <%= text_input f, :to_time, type: "time" %>
+        <%= error_tag f, :to_time %>
+      </label>
+
+      <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded ml-4">
+        Download
+      </button>
+    </div>
   <% end %>
 
   <table class="w-full mt-4">

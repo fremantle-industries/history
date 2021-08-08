@@ -5,8 +5,8 @@
 <form phx-change="suggest" phx-submit="search" class="mt-4">
   <input type="text" name="q" value="<%= @query %>" placeholder="Live product search" list="products" autocomplete="off"/>
   <datalist id="products">
-    <%= for p <- @symbols do %>
-      <option value="<%= p.symbol %>"><%= p.symbol %></option>
+    <%= for s <- @symbols do %>
+      <option value="<%= s %>"><%= s %></option>
     <% end %>
   </datalist>
   <button type="button" phx-click="import" phx-disable-with="Syncing..." class="disabled:opacity-50 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">

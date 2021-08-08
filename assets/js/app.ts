@@ -1,26 +1,31 @@
-// We need to import the CSS so that webpack will load it.
-// The MiniCssExtractPlugin is used to separate it out into
-// its own CSS file.
 import "../css/app.css"
-
-// webpack automatically bundles all modules in your
-// entry points. Those entry points can be configured
-// in "webpack.config.js".
-//
-// Import deps with the dep name or local files with a relative path, for example:
-//
-//     import {Socket} from "phoenix"
-//     import socket from "./socket"
-//
 import "phoenix_html"
-import {Socket} from "phoenix"
+import { Socket } from "phoenix"
 import * as NProgress from "nprogress"
-import {LiveSocket} from "phoenix_live_view"
+import { LiveSocket } from "phoenix_live_view"
+import Alpine from 'alpinejs'
+import { hooks } from "./hooks"
 
-import {hooks} from "./hooks"
+window.Alpine = Alpine
 
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
-let liveSocket = new LiveSocket("/live", Socket, {params: {_csrf_token: csrfToken}, hooks: hooks})
+let liveSocket = new LiveSocket(
+  "/live",
+  Socket,
+  {
+    params: { _csrf_token: csrfToken },
+    dom: {
+      onBeforeElUpdated(from, to) {
+        if (from._x_dataStack) {
+          window.Alpine.clone(from, to)
+        }
+      }
+    },
+    hooks: hooks,
+  },
+)
+
+Alpine.start()
 
 // Show progress bar on live navigation and form submits
 window.addEventListener("phx:page-loading-start", info => NProgress.start())

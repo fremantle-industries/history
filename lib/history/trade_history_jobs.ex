@@ -84,6 +84,8 @@ defmodule History.TradeHistoryJobs do
     {:ok, end_at} = RangeJob.to(job)
 
     job.products
+    |> Enum.map(fn p -> {p.venue, p.symbol} end)
+    |> History.Products.by_venue_and_symbol()
     |> Enum.each(fn p ->
       adapter = adapter_for!(p.venue)
 

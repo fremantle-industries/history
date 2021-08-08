@@ -8,7 +8,7 @@ http_port = "PORT" |> System.get_env("4000") |> String.to_integer()
 database_pool_size = String.to_integer(System.get_env("POOL_SIZE") || "10")
 default_database_url = "postgres://postgres:postgres@localhost:5432/history_?"
 configured_database_url = System.get_env("DATABASE_URL") || default_database_url
-database_url = String.replace(configured_database_url, "?", "dev")
+database_url = String.replace(configured_database_url, "?", env)
 
 # History
 config :history, ecto_repos: [History.Repo]
