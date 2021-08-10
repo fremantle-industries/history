@@ -42,6 +42,32 @@ Visit [`history.localhost:4000`](http://history.localhost:4000)
 
 ![swap-funding-rates](./docs/swap-funding-rates.png)
 
+## Venues
+
+| Venues   | Supported |
+| -------- | :-------: |
+| FTX      |    [x]    |
+| OkEx     |    [ ]    |
+| BitMEX   |    [ ]    |
+| Binance  |    [ ]    |
+| Deribit  |    [ ]    |
+| GDAX     |    [ ]    |
+| Huobi    |    [ ]    |
+| Bybit    |    [ ]    |
+| bit.com  |    [ ]    |
+| Bitfinex |    [ ]    |
+| Kraken   |    [ ]    |
+| CME      |    [ ]    |
+| Phemex   |    [ ]    |
+| BTSE     |    [ ]    |
+| KuCoin   |    [ ]    |
+| BitMax   |    [ ]    |
+| MEXC     |    [ ]    |
+| PrimeXBT |    [ ]    |
+| Gate.io  |    [ ]    |
+| Coinflex |    [ ]    |
+| bitFlyer |    [ ]    |
+
 ## Development
 
 ```bash
@@ -78,3 +104,17 @@ $ mix ecto.rollback
 # Last 3 migrations
 $ mix ecto.rollback -n 3
 ```
+
+## Help Wanted :)
+
+If you think this `history` thing might be worthwhile and you don't see a feature
+or venue listed we would love your contributions to add them! Feel free to
+drop us an email or open a Github issue.
+
+## Authors
+
+- Alex Kwiatkowski - alex+git@fremantle.io
+
+## License
+
+`history` is released under the [MIT license](./LICENSE)
