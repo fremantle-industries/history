@@ -10,7 +10,7 @@ defmodule HistoryWeb.PredictedFundingRateJob.IndexLive do
 
     socket =
       socket
-      |> assign(:swap_products, swap_products())
+      |> assign_swap_products()
       |> assign(:job_changeset, PredictedFundingRateJobs.changeset(%{}))
 
     {:ok, socket}
@@ -31,19 +31,21 @@ defmodule HistoryWeb.PredictedFundingRateJob.IndexLive do
   end
 
   @impl true
-  def handle_event("download", %{"predicted_funding_rate_job" => params}, socket) do
+  def handle_event("download", params, socket) do
+    job_params = Map.get(params, "predicted_funding_rate_job", %{})
+
     products =
-      params
+      job_params
       |> Map.get("products", [])
       |> Enum.map(&Jason.decode!/1)
 
-    params =
-      params
+    attrs =
+      job_params
       |> Map.put("products", products)
       |> Map.put("status", "enqueued")
 
     socket =
-      with {:ok, job} <- PredictedFundingRateJobs.insert(params) do
+      with {:ok, job} <- PredictedFundingRateJobs.insert(attrs) do
         socket
         |> assign(
           :job_changeset,
@@ -96,13 +98,8 @@ defmodule HistoryWeb.PredictedFundingRateJob.IndexLive do
     )
   end
 
-  defp swap_products do
-    Products.swap()
-    |> Enum.map(fn p ->
-      [
-        value: %{symbol: p.symbol, venue: p.venue} |> Jason.encode!(),
-        key: "#{p.venue}:#{p.symbol}"
-      ]
-    end)
+  defp assign_swap_products(socket) do
+    socket
+    |> assign(:swap_products, Products.swap())
   end
 end

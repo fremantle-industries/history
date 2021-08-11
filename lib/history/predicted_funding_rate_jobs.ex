@@ -56,6 +56,8 @@ defmodule History.PredictedFundingRateJobs do
 
   def each_chunk(job, callback) do
     job.products
+    |> Enum.map(fn p -> {p.venue, p.symbol, :swap} end)
+    |> History.Products.by_venue_and_symbol_and_type()
     |> Enum.each(fn p ->
       build_each_chunk(job, p.venue, p.symbol, callback)
     end)
