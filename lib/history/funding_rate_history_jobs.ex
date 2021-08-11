@@ -55,6 +55,8 @@ defmodule History.FundingRateHistoryJobs do
     {:ok, end_at} = RangeJob.to(job)
 
     job.products
+    |> Enum.map(fn p -> {p.venue, p.symbol, :swap} end)
+    |> History.Products.by_venue_and_symbol_and_type()
     |> Enum.each(fn p ->
       adapter = adapter_for!(p.venue)
 

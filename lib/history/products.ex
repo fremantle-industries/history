@@ -35,6 +35,12 @@ defmodule History.Products do
     |> Repo.all()
   end
 
+  def by_venue_and_symbol_and_type(products) do
+    products
+    |> Products.Queries.ByVenueAndSymbolType.call()
+    |> Repo.all()
+  end
+
   def delete(id) when is_number(id), do: %Products.Product{id: id} |> Repo.delete()
   def delete(id) when is_bitstring(id), do: id |> String.to_integer() |> delete()
 end

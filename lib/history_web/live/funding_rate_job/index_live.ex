@@ -9,7 +9,7 @@ defmodule HistoryWeb.FundingRateJob.IndexLive do
 
     socket =
       socket
-      |> assign(:swap_products, swap_products())
+      |> assign_swap_products()
       |> assign(:job_changeset, FundingRateHistoryJobs.job_changeset_today(%{}))
 
     {:ok, socket}
@@ -107,13 +107,8 @@ defmodule HistoryWeb.FundingRateJob.IndexLive do
     )
   end
 
-  defp swap_products do
-    Products.swap()
-    |> Enum.map(fn p ->
-      [
-        value: %{symbol: p.symbol, venue: p.venue} |> Jason.encode!(),
-        key: "#{p.venue}:#{p.symbol}"
-      ]
-    end)
+  defp assign_swap_products(socket) do
+    socket
+    |> assign(:swap_products, Products.swap())
   end
 end
