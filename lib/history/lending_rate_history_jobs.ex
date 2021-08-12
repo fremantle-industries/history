@@ -55,24 +55,23 @@ defmodule History.LendingRateHistoryJobs do
     {:ok, end_at} = RangeJob.to(job)
 
     job.tokens
-    |> Enum.each(fn t ->
-      adapter = adapter_for!(t.venue)
+    |> Enum.map(fn t -> {t.venue, t.symbol} end)
+    |> History.Tokens.by_venue_and_symbol()
+    |> Enum.each(fn %{venue: venue, symbol: symbol} ->
+      adapter = adapter_for!(venue)
 
       with {:ok, period} <- adapter.period(),
            {:ok, periods_per_chunk} <- adapter.periods_per_chunk() do
         build_each_chunk(
           job,
-          t.venue,
-          t.symbol,
+          venue,
+          symbol,
           start_at,
           end_at,
           period,
           periods_per_chunk,
           callback
         )
-
-        # else
-        #   {:error, :not_supported} -> :ok
       end
     end)
   end

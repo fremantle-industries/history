@@ -12,7 +12,10 @@ defmodule History.MixProject do
       start_permanent: Mix.env() == :prod,
       description: description(),
       aliases: aliases(),
-      deps: deps()
+      deps: deps(),
+      dialyzer: [
+        plt_add_apps: [:mix]
+      ]
     ]
   end
 
@@ -71,7 +74,7 @@ defmodule History.MixProject do
     [
       setup: ["setup.deps", "ecto.setup"],
       "setup.deps": ["deps.get", "cmd npm install --prefix assets"],
-      "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
+      "ecto.setup": ["ecto.create", "ecto.migrate", "history.seed"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
       test: ["ecto.create --quiet", "ecto.migrate", "test"]
     ]

@@ -1,46 +1,29 @@
 defmodule History.Tokens do
   require Ecto.Query
-  import Ecto.Query
-  alias History.Repo
-  alias History.Tokens.Token
-  alias History.Products.Product
+  alias History.{Repo, Tokens}
 
-  def all do
-    from(
-      Token,
-      order_by: [asc: :name],
-      select: [:id, :name, :symbol]
-    )
-    |> Repo.all()
-  end
+  @type venue_and_symbol_key :: Tokens.Token.venue_and_symbol_key()
+  @type token :: Tokens.Token.t()
 
+  @spec search(String.t() | nil) :: [token]
   def search(query) do
-    from(
-      t in Token,
-      order_by: [asc: :name],
-      select: [:id, :name, :symbol],
-      where: ilike(t.name, ^"%#{query}%") or ilike(t.symbol, ^"%#{query}%")
-    )
+    query
+    |> Tokens.Queries.Search.call()
     |> Repo.all()
   end
 
-  def venue_tokens do
-    from(
-      t in Token,
-      join: p in Product,
-      on: p.base == t.symbol or p.quote == t.symbol,
-      group_by: [t.symbol, p.venue],
-      order_by: [asc: p.venue, asc: t.symbol],
-      select: {p.venue, t.symbol}
-    )
+  @spec by_venue_and_symbol([venue_and_symbol_key]) :: [token]
+  def by_venue_and_symbol(venue_and_symbol_keys) do
+    venue_and_symbol_keys
+    |> Tokens.Queries.ByVenueAndSymbol.call()
     |> Repo.all()
   end
 
   def insert(params) do
-    changeset = Token.changeset(%Token{}, params)
+    changeset = Tokens.Token.changeset(%Tokens.Token{}, params)
     Repo.insert(changeset)
   end
 
-  def delete(id) when is_number(id), do: %Token{id: id} |> Repo.delete()
+  def delete(id) when is_number(id), do: %Tokens.Token{id: id} |> Repo.delete()
   def delete(id) when is_bitstring(id), do: id |> String.to_integer() |> delete()
 end

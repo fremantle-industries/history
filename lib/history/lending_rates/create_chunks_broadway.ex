@@ -2,9 +2,7 @@ defmodule History.LendingRates.CreateChunksBroadway do
   use Broadway
   require Logger
   alias Broadway.Message
-  alias History.LendingRateHistoryChunks
-  alias History.LendingRateHistoryJobs
-  alias History.LendingRates
+  alias History.{LendingRateHistoryChunks, LendingRateHistoryJobs, LendingRates}
 
   @spec start_link(term) :: Supervisor.on_start()
   def start_link(_) do

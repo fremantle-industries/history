@@ -9,7 +9,7 @@ defmodule HistoryWeb.LendingRateJob.IndexLive do
 
     socket =
       socket
-      |> assign(:tokens, venue_tokens())
+      |> assign_venue_tokens()
       |> assign(:job_changeset, LendingRateHistoryJobs.job_changeset_today(%{}))
 
     {:ok, socket}
@@ -59,9 +59,7 @@ defmodule HistoryWeb.LendingRateJob.IndexLive do
   end
 
   @impl true
-  def handle_event("cancel", %{"history-job-id" => id}, socket) do
-    require Logger
-    Logger.warn("TODO... cancel history download job: #{id}")
+  def handle_event("cancel", %{"history-job-id" => _id}, socket) do
     {:noreply, socket}
   end
 
@@ -102,13 +100,10 @@ defmodule HistoryWeb.LendingRateJob.IndexLive do
     )
   end
 
-  defp venue_tokens do
-    Tokens.venue_tokens()
-    |> Enum.map(fn {venue, base} ->
-      [
-        value: %{symbol: base, venue: venue} |> Jason.encode!(),
-        key: "#{venue}:#{base}"
-      ]
-    end)
+  defp assign_venue_tokens(socket) do
+    tokens = Tokens.by_venue_and_symbol([{"*", "*"}])
+
+    socket
+    |> assign(:venue_tokens, tokens)
   end
 end
