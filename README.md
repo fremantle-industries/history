@@ -36,6 +36,8 @@ Visit [`history.localhost:4000`](http://history.localhost:4000)
 
 ### Download Historical Venue Data
 
+![filter-predicted-funding-rate-job](./docs/filter-predicted-funding-rate-job.png)
+
 ![predicted-funding-rate-download](./docs/predicted-funding-rate-download.png)
 
 ### Visualize & Explore Data for Market Insights
