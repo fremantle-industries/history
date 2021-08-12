@@ -5,8 +5,6 @@ defmodule History.Tokens.Token do
   schema "tokens" do
     field :name, :string
     field :symbol, :string
-    field :collateral, :boolean
-    field :collateral_weight, :decimal
 
     timestamps()
   end
@@ -14,8 +12,8 @@ defmodule History.Tokens.Token do
   @doc false
   def changeset(token, attrs) do
     token
-    |> cast(attrs, [:name, :symbol, :collateral, :collateral_weight])
-    |> validate_required([:name, :symbol, :collateral])
+    |> cast(attrs, [:name, :symbol])
+    |> validate_required([:name, :symbol])
     |> unique_constraint([:name, :symbol])
   end
 end
