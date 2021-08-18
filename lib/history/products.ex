@@ -2,16 +2,27 @@ defmodule History.Products do
   require Ecto.Query
   alias History.{Products, Repo}
 
+  @type product :: Products.Product.t()
+
   def import do
     Products.Services.Import.call()
   end
 
+  @spec all :: [product]
+  def all do
+    "*"
+    |> Products.Queries.ByType.call()
+    |> Repo.all()
+  end
+
+  @spec spot :: [product]
   def spot do
     "spot"
     |> Products.Queries.ByType.call()
     |> Repo.all()
   end
 
+  @spec swap :: [product]
   def swap do
     "swap"
     |> Products.Queries.ByType.call()

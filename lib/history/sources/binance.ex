@@ -4,7 +4,10 @@ defmodule History.Sources.Binance do
   @behaviour History.DataAdapter
 
   @impl true
-  def trades, do: NoOp.FundingRates
+  def trades, do: NoOp.Trades
+
+  @impl true
+  def candles, do: NoOp.Candles
 
   @impl true
   def liquidations, do: NoOp.Liquidations

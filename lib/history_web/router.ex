@@ -25,6 +25,10 @@ defmodule HistoryWeb.Router do
     live("/data/trade/latest", TradeLatestLive, :index)
     live("/data/trade/jobs", TradeJob.IndexLive, :index, as: :trade_job)
     live("/data/trade/jobs/:id", TradeJob.ShowLive, :show, as: :trade_job)
+    live("/data/candles", CandleLive, :index)
+    live("/data/candles/latest", CandleLatestLive, :index)
+    live("/data/candles/jobs", CandleJob.IndexLive, :index, as: :candle_job)
+    live("/data/candles/jobs/:id", CandleJob.ShowLive, :show, as: :candle_job)
     live("/data/predicted_funding", PredictedFundingRateLive, :index)
 
     live("/data/predicted_funding/jobs", PredictedFundingRateJob.IndexLive, :index,
@@ -55,11 +59,6 @@ defmodule HistoryWeb.Router do
       layout: {HistoryWeb.LayoutView, :root}
     )
   end
-
-  # Other scopes may use custom stacks.
-  # scope "/api", HistoryWeb do
-  #   pipe_through :api
-  # end
 
   # Enables LiveDashboard only for development
   #

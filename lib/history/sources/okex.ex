@@ -7,6 +7,9 @@ defmodule History.Sources.OkEx do
   def trades, do: NoOp.Trades
 
   @impl true
+  def candles, do: NoOp.Candles
+
+  @impl true
   def liquidations, do: NoOp.Liquidations
 
   @impl true

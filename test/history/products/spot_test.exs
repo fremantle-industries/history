@@ -8,7 +8,7 @@ defmodule History.Products.SpotTest do
     {:ok, swap_product} = Factories.Product.create(%{symbol: "btc-perp", type: :swap})
 
     products = History.Products.spot()
-    assert Enum.any?(products)
+    assert Enum.count(products) == 2
     assert Enum.member?(products, spot_product_1)
     assert Enum.member?(products, spot_product_2)
     assert !Enum.member?(products, swap_product)

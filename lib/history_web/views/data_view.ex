@@ -23,6 +23,8 @@ defmodule HistoryWeb.DataView do
     <nav class="mt-2 space-x-1">
       <%= link "Trades", to: Routes.trade_path(assigns.conn, :index), class: "hover:opacity-75" %>
       <span class="text-gray-400">|</span>
+      <%= link "Candles", to: Routes.candle_path(assigns.conn, :index), class: "hover:opacity-75" %>
+      <span class="text-gray-400">|</span>
       <%= link "Funding Rates", to: Routes.funding_rate_path(assigns.conn, :index), class: "hover:opacity-75" %>
       <span class="text-gray-400">|</span>
       <%= link "Predicted Funding Rates", to: Routes.predicted_funding_rate_path(assigns.conn, :index), class: "hover:opacity-75" %>

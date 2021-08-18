@@ -2,6 +2,8 @@ defmodule History.Products.Product do
   use Ecto.Schema
   import Ecto.Changeset
 
+  @type t :: %__MODULE__{}
+
   schema "products" do
     field(:base, :string)
     field(:quote, :string)

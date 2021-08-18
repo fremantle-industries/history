@@ -41,6 +41,13 @@
     {
       "icon": "external link",
       "tags": [
+        "candles"
+      ],
+      "type": "dashboards"
+    },
+    {
+      "icon": "external link",
+      "tags": [
         "futures-premiums"
       ],
       "type": "dashboards"

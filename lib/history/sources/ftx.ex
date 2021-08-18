@@ -7,6 +7,9 @@ defmodule History.Sources.Ftx do
   def trades, do: Ftx.Trades
 
   @impl true
+  def candles, do: Ftx.Candles
+
+  @impl true
   def liquidations, do: Ftx.Liquidations
 
   @impl true

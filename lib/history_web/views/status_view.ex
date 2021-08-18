@@ -16,10 +16,12 @@ defmodule HistoryWeb.StatusView do
   defp bg_color(:working), do: "bg-purple-50"
   defp bg_color(:not_found), do: "bg-gray-50"
   defp bg_color(:complete), do: "bg-green-50"
+  defp bg_color(:canceled), do: "bg-gray-400"
 
   defp text_color(:enqueued), do: "text-yellow-400"
   defp text_color(:error), do: "text-red-400"
   defp text_color(:working), do: "text-purple-400"
   defp text_color(:not_found), do: "text-gray-400"
   defp text_color(:complete), do: "text-green-400"
+  defp text_color(:canceled), do: "text-white"
 end

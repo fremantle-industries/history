@@ -12,6 +12,7 @@ defmodule History.Application do
       HistoryWeb.Telemetry,
       HistoryWeb.Endpoint,
       History.Trades.Supervisor,
+      History.Candles.Supervisor,
       History.FundingRates.Supervisor,
       History.PredictedFundingRates.Supervisor,
       History.LendingRates.Supervisor
