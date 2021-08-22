@@ -2,17 +2,17 @@ defmodule History.FundingRateHistoryJobs do
   require Ecto.Query
   require Indifferent
   import Ecto.Query
-  alias History.{DataAdapter, RangeJob, Repo}
-  alias History.FundingRates.{FundingRateHistoryJob, FundingRateHistoryChunk}
+  alias History.Repo
+  alias History.FundingRates.FundingRateHistoryJob, as: Job
 
   @default_latest_page 1
   @default_latest_page_size 25
   @max_page_size 100
 
-  @spec get!(FundingRateHistoryJob.id()) :: FundingRateHistoryJob.t()
+  @spec get!(Job.id()) :: Job.t()
   def get!(id) do
     from(
-      j in FundingRateHistoryJob,
+      j in Job,
       where: j.id == ^id
     )
     |> Repo.one()
@@ -24,7 +24,7 @@ defmodule History.FundingRateHistoryJobs do
     offset = page * page_size
 
     from(
-      f in FundingRateHistoryJob,
+      f in Job,
       order_by: [desc: :inserted_at],
       offset: ^offset,
       limit: ^page_size
@@ -32,49 +32,19 @@ defmodule History.FundingRateHistoryJobs do
     |> Repo.all()
   end
 
+  @spec count :: non_neg_integer
   def count do
-    from(
-      j in FundingRateHistoryJob,
-      select: count(j.id)
-    )
-    |> Repo.one()
+    Repo.aggregate(Job, :count)
   end
 
   def enqueued_after(id, count) do
     from(
-      f in FundingRateHistoryJob,
+      f in Job,
       where: f.id > ^id and f.status == "enqueued",
       order_by: [asc: :id],
       limit: ^count
     )
     |> Repo.all()
-  end
-
-  def each_chunk(job, callback) do
-    {:ok, start_at} = RangeJob.from(job)
-    {:ok, end_at} = RangeJob.to(job)
-
-    job.products
-    |> Enum.map(fn p -> {p.venue, p.symbol, :swap} end)
-    |> History.Products.by_venue_and_symbol_and_type()
-    |> Enum.each(fn p ->
-      {:ok, adapter} = DataAdapter.for_venue(p.venue)
-      funding_rate_adapter = adapter.funding_rates()
-
-      with {:ok, period} <- funding_rate_adapter.period(),
-           {:ok, periods_per_chunk} = funding_rate_adapter.periods_per_chunk() do
-        build_each_chunk(
-          job,
-          p.venue,
-          p.symbol,
-          start_at,
-          end_at,
-          period,
-          periods_per_chunk,
-          callback
-        )
-      end
-    end)
   end
 
   def job_changeset_today(params) do
@@ -94,59 +64,21 @@ defmodule History.FundingRateHistoryJobs do
         }
       )
 
-    FundingRateHistoryJob.changeset(%FundingRateHistoryJob{}, merged_params)
+    Job.changeset(%Job{}, merged_params)
   end
 
   def insert(params) do
-    changeset = FundingRateHistoryJob.changeset(%FundingRateHistoryJob{}, params)
+    changeset = Job.changeset(%Job{}, params)
     Repo.insert(changeset)
   end
 
   def update(job, params) do
-    changeset = FundingRateHistoryJob.changeset(job, params)
+    changeset = Job.changeset(job, params)
     Repo.update(changeset)
   end
 
   def cancel(job) do
-    changeset = FundingRateHistoryJob.changeset(job, %{status: :canceled})
+    changeset = Job.changeset(job, %{status: :canceled})
     Repo.update(changeset)
-  end
-
-  defp build_each_chunk(
-         job,
-         venue,
-         product_symbol,
-         start_at,
-         end_at,
-         period,
-         periods_per_chunk,
-         callback
-       ) do
-    if Timex.before?(start_at, end_at) do
-      chunk_end_at = DateTime.add(start_at, period * periods_per_chunk, :second)
-      min_chunk_end_at = Tai.DateTime.min(chunk_end_at, end_at)
-
-      chunk = %FundingRateHistoryChunk{
-        status: "enqueued",
-        job: job,
-        venue: venue,
-        product: product_symbol,
-        start_at: start_at,
-        end_at: min_chunk_end_at
-      }
-
-      callback.(chunk)
-
-      build_each_chunk(
-        job,
-        venue,
-        product_symbol,
-        min_chunk_end_at,
-        end_at,
-        period,
-        periods_per_chunk,
-        callback
-      )
-    end
   end
 end

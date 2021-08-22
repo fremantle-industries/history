@@ -3,7 +3,7 @@ defmodule History.FundingRateHistoryChunks do
   require Indifferent
   import Ecto.Query
   alias History.{DataAdapter, Repo}
-  alias History.FundingRates.FundingRateHistoryChunk
+  alias History.FundingRates.FundingRateHistoryChunk, as: Chunk
 
   @default_latest_page 1
   @default_latest_page_size 25
@@ -11,7 +11,7 @@ defmodule History.FundingRateHistoryChunks do
 
   def enqueued_after(id, count) do
     from(
-      c in FundingRateHistoryChunk,
+      c in Chunk,
       where: c.id > ^id and c.status == "enqueued",
       order_by: [asc: :id],
       limit: ^count
@@ -25,7 +25,7 @@ defmodule History.FundingRateHistoryChunks do
     offset = page * page_size
 
     from(
-      c in FundingRateHistoryChunk,
+      c in Chunk,
       where: c.job_id == ^job_id,
       order_by: [asc: :start_at, asc: :product, asc: :venue],
       offset: ^offset,
@@ -36,7 +36,7 @@ defmodule History.FundingRateHistoryChunks do
 
   def count_by_job_id(job_id) do
     from(
-      c in FundingRateHistoryChunk,
+      c in Chunk,
       select: count(c.id),
       where: c.job_id == ^job_id
     )
@@ -45,7 +45,7 @@ defmodule History.FundingRateHistoryChunks do
 
   def count_by_job_id_and_status(job_id, status) do
     from(
-      c in FundingRateHistoryChunk,
+      c in Chunk,
       select: count(c.id),
       where: c.job_id == ^job_id and c.status == ^status
     )
@@ -57,7 +57,7 @@ defmodule History.FundingRateHistoryChunks do
   end
 
   def update(chunk, params) do
-    changeset = FundingRateHistoryChunk.changeset(chunk, params)
+    changeset = Chunk.changeset(chunk, params)
     Repo.update(changeset)
   end
 
