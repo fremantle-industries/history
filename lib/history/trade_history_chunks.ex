@@ -2,11 +2,11 @@ defmodule History.TradeHistoryChunks do
   require Ecto.Query
   import Ecto.Query
   alias History.{DataAdapter, Repo}
-  alias History.Trades.TradeHistoryChunk
+  alias History.Trades.TradeHistoryChunk, as: Chunk
 
   def enqueued_after(id, count) do
     from(
-      c in TradeHistoryChunk,
+      c in Chunk,
       where: c.id > ^id and c.status == "enqueued",
       order_by: [asc: :id],
       limit: ^count
@@ -24,7 +24,7 @@ defmodule History.TradeHistoryChunks do
     offset = page * page_size
 
     from(
-      c in TradeHistoryChunk,
+      c in Chunk,
       where: c.job_id == ^job_id,
       order_by: [asc: :start_at, asc: :product, asc: :venue],
       offset: ^offset,
@@ -35,7 +35,7 @@ defmodule History.TradeHistoryChunks do
 
   def count_by_job_id(job_id) do
     from(
-      c in TradeHistoryChunk,
+      c in Chunk,
       select: count(c.id),
       where: c.job_id == ^job_id
     )
@@ -44,7 +44,7 @@ defmodule History.TradeHistoryChunks do
 
   def count_by_job_id_and_status(job_id, status) do
     from(
-      c in TradeHistoryChunk,
+      c in Chunk,
       select: count(c.id),
       where: c.job_id == ^job_id and c.status == ^status
     )
@@ -56,7 +56,7 @@ defmodule History.TradeHistoryChunks do
   end
 
   def update(chunk, params) do
-    changeset = TradeHistoryChunk.changeset(chunk, params)
+    changeset = Chunk.changeset(chunk, params)
     Repo.update(changeset)
   end
 
