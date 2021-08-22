@@ -62,8 +62,7 @@ defmodule History.FundingRateHistoryChunks do
   end
 
   def fetch(chunk) do
-    {:ok, adapter} = DataAdapter.for_venue(chunk.venue)
-    funding_rate_adapter = adapter.funding_rates()
+    {:ok, funding_rate_adapter} = DataAdapter.for_venue(chunk.venue, :funding_rates)
     funding_rate_adapter.fetch(chunk)
   end
 end

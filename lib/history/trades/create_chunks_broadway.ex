@@ -66,10 +66,8 @@ defmodule History.Trades.CreateChunksBroadway do
     |> Enum.map(fn p -> {p.venue, p.symbol} end)
     |> History.Products.by_venue_and_symbol()
     |> Enum.each(fn p ->
-      {:ok, adapter} = DataAdapter.for_venue(p.venue)
-      trade_adapter = adapter.trades()
-
-      with {:ok, period} <- trade_adapter.period(),
+      with {:ok, trade_adapter} = DataAdapter.for_venue(p.venue, :trades),
+           {:ok, period} <- trade_adapter.period(),
            {:ok, periods_per_chunk} = trade_adapter.periods_per_chunk() do
         build_each_chunk(
           job,

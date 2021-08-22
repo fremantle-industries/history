@@ -66,10 +66,8 @@ defmodule History.FundingRates.CreateChunksBroadway do
     |> Enum.map(fn p -> {p.venue, p.symbol, :swap} end)
     |> History.Products.by_venue_and_symbol_and_type()
     |> Enum.each(fn p ->
-      {:ok, adapter} = DataAdapter.for_venue(p.venue)
-      funding_rate_adapter = adapter.funding_rates()
-
-      with {:ok, period} <- funding_rate_adapter.period(),
+      with {:ok, funding_rate_adapter} = DataAdapter.for_venue(p.venue, :funding_rates),
+           {:ok, period} <- funding_rate_adapter.period(),
            {:ok, periods_per_chunk} = funding_rate_adapter.periods_per_chunk() do
         build_each_chunk(
           job,

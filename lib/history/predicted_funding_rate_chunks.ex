@@ -62,8 +62,9 @@ defmodule History.PredictedFundingRateChunks do
   end
 
   def fetch(chunk) do
-    {:ok, adapter} = DataAdapter.for_venue(chunk.venue)
-    predicted_funding_rate_adapter = adapter.predicted_funding_rates()
+    {:ok, predicted_funding_rate_adapter} =
+      DataAdapter.for_venue(chunk.venue, :predicted_funding_rates)
+
     predicted_funding_rate_adapter.fetch(chunk)
   end
 end

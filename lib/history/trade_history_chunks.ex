@@ -61,8 +61,7 @@ defmodule History.TradeHistoryChunks do
   end
 
   def fetch(chunk) do
-    {:ok, adapter} = DataAdapter.for_venue(chunk.venue)
-    trade_adapter = adapter.trades()
+    {:ok, trade_adapter} = DataAdapter.for_venue(chunk.venue, :trades)
     trade_adapter.fetch(chunk)
   end
 end
