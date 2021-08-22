@@ -1,4 +1,4 @@
-defmodule History.DataAdapters.NoOp.Trades do
+defmodule History.Sources.NoOp.LendingRates do
   def period do
     {:error, :not_supported}
   end

@@ -1,5 +1,5 @@
-defmodule History.DataAdapters.Bitmex do
-  alias History.DataAdapters.NoOp
+defmodule History.Sources.Bybit do
+  alias History.Sources.NoOp
 
   @behaviour History.DataAdapter
 

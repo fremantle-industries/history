@@ -32,12 +32,12 @@ config :history, :prometheus_metrics_port, history_prometheus_metrics_port
 
 config :history,
   data_adapters: %{
-    binance: History.DataAdapters.Binance,
-    bitmex: History.DataAdapters.Bitmex,
-    bybit: History.DataAdapters.Bybit,
-    gdax: History.DataAdapters.Gdax,
-    ftx: History.DataAdapters.Ftx,
-    okex: History.DataAdapters.OkEx
+    binance: History.Sources.Binance,
+    bitmex: History.Sources.Bitmex,
+    bybit: History.Sources.Bybit,
+    gdax: History.Sources.Gdax,
+    ftx: History.Sources.Ftx,
+    okex: History.Sources.OkEx
   }
 
 # Workbench

@@ -1,10 +1,10 @@
-defmodule History.DataAdapters.OkEx do
-  alias History.DataAdapters.NoOp
+defmodule History.Sources.Bitmex do
+  alias History.Sources.NoOp
 
   @behaviour History.DataAdapter
 
   @impl true
-  def trades, do: NoOp.Trades
+  def trades, do: NoOp.FundingRates
 
   @impl true
   def liquidations, do: NoOp.Liquidations

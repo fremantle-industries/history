@@ -1,5 +1,5 @@
-defmodule History.DataAdapters.Binance do
-  alias History.DataAdapters.NoOp
+defmodule History.Sources.Gdax do
+  alias History.Sources.NoOp
 
   @behaviour History.DataAdapter
 

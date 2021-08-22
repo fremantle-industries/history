@@ -1,4 +1,4 @@
-defmodule History.DataAdapters.Ftx do
+defmodule History.Sources.Ftx do
   alias __MODULE__
 
   @behaviour History.DataAdapter
