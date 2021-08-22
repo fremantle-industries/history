@@ -2,7 +2,7 @@ defmodule History.FundingRateHistoryChunks do
   require Ecto.Query
   require Indifferent
   import Ecto.Query
-  alias History.Repo
+  alias History.{DataAdapter, Repo}
   alias History.FundingRates.FundingRateHistoryChunk
 
   @default_latest_page 1
@@ -62,16 +62,8 @@ defmodule History.FundingRateHistoryChunks do
   end
 
   def fetch(chunk) do
-    adapter = adapter_for!(chunk.venue)
-    adapter.fetch(chunk)
-  end
-
-  defp adapter_for!(venue) do
-    adapters = :history |> Application.get_env(:data_adapters, %{}) |> Indifferent.access()
-
-    case adapters[venue] do
-      nil -> raise "funding rate adapter not found for: #{inspect(venue)}"
-      adapter -> adapter.funding_rates
-    end
+    {:ok, adapter} = DataAdapter.for_venue(chunk.venue)
+    funding_rate_adapter = adapter.funding_rates()
+    funding_rate_adapter.fetch(chunk)
   end
 end

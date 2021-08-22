@@ -1,7 +1,7 @@
 defmodule History.TradeHistoryJobs do
   require Ecto.Query
   import Ecto.Query
-  alias History.{RangeJob, Repo}
+  alias History.{DataAdapter, RangeJob, Repo}
   alias History.Trades.{TradeHistoryJob, TradeHistoryChunk}
 
   def job_changeset_today(params) do
@@ -87,10 +87,11 @@ defmodule History.TradeHistoryJobs do
     |> Enum.map(fn p -> {p.venue, p.symbol} end)
     |> History.Products.by_venue_and_symbol()
     |> Enum.each(fn p ->
-      adapter = adapter_for!(p.venue)
+      {:ok, adapter} = DataAdapter.for_venue(p.venue)
+      trade_adapter = adapter.trades()
 
-      with {:ok, period} <- adapter.period(),
-           {:ok, periods_per_chunk} = adapter.periods_per_chunk() do
+      with {:ok, period} <- trade_adapter.period(),
+           {:ok, periods_per_chunk} = trade_adapter.periods_per_chunk() do
         build_each_chunk(
           job,
           p.venue,
@@ -103,15 +104,6 @@ defmodule History.TradeHistoryJobs do
         )
       end
     end)
-  end
-
-  defp adapter_for!(venue) do
-    adapters = :history |> Application.get_env(:data_adapters, %{}) |> Indifferent.access()
-
-    case adapters[venue] do
-      nil -> raise "trade adapter not found for: #{inspect(venue)}"
-      adapter -> adapter.trades
-    end
   end
 
   defp build_each_chunk(

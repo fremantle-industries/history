@@ -1,7 +1,7 @@
 defmodule History.TradeHistoryChunks do
   require Ecto.Query
   import Ecto.Query
-  alias History.Repo
+  alias History.{DataAdapter, Repo}
   alias History.Trades.TradeHistoryChunk
 
   def enqueued_after(id, count) do
@@ -61,16 +61,8 @@ defmodule History.TradeHistoryChunks do
   end
 
   def fetch(chunk) do
-    adapter = adapter_for!(chunk.venue)
-    adapter.fetch(chunk)
-  end
-
-  defp adapter_for!(venue) do
-    adapters = :history |> Application.get_env(:data_adapters, %{}) |> Indifferent.access()
-
-    case adapters[venue] do
-      nil -> raise "trades adapter not found for: #{inspect(venue)}"
-      adapter -> adapter.trades
-    end
+    {:ok, adapter} = DataAdapter.for_venue(chunk.venue)
+    trade_adapter = adapter.trades()
+    trade_adapter.fetch(chunk)
   end
 end

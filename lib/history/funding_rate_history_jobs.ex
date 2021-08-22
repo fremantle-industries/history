@@ -2,7 +2,7 @@ defmodule History.FundingRateHistoryJobs do
   require Ecto.Query
   require Indifferent
   import Ecto.Query
-  alias History.{RangeJob, Repo}
+  alias History.{DataAdapter, RangeJob, Repo}
   alias History.FundingRates.{FundingRateHistoryJob, FundingRateHistoryChunk}
 
   @default_latest_page 1
@@ -58,10 +58,11 @@ defmodule History.FundingRateHistoryJobs do
     |> Enum.map(fn p -> {p.venue, p.symbol, :swap} end)
     |> History.Products.by_venue_and_symbol_and_type()
     |> Enum.each(fn p ->
-      adapter = adapter_for!(p.venue)
+      {:ok, adapter} = DataAdapter.for_venue(p.venue)
+      funding_rate_adapter = adapter.funding_rates()
 
-      with {:ok, period} <- adapter.period(),
-           {:ok, periods_per_chunk} = adapter.periods_per_chunk() do
+      with {:ok, period} <- funding_rate_adapter.period(),
+           {:ok, periods_per_chunk} = funding_rate_adapter.periods_per_chunk() do
         build_each_chunk(
           job,
           p.venue,
@@ -109,15 +110,6 @@ defmodule History.FundingRateHistoryJobs do
   def cancel(job) do
     changeset = FundingRateHistoryJob.changeset(job, %{status: :canceled})
     Repo.update(changeset)
-  end
-
-  defp adapter_for!(venue) do
-    adapters = :history |> Application.get_env(:data_adapters, %{}) |> Indifferent.access()
-
-    case adapters[venue] do
-      nil -> raise "funding rate adapter not found for: #{inspect(venue)}"
-      adapter -> adapter.funding_rates
-    end
   end
 
   defp build_each_chunk(
