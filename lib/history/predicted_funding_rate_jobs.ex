@@ -3,24 +3,16 @@ defmodule History.PredictedFundingRateJobs do
   require Indifferent
   import Ecto.Query
   alias History.Repo
+  alias History.PredictedFundingRates.PredictedFundingRateJob, as: Job
 
-  alias History.PredictedFundingRates.{
-    PredictedFundingRateJob,
-    PredictedFundingRateChunk
-  }
+  @spec get!(Job.id()) :: Job.t()
+  def get!(id) do
+    Repo.get!(Job, id)
+  end
 
   @default_latest_page 1
   @default_latest_page_size 25
   @max_page_size 100
-
-  @spec get!(PredictedFundingRateJob.id()) :: PredictedFundingRateJob.t()
-  def get!(id) do
-    from(
-      j in PredictedFundingRateJob,
-      where: j.id == ^id
-    )
-    |> Repo.one()
-  end
 
   def latest(opts) do
     page = max((opts[:page] || @default_latest_page) - 1, 0)
@@ -28,7 +20,7 @@ defmodule History.PredictedFundingRateJobs do
     offset = page * page_size
 
     from(
-      f in PredictedFundingRateJob,
+      f in Job,
       order_by: [desc: :inserted_at],
       offset: ^offset,
       limit: ^page_size
@@ -36,17 +28,14 @@ defmodule History.PredictedFundingRateJobs do
     |> Repo.all()
   end
 
+  @spec count :: non_neg_integer
   def count do
-    from(
-      j in PredictedFundingRateJob,
-      select: count(j.id)
-    )
-    |> Repo.one()
+    Repo.aggregate(Job, :count)
   end
 
   def enqueued_after(id, count) do
     from(
-      f in PredictedFundingRateJob,
+      f in Job,
       where: f.id > ^id and f.status == "enqueued",
       order_by: [asc: :id],
       limit: ^count
@@ -54,38 +43,18 @@ defmodule History.PredictedFundingRateJobs do
     |> Repo.all()
   end
 
-  def each_chunk(job, callback) do
-    job.products
-    |> Enum.map(fn p -> {p.venue, p.symbol, :swap} end)
-    |> History.Products.by_venue_and_symbol_and_type()
-    |> Enum.each(fn p ->
-      build_each_chunk(job, p.venue, p.symbol, callback)
-    end)
-  end
-
   def changeset(params) do
     merged_params = Map.merge(params, %{})
-    PredictedFundingRateJob.changeset(%PredictedFundingRateJob{}, merged_params)
+    Job.changeset(%Job{}, merged_params)
   end
 
   def insert(params) do
-    changeset = PredictedFundingRateJob.changeset(%PredictedFundingRateJob{}, params)
+    changeset = Job.changeset(%Job{}, params)
     Repo.insert(changeset)
   end
 
   def update(job, params) do
-    changeset = PredictedFundingRateJob.changeset(job, params)
+    changeset = Job.changeset(job, params)
     Repo.update(changeset)
-  end
-
-  def build_each_chunk(job, venue, product_symbol, callback) do
-    chunk = %PredictedFundingRateChunk{
-      status: "enqueued",
-      job: job,
-      venue: venue,
-      product: product_symbol
-    }
-
-    callback.(chunk)
   end
 end
