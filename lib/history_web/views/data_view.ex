@@ -13,7 +13,8 @@ defmodule HistoryWeb.DataView do
   end
 
   def render("_header.html", assigns) do
-    sections = ["Data" | assigns.section]
+    # sections = ["Data" | assigns.section]
+    sections = [{"Data", Routes.data_path(assigns.conn, :index)} | assigns.section]
     assigns = Map.put(assigns, :section, sections)
     render("_breadcrumbs.html", assigns)
   end

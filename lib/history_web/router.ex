@@ -15,12 +15,12 @@ defmodule HistoryWeb.Router do
     plug(:accepts, ["json"])
   end
 
-  redirect("/", "/data/trade", :permanent)
-  redirect("/data", "/data/trade", :permanent)
+  redirect("/", "/data", :permanent)
 
   scope "/", HistoryWeb do
     pipe_through(:browser)
 
+    live("/data", DataLive, :index)
     live("/data/trade", TradeLive, :index)
     live("/data/trade/latest", TradeLatestLive, :index)
     live("/data/trade/jobs", TradeJob.IndexLive, :index, as: :trade_job)

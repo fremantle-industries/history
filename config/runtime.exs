@@ -96,12 +96,12 @@ config :navigator,
     history: [
       %{
         label: "History",
-        link: {HistoryWeb.Router.Helpers, :trade_path, [HistoryWeb.Endpoint, :index]},
+        link: {HistoryWeb.Router.Helpers, :data_path, [HistoryWeb.Endpoint, :index]},
         class: "text-4xl"
       },
       %{
         label: "Data",
-        link: {HistoryWeb.Router.Helpers, :trade_path, [HistoryWeb.Endpoint, :index]}
+        link: {HistoryWeb.Router.Helpers, :data_path, [HistoryWeb.Endpoint, :index]}
       },
       %{
         label: "Products",
