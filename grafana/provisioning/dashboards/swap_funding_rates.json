@@ -22,7 +22,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": 6,
-  "iteration": 1628792364119,
+  "iteration": 1629903373379,
   "links": [
     {
       "icon": "external link",
@@ -32,11 +32,12 @@
       "type": "dashboards"
     },
     {
+      "asDropdown": true,
       "icon": "external link",
       "tags": [
-        "funding-rates",
         "rates"
       ],
+      "title": "Rates",
       "type": "dashboards"
     }
   ],
@@ -721,14 +722,15 @@
   "schemaVersion": 30,
   "style": "dark",
   "tags": [
-    "swap-funding-rates"
+    "swap-funding-rates",
+    "rates"
   ],
   "templating": {
     "list": [
       {
         "allValue": null,
         "current": {
-          "selected": false,
+          "selected": true,
           "text": [
             "All"
           ],
@@ -759,7 +761,7 @@
       {
         "allValue": null,
         "current": {
-          "selected": false,
+          "selected": true,
           "text": [
             "All"
           ],
@@ -828,5 +830,5 @@
   "timezone": "",
   "title": "Swap Funding Rates",
   "uid": "2dkHtKXGz",
-  "version": 13
+  "version": 18
 }

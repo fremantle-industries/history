@@ -8,6 +8,12 @@
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
         "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
         "type": "dashboard"
       }
     ]
@@ -15,8 +21,8 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 15,
-  "iteration": 1623210295921,
+  "id": 7,
+  "iteration": 1629903464797,
   "links": [
     {
       "icon": "external link",
@@ -24,6 +30,20 @@
         "home"
       ],
       "type": "dashboards"
+    },
+    {
+      "asDropdown": true,
+      "icon": "external link",
+      "includeVars": false,
+      "keepTime": false,
+      "tags": [
+        "rates"
+      ],
+      "targetBlank": false,
+      "title": "Rates",
+      "tooltip": "",
+      "type": "dashboards",
+      "url": ""
     }
   ],
   "panels": [
@@ -59,7 +79,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -180,7 +200,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -256,7 +276,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -330,7 +350,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -404,7 +424,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -480,7 +500,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -554,7 +574,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -630,7 +650,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -704,7 +724,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -778,7 +798,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -854,7 +874,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -928,7 +948,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -1004,7 +1024,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -1078,7 +1098,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -1152,7 +1172,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -1228,7 +1248,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -1302,7 +1322,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -1378,7 +1398,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -1452,7 +1472,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -1526,7 +1546,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -1602,7 +1622,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -1676,7 +1696,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -1752,7 +1772,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -1826,7 +1846,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -1900,7 +1920,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -1976,7 +1996,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -2050,7 +2070,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -2126,7 +2146,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -2200,7 +2220,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -2274,7 +2294,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -2350,7 +2370,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -2424,7 +2444,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -2500,7 +2520,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -2574,7 +2594,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -2648,7 +2668,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -2724,7 +2744,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -2798,7 +2818,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -2874,7 +2894,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -2948,7 +2968,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -3022,7 +3042,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -3098,7 +3118,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -3172,7 +3192,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -3248,7 +3268,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -3322,7 +3342,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -3396,7 +3416,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -3472,7 +3492,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -3546,7 +3566,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -3622,7 +3642,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -3696,7 +3716,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -3770,7 +3790,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -3846,7 +3866,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -3920,7 +3940,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -3996,7 +4016,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -4070,7 +4090,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -4144,7 +4164,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -4220,7 +4240,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -4294,7 +4314,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -4370,7 +4390,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -4444,7 +4464,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -4518,7 +4538,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -4594,7 +4614,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -4668,7 +4688,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -4744,7 +4764,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -4818,7 +4838,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -4892,7 +4912,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -4968,7 +4988,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -5042,7 +5062,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -5118,7 +5138,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -5192,7 +5212,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -5266,7 +5286,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -5342,7 +5362,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -5416,7 +5436,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -5492,7 +5512,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -5566,7 +5586,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -5640,7 +5660,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -5716,7 +5736,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -5790,7 +5810,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -5866,7 +5886,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -5940,7 +5960,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -6014,7 +6034,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -6090,7 +6110,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -6164,7 +6184,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -6240,7 +6260,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -6314,7 +6334,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -6388,7 +6408,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -6464,7 +6484,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -6538,7 +6558,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -6614,7 +6634,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -6688,7 +6708,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -6762,7 +6782,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -6838,7 +6858,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -6912,7 +6932,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -6988,7 +7008,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -7062,7 +7082,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -7136,7 +7156,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -7212,7 +7232,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -7286,7 +7306,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -7362,7 +7382,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -7436,7 +7456,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -7510,7 +7530,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -7586,7 +7606,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -7660,7 +7680,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -7736,7 +7756,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -7810,7 +7830,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -7884,7 +7904,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -7960,7 +7980,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -8034,7 +8054,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -8110,7 +8130,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -8184,7 +8204,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -8258,7 +8278,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -8334,7 +8354,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -8408,7 +8428,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -8484,7 +8504,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -8558,7 +8578,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -8632,7 +8652,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -8708,7 +8728,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -8782,7 +8802,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -8858,7 +8878,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -8932,7 +8952,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -9006,7 +9026,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -9082,7 +9102,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -9156,7 +9176,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -9232,7 +9252,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -9306,7 +9326,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -9380,7 +9400,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -9456,7 +9476,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -9530,7 +9550,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -9606,7 +9626,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -9680,7 +9700,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -9754,7 +9774,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -9830,7 +9850,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.0",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "format": "time_series",
@@ -9901,7 +9921,7 @@
       {
         "allValue": null,
         "current": {
-          "selected": false,
+          "selected": true,
           "text": [
             "All"
           ],
@@ -9939,5 +9959,5 @@
   "timezone": "",
   "title": "Spot Lending Rates",
   "uid": "97r3KPuMk",
-  "version": 15
+  "version": 4
 }
