@@ -34,7 +34,8 @@
     {
       "icon": "external link",
       "tags": [
-        "funding-rates"
+        "funding-rates",
+        "rates"
       ],
       "type": "dashboards"
     }

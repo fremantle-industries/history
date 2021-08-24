@@ -9866,7 +9866,8 @@
   "schemaVersion": 30,
   "style": "dark",
   "tags": [
-    "spot-lending-rates"
+    "spot-lending-rates",
+    "rates"
   ],
   "templating": {
     "list": [

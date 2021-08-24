@@ -42,6 +42,8 @@ Visit [`history.localhost:4000`](http://history.localhost:4000)
 
 ### Visualize & Explore Data for Market Insights
 
+![home](./docs/history-home.png)
+
 ![swap-funding-rates](./docs/swap-funding-rates.png)
 
 ## Venues
