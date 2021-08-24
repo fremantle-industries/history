@@ -83,7 +83,7 @@
     {
       "icon": "external link",
       "tags": [
-        "correlations"
+        "beta"
       ],
       "type": "dashboards"
     },
@@ -165,7 +165,7 @@
       "type": "row"
     },
     {
-      "datasource": "Prop TimescaleDB",
+      "datasource": "History TimescaleDB",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -328,7 +328,7 @@
       "type": "row"
     },
     {
-      "datasource": "Prop TimescaleDB",
+      "datasource": "History TimescaleDB",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -447,7 +447,7 @@
       "type": "barchart"
     },
     {
-      "datasource": "Prop TimescaleDB",
+      "datasource": "History TimescaleDB",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -661,7 +661,7 @@
           "text": "ftx",
           "value": "ftx"
         },
-        "datasource": "Prop TimescaleDB",
+        "datasource": "History TimescaleDB",
         "definition": "SELECT products.venue FROM products GROUP BY products.venue ORDER BY products.venue",
         "description": "",
         "error": null,
@@ -685,7 +685,7 @@
           "text": "btc/usd",
           "value": "btc/usd"
         },
-        "datasource": "Prop TimescaleDB",
+        "datasource": "History TimescaleDB",
         "definition": "SELECT products.symbol FROM products WHERE products.base = 'btc' AND products.type = 'spot' GROUP BY products.symbol ORDER BY products.symbol",
         "description": null,
         "error": null,
@@ -709,7 +709,7 @@
           "text": "ftx",
           "value": "ftx"
         },
-        "datasource": "Prop TimescaleDB",
+        "datasource": "History TimescaleDB",
         "definition": "SELECT products.venue FROM products GROUP BY products.venue ORDER BY products.venue",
         "description": null,
         "error": null,
@@ -733,7 +733,7 @@
           "text": "eth/usd",
           "value": "eth/usd"
         },
-        "datasource": "Prop TimescaleDB",
+        "datasource": "History TimescaleDB",
         "definition": "SELECT products.symbol FROM products WHERE products.base = 'eth' AND products.type = 'spot' GROUP BY products.symbol ORDER BY products.symbol",
         "description": null,
         "error": null,

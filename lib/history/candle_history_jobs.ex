@@ -43,11 +43,13 @@ defmodule History.CandleHistoryJobs do
     |> Repo.all()
   end
 
+  @seconds_in_1_hour 60 * 60
   def job_changeset_today(params) do
     now = DateTime.utc_now()
     today = now |> DateTime.to_date()
     yesterday = today |> Timex.shift(days: -1)
     current_hour = Time.new!(now.hour, 0, 0)
+    next_hour = current_hour |> Time.add(@seconds_in_1_hour, :second)
 
     merged_params =
       Map.merge(
@@ -56,7 +58,7 @@ defmodule History.CandleHistoryJobs do
           from_date: yesterday,
           from_time: current_hour,
           to_date: today,
-          to_time: current_hour
+          to_time: next_hour
         }
       )
 
