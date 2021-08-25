@@ -48,29 +48,29 @@ Visit [`history.localhost:4000`](http://history.localhost:4000)
 
 ## Venues
 
-| Venues   | Supported |
-| -------- | :-------: |
-| FTX      |    [x]    |
-| OkEx     |    [ ]    |
-| BitMEX   |    [ ]    |
-| Binance  |    [ ]    |
-| Deribit  |    [ ]    |
-| GDAX     |    [ ]    |
-| Huobi    |    [ ]    |
-| Bybit    |    [ ]    |
-| bit.com  |    [ ]    |
-| Bitfinex |    [ ]    |
-| Kraken   |    [ ]    |
-| CME      |    [ ]    |
-| Phemex   |    [ ]    |
-| BTSE     |    [ ]    |
-| KuCoin   |    [ ]    |
-| BitMax   |    [ ]    |
-| MEXC     |    [ ]    |
-| PrimeXBT |    [ ]    |
-| Gate.io  |    [ ]    |
-| Coinflex |    [ ]    |
-| bitFlyer |    [ ]    |
+| Venues   | Trades | Candles | Funding Rates | Predicted Funding Rates | Lending Rates |
+| -------- | :----: | :-----: | :-----------: | :---------------------: | :-----------: |
+| FTX      |  [x]   |   [x]   |      [x]      |           [x]           |      [x]      |
+| OkEx     |  [ ]   |   [ ]   |      [ ]      |           [ ]           |      [ ]      |
+| BitMEX   |  [ ]   |   [ ]   |      [ ]      |           [ ]           |      [ ]      |
+| Binance  |  [ ]   |   [ ]   |      [ ]      |           [ ]           |      [ ]      |
+| Deribit  |  [ ]   |   [ ]   |      [ ]      |           [ ]           |      [ ]      |
+| GDAX     |  [ ]   |   [ ]   |      [ ]      |           [ ]           |      [ ]      |
+| Huobi    |  [ ]   |   [ ]   |      [ ]      |           [ ]           |      [ ]      |
+| Bybit    |  [ ]   |   [ ]   |      [ ]      |           [ ]           |      [ ]      |
+| bit.com  |  [ ]   |   [ ]   |      [ ]      |           [ ]           |      [ ]      |
+| Bitfinex |  [ ]   |   [ ]   |      [ ]      |           [ ]           |      [ ]      |
+| Kraken   |  [ ]   |   [ ]   |      [ ]      |           [ ]           |      [ ]      |
+| CME      |  [ ]   |   [ ]   |      [ ]      |           [ ]           |      [ ]      |
+| Phemex   |  [ ]   |   [ ]   |      [ ]      |           [ ]           |      [ ]      |
+| BTSE     |  [ ]   |   [ ]   |      [ ]      |           [ ]           |      [ ]      |
+| KuCoin   |  [ ]   |   [ ]   |      [ ]      |           [ ]           |      [ ]      |
+| BitMax   |  [ ]   |   [ ]   |      [ ]      |           [ ]           |      [ ]      |
+| MEXC     |  [ ]   |   [ ]   |      [ ]      |           [ ]           |      [ ]      |
+| PrimeXBT |  [ ]   |   [ ]   |      [ ]      |           [ ]           |      [ ]      |
+| Gate.io  |  [ ]   |   [ ]   |      [ ]      |           [ ]           |      [ ]      |
+| Coinflex |  [ ]   |   [ ]   |      [ ]      |           [ ]           |      [ ]      |
+| bitFlyer |  [ ]   |   [ ]   |      [ ]      |           [ ]           |      [ ]      |
 
 ## Development
 
