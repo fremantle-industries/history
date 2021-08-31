@@ -68,9 +68,16 @@ defmodule History.Candles do
       changeset,
       on_conflict: [
         set: [
-          time: Ecto.Changeset.get_field(changeset, :time),
           venue: Ecto.Changeset.get_field(changeset, :venue),
+          product: Ecto.Changeset.get_field(changeset, :product),
           source: Ecto.Changeset.get_field(changeset, :source),
+          period: Ecto.Changeset.get_field(changeset, :period),
+          time: Ecto.Changeset.get_field(changeset, :time),
+          open: Ecto.Changeset.get_field(changeset, :open),
+          high: Ecto.Changeset.get_field(changeset, :high),
+          low: Ecto.Changeset.get_field(changeset, :low),
+          close: Ecto.Changeset.get_field(changeset, :close),
+          volume: Ecto.Changeset.get_field(changeset, :volume),
           updated_at: DateTime.utc_now()
         ]
       ],
