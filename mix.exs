@@ -31,7 +31,7 @@ defmodule History.MixProject do
 
   defp deps do
     [
-      {:broadway, "~> 0.6"},
+      {:broadway, "~> 1.0"},
       {:confex, "~> 3.5"},
       {:ecto_enum, "~> 1.4"},
       {:ecto_sql, "~> 3.4"},
