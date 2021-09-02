@@ -2,7 +2,11 @@ import Config
 
 # Shared variables
 env = config_env() |> Atom.to_string()
-http_port = "PORT" |> System.get_env("4000") |> String.to_integer()
+http_port = (System.get_env("HTTP_PORT") || "4000") |> String.to_integer()
+workbench_host = System.get_env("WORKBENCH_HOST") || "workbench.localhost"
+history_host = System.get_env("HISTORY_HOST") || "history.localhost"
+grafana_host = System.get_env("GRAFANA_HOST") || "grafana.localhost"
+prometheus_host = System.get_env("PROMETHEUS_HOST") || "prometheus.localhost"
 
 # Configure your database
 database_pool_size = String.to_integer(System.get_env("POOL_SIZE") || "10")
@@ -19,7 +23,7 @@ config :history, History.Repo,
 
 config :history, HistoryWeb.Endpoint,
   server: true,
-  url: [host: "history.localhost", port: http_port],
+  url: [host: history_host, port: http_port],
   render_errors: [view: HistoryWeb.ErrorView, accepts: ~w(html json), layout: false],
   pubsub_server: Tai.PubSub,
   secret_key_base: "IKVflq8U85wcqXU8o9X9X1PblMh2WZ7ejOfhN9pSOOui0COkoqSQZIU5fJTGoaqO",
@@ -46,7 +50,7 @@ config :workbench, Workbench.Repo,
   pool_size: 10
 
 config :workbench, WorkbenchWeb.Endpoint,
-  url: [host: "workbench.localhost", port: http_port],
+  url: [host: workbench_host, port: http_port],
   pubsub_server: Tai.PubSub,
   live_view: [signing_salt: "3kcyIROlwEycfF3Ea+Y33dH+g2S5pg4c"],
   secret_key_base: "fZUpnPa+1UWIZw8eHVLDMuB7+hYyvxJVYu9+LZpQCrpon/kWUjp5b2Eehz03dQ4t",
@@ -82,11 +86,11 @@ config :master_proxy,
   http: [:inet6, port: http_port],
   backends: [
     %{
-      host: ~r/history.localhost/,
+      host: ~r/#{history_host}/,
       phoenix_endpoint: HistoryWeb.Endpoint
     },
     %{
-      host: ~r/workbench.localhost/,
+      host: ~r/#{workbench_host}/,
       phoenix_endpoint: WorkbenchWeb.Endpoint
     }
   ]
@@ -117,11 +121,11 @@ config :navigator,
       },
       %{
         label: "Grafana",
-        link: "http://grafana.localhost:3000"
+        link: "http://#{grafana_host}"
       },
       %{
         label: "Prometheus",
-        link: "http://prometheus.localhost:9090"
+        link: "http://#{prometheus_host}"
       }
     ],
     workbench: [
@@ -168,15 +172,15 @@ config :navigator,
       },
       %{
         label: "History",
-        link: {HistoryWeb.Router.Helpers, :home_url, [HistoryWeb.Endpoint, :index]}
+        link: {HistoryWeb.Router.Helpers, :trade_url, [HistoryWeb.Endpoint, :index]}
       },
       %{
         label: "Grafana",
-        link: "http://grafana.localhost:3000"
+        link: "http://#{grafana_host}"
       },
       %{
         label: "Prometheus",
-        link: "http://prometheus.localhost:9090"
+        link: "http://#{prometheus_host}"
       }
     ]
   }

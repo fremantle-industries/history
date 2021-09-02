@@ -19,21 +19,21 @@ services:
       dockerfile: ./Dockerfile
       target: builder
     ports:
-      - "${HOST_PORT:-4000}:${PORT:-4000}"
       - "${WORKBENCH_PROMETHEUS_METRICS_PORT:-9568}:${WORKBENCH_PROMETHEUS_METRICS_PORT:-9568}"
       - "${HISTORY_PROMETHEUS_METRICS_PORT:-9569}:${HISTORY_PROMETHEUS_METRICS_PORT:-9569}"
-      - "4369:4369"
-      - "9999:9999"
     depends_on:
       - db
     environment:
-      - PORT
-      - HOST_PORT
-      - HOST
+      - DATABASE_URL=${DATABASE_URL:-ecto://postgres:postgres@db:5432/history_?}
+      - HTTP_PORT
       - REPLACE_OS_VARS=true
       - NODE_COOKIE
       - WORKBENCH_PROMETHEUS_METRICS_PORT
       - HISTORY_PROMETHEUS_METRICS_PORT
+      - WORKBENCH_HOST
+      - HISTORY_HOST
+      - GRAFANA_HOST
+      - PROMETHEUS_HOST
       - SECRET_KEY_BASE
       - LIVE_VIEW_SIGNING_SALT
       - GOOGLE_CLOUD_PROJECT
@@ -44,9 +44,10 @@ services:
       - BALANCE_SNAPSHOT_BTC_USD_SYMBOL
       - BALANCE_SNAPSHOT_USD_QUOTE_VENUE
       - BALANCE_SNAPSHOT_USD_QUOTE_ASSET
-      - DATABASE_URL
     volumes:
       - web_build:/app/_build
+      - web_deps:/app/deps
+      - web_asset_node_modules:/app/assets/node_modules
       - ./.env:/app/.env
       - ./mix.exs:/app/mix.exs
       - ./mix.lock:/app/mix.lock
@@ -60,8 +61,7 @@ services:
       - ./config:/app/config
       - ./lib:/app/lib
       - ./priv/repo:/app/priv/repo
-    # entrypoint: "sh -c 'mix setup.deps && mix phx.server'"
-    entrypoint: "sh -c 'mix setup && elixir --sname history -S mix phx.server'"
+    entrypoint: "sh -c 'mix setup.deps && elixir --sname history -S mix phx.server'"
 
   prometheus:
     image: 'prom/prometheus:v2.28.1'
@@ -90,8 +90,26 @@ services:
     env_file:
       - ./grafana/config.monitoring
 
+  reverse_proxy:
+    build:
+      context: .
+      dockerfile: ./reverse_proxy/Dockerfile
+    ports:
+      - 80:80
+    volumes:
+      - ./reverse_proxy/templates:/etc/nginx/templates
+      - ./reverse_proxy/nginx.htpasswd:/etc/nginx/conf.d/nginx.htpasswd
+    environment:
+      - HTTP_PORT
+      - WORKBENCH_HOST
+      - HISTORY_HOST
+      - GRAFANA_HOST
+      - PROMETHEUS_HOST
+
 volumes:
   db_data:
   web_build:
+  web_deps:
+  web_asset_node_modules:
   prometheus_data:
   grafana_data:

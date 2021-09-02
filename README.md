@@ -22,7 +22,14 @@ end
 $ docker-compose up
 ```
 
-Visit [`history.localhost:4000`](http://history.localhost:4000)
+Visit [`history.localhost`](http://history.localhost)
+
+When running the application with `docker-compose` you will need to enter the basic auth development credentials:
+
+```
+username: admin
+password: password
+```
 
 ## Requirements
 

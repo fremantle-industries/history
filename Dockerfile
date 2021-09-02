@@ -15,6 +15,7 @@ COPY ./config ./config
 COPY ./lib ./lib
 COPY ./priv/repo ./priv/repo
 RUN mix setup.deps
+RUN mix compile
 
 FROM bitwalker/alpine-elixir-phoenix:latest
 
