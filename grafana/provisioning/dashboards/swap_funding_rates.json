@@ -21,8 +21,8 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 6,
-  "iteration": 1629903373379,
+  "id": 14,
+  "iteration": 1629746104181,
   "links": [
     {
       "icon": "external link",
@@ -34,11 +34,16 @@
     {
       "asDropdown": true,
       "icon": "external link",
+      "includeVars": false,
+      "keepTime": false,
       "tags": [
         "rates"
       ],
+      "targetBlank": false,
       "title": "Rates",
-      "type": "dashboards"
+      "tooltip": "",
+      "type": "dashboards",
+      "url": ""
     }
   ],
   "panels": [
@@ -730,7 +735,7 @@
       {
         "allValue": null,
         "current": {
-          "selected": true,
+          "selected": false,
           "text": [
             "All"
           ],
@@ -741,7 +746,36 @@
         "datasource": "History TimescaleDB",
         "definition": "SELECT venue FROM products WHERE products.type = 'swap' GROUP BY venue ORDER BY venue",
         "description": null,
-        "error": null,
+        "error": {
+          "config": {
+            "data": {
+              "from": "1627154104169",
+              "queries": [
+                {
+                  "datasourceId": 84,
+                  "format": "table",
+                  "rawSql": "SELECT venue FROM products WHERE products.type = 'swap' GROUP BY venue ORDER BY venue",
+                  "refId": "venue"
+                }
+              ],
+              "to": "1629749704169"
+            },
+            "headers": {
+              "X-Grafana-Org-Id": 1
+            },
+            "hideFromInspector": false,
+            "method": "POST",
+            "requestId": "venue",
+            "retry": 0,
+            "url": "api/ds/query"
+          },
+          "data": {
+            "message": "Invalid data source ID"
+          },
+          "message": "Invalid data source ID",
+          "status": 400,
+          "statusText": "Bad Request"
+        },
         "hide": 0,
         "includeAll": true,
         "label": null,
@@ -761,7 +795,7 @@
       {
         "allValue": null,
         "current": {
-          "selected": true,
+          "selected": false,
           "text": [
             "All"
           ],
@@ -772,7 +806,36 @@
         "datasource": "History TimescaleDB",
         "definition": "SELECT quote FROM products WHERE products.type = 'swap'  GROUP BY quote ORDER BY quote",
         "description": null,
-        "error": null,
+        "error": {
+          "config": {
+            "data": {
+              "from": "1627154104170",
+              "queries": [
+                {
+                  "datasourceId": 84,
+                  "format": "table",
+                  "rawSql": "SELECT quote FROM products WHERE products.type = 'swap'  GROUP BY quote ORDER BY quote",
+                  "refId": "quote"
+                }
+              ],
+              "to": "1629749704170"
+            },
+            "headers": {
+              "X-Grafana-Org-Id": 1
+            },
+            "hideFromInspector": false,
+            "method": "POST",
+            "requestId": "quote",
+            "retry": 0,
+            "url": "api/ds/query"
+          },
+          "data": {
+            "message": "Invalid data source ID"
+          },
+          "message": "Invalid data source ID",
+          "status": 400,
+          "statusText": "Bad Request"
+        },
         "hide": 0,
         "includeAll": true,
         "label": null,
@@ -803,7 +866,36 @@
         "datasource": "History TimescaleDB",
         "definition": "SELECT base FROM products WHERE products.type = 'swap' GROUP BY base ORDER BY base",
         "description": null,
-        "error": null,
+        "error": {
+          "config": {
+            "data": {
+              "from": "1627154104170",
+              "queries": [
+                {
+                  "datasourceId": 84,
+                  "format": "table",
+                  "rawSql": "SELECT base FROM products WHERE products.type = 'swap' GROUP BY base ORDER BY base",
+                  "refId": "base"
+                }
+              ],
+              "to": "1629749704170"
+            },
+            "headers": {
+              "X-Grafana-Org-Id": 1
+            },
+            "hideFromInspector": false,
+            "method": "POST",
+            "requestId": "base",
+            "retry": 0,
+            "url": "api/ds/query"
+          },
+          "data": {
+            "message": "Invalid data source ID"
+          },
+          "message": "Invalid data source ID",
+          "status": 400,
+          "statusText": "Bad Request"
+        },
         "hide": 0,
         "includeAll": true,
         "label": null,
@@ -830,5 +922,5 @@
   "timezone": "",
   "title": "Swap Funding Rates",
   "uid": "2dkHtKXGz",
-  "version": 18
+  "version": 4
 }
