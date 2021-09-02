@@ -1,8 +1,8 @@
-defmodule History.Repo.Migrations.CreateCandles do
+defmodule <%= module_prefix %>.Repo.Migrations.CreateHistoryCandles do
   use Ecto.Migration
 
   def change do
-    create table(:candles) do
+    create table(:candles<%= if not is_nil(db_prefix), do: ", prefix: \"#{db_prefix}\"" %>) do
       add :venue, :string, null: false
       add :product, :string, null: false
       add :source, :string, null: false

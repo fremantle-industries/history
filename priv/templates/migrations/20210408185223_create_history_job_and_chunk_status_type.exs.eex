@@ -1,4 +1,4 @@
-defmodule History.Repo.Migrations.CreateJobAndChunkStatusType do
+defmodule <%= module_prefix %>.Repo.Migrations.CreateHistoryJobAndChunkStatusType do
   use Ecto.Migration
 
   def up do

@@ -60,7 +60,8 @@ services:
       - ./config:/app/config
       - ./lib:/app/lib
       - ./priv/repo:/app/priv/repo
-    entrypoint: "sh -c 'mix setup.deps && mix phx.server'"
+    # entrypoint: "sh -c 'mix setup.deps && mix phx.server'"
+    entrypoint: "sh -c 'mix setup && elixir --sname history -S mix phx.server'"
 
   prometheus:
     image: 'prom/prometheus:v2.28.1'

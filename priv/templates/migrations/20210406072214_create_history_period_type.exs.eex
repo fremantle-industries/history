@@ -1,4 +1,4 @@
-defmodule History.Repo.Migrations.CreatePeriodType do
+defmodule <%= module_prefix %>.Repo.Migrations.CreateHistoryPeriodType do
   use Ecto.Migration
 
   def up do

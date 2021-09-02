@@ -1,13 +1,14 @@
-defmodule History.Repo.Migrations.CreateTradeHistoryJobs do
+defmodule <%= module_prefix %>.Repo.Migrations.CreateHistoryCandleHistoryJobs do
   use Ecto.Migration
 
   def up do
-    create table(:trade_history_jobs) do
+    create table(:candle_history_jobs<%= if not is_nil(db_prefix), do: ", prefix: \"#{db_prefix}\"" %>) do
       add(:from_date, :date, null: false)
       add(:from_time, :time, null: false)
       add(:to_date, :date, null: false)
       add(:to_time, :time, null: false)
       add(:products, {:array, :jsonb}, null: false)
+      add(:periods, {:array, History.PeriodType.type()}, null: false)
       add(:status, History.JobStatusType.type(), null: false)
 
       timestamps()
@@ -15,6 +16,6 @@ defmodule History.Repo.Migrations.CreateTradeHistoryJobs do
   end
 
   def down do
-    drop(table(:trade_history_jobs))
+    drop table(:candle_history_jobs<%= if not is_nil(db_prefix), do: ", prefix: \"#{db_prefix}\"" %>)
   end
 end

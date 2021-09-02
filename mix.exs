@@ -72,8 +72,9 @@ defmodule History.MixProject do
 
   defp aliases do
     [
-      setup: ["setup.deps", "ecto.setup"],
+      setup: ["setup.deps", "setup.gen.migration", "ecto.setup"],
       "setup.deps": ["deps.get", "cmd npm install --prefix assets"],
+      "setup.gen.migration": ["tai.gen.migration", "workbench.gen.migration", "history.gen.migration"],
       "ecto.setup": ["ecto.create", "ecto.migrate", "history.seed"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
       test: ["ecto.create --quiet", "ecto.migrate", "test"]

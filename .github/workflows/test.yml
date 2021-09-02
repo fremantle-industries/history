@@ -64,8 +64,8 @@ jobs:
           SECRET_KEY_BASE: ${{secrets.SECRET_KEY_BASE}}
           LIVE_VIEW_SIGNING_SALT: ${{secrets.LIVE_VIEW_SIGNING_SALT}}
         run: |
-          mix ecto.create
-          mix ecto.migrate
+          mix setup.gen.migration
+          mix ecto.setup
           mix test
 
       - name: Dialyzer

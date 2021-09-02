@@ -1,8 +1,8 @@
-defmodule History.Repo.Migrations.CreateFundingRateHistoryChunks do
+defmodule <%= module_prefix %>.Repo.Migrations.CreateHistoryFundingRateHistoryChunks do
   use Ecto.Migration
 
   def up do
-    create table(:funding_rate_history_chunks) do
+    create table(:funding_rate_history_chunks<%= if not is_nil(db_prefix), do: ", prefix: \"#{db_prefix}\"" %>) do
       add(:venue, :string, null: false)
       add(:product, :string, null: false)
       add(:start_at, :utc_datetime, null: false)
@@ -19,6 +19,6 @@ defmodule History.Repo.Migrations.CreateFundingRateHistoryChunks do
   end
 
   def down do
-    drop(table(:funding_rate_history_chunks))
+    drop table(:funding_rate_history_chunks<%= if not is_nil(db_prefix), do: ", prefix: \"#{db_prefix}\"" %>)
   end
 end

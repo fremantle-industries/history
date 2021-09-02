@@ -1,8 +1,8 @@
-defmodule History.Repo.Migrations.CreateLendingRateHistoryJobs do
+defmodule <%= module_prefix %>.Repo.Migrations.CreateHistoryLendingRateHistoryJobs do
   use Ecto.Migration
 
   def up do
-    create table(:lending_rate_history_jobs) do
+    create table(:lending_rate_history_jobs<%= if not is_nil(db_prefix), do: ", prefix: \"#{db_prefix}\"" %>) do
       add(:from_date, :date, null: false)
       add(:from_time, :time, null: false)
       add(:to_date, :date, null: false)
@@ -15,6 +15,6 @@ defmodule History.Repo.Migrations.CreateLendingRateHistoryJobs do
   end
 
   def down do
-    drop(table(:lending_rate_history_jobs))
+    drop table(:lending_rate_history_jobs<%= if not is_nil(db_prefix), do: ", prefix: \"#{db_prefix}\"" %>)
   end
 end

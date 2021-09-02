@@ -1,8 +1,8 @@
-defmodule History.Repo.Migrations.CreateTradeHistoryChunks do
+defmodule <%= module_prefix %>.Repo.Migrations.CreateHistoryTradeHistoryChunks do
   use Ecto.Migration
 
   def up do
-    create table(:trade_history_chunks) do
+    create table(:trade_history_chunks<%= if not is_nil(db_prefix), do: ", prefix: \"#{db_prefix}\"" %>) do
       add(:venue, :string, null: false)
       add(:product, :string, null: false)
       add(:start_at, :utc_datetime, null: false)
@@ -17,6 +17,6 @@ defmodule History.Repo.Migrations.CreateTradeHistoryChunks do
   end
 
   def down do
-    drop(table(:trade_history_chunks))
+    drop table(:trade_history_chunks<%= if not is_nil(db_prefix), do: ", prefix: \"#{db_prefix}\"" %>)
   end
 end

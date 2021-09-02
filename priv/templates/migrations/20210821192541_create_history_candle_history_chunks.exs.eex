@@ -1,8 +1,8 @@
-defmodule History.Repo.Migrations.CreateCandleHistoryChunks do
+defmodule <%= module_prefix %>.Repo.Migrations.CreateHistoryCandleHistoryChunks do
   use Ecto.Migration
 
   def up do
-    create table(:candle_history_chunks) do
+    create table(:candle_history_chunks<%= if not is_nil(db_prefix), do: ", prefix: \"#{db_prefix}\"" %>) do
       add(:job_id, references(:candle_history_jobs), null: false)
       add(:venue, :string, null: false)
       add(:product, :string, null: false)
@@ -20,6 +20,6 @@ defmodule History.Repo.Migrations.CreateCandleHistoryChunks do
   end
 
   def down do
-    drop(table(:candle_history_chunks))
+    drop table(:candle_history_chunks<%= if not is_nil(db_prefix), do: ", prefix: \"#{db_prefix}\"" %>)
   end
 end

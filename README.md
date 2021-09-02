@@ -74,8 +74,16 @@ Visit [`history.localhost:4000`](http://history.localhost:4000)
 
 ## Development
 
+Initial setup:
+
+- Installs `hex` and `npm` dependencies
+- Generates migrations for history, workbench and tai
+- Runs migrations
+- Seeds database
+
 ```bash
 $ docker-compose up db
+$ mix setup
 $ mix phx.server
 ```
 

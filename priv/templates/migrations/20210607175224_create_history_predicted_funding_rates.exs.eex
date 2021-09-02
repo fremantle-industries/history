@@ -1,8 +1,8 @@
-defmodule History.Repo.Migrations.CreatePredictedFundingRates do
+defmodule <%= module_prefix %>.Repo.Migrations.CreateHistoryPredictedFundingRates do
   use Ecto.Migration
 
   def change do
-    create table(:predicted_funding_rates) do
+    create table(:predicted_funding_rates<%= if not is_nil(db_prefix), do: ", prefix: \"#{db_prefix}\"" %>) do
       add :next_funding_time, :utc_datetime, null: false
       add :venue, :string, null: false
       add :product, :string, null: false

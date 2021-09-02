@@ -1,10 +1,10 @@
-defmodule History.Repo.Migrations.CreateProducts do
+defmodule <%= module_prefix %>.Repo.Migrations.CreateHistoryProducts do
   use Ecto.Migration
 
   def up do
     History.ProductType.create_type()
 
-    create table(:products) do
+    create table(:products<%= if not is_nil(db_prefix), do: ", prefix: \"#{db_prefix}\"" %>) do
       add(:venue, :string, null: false)
       add(:symbol, :string, null: false)
       add(:venue_symbol, :string, null: false)
@@ -19,7 +19,7 @@ defmodule History.Repo.Migrations.CreateProducts do
   end
 
   def down do
-    drop(table(:products))
+    drop table(:products<%= if not is_nil(db_prefix), do: ", prefix: \"#{db_prefix}\"" %>)
     History.ProductType.drop_type()
   end
 end
