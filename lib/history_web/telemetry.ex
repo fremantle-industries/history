@@ -40,7 +40,19 @@ defmodule HistoryWeb.Telemetry do
       last_value("history.repo.query.decode_time", unit: {:native, :millisecond}),
       last_value("history.repo.query.query_time", unit: {:native, :millisecond}),
       last_value("history.repo.query.queue_time", unit: {:native, :millisecond}),
-      last_value("history.repo.query.idle_time", unit: {:native, :millisecond})
+      last_value("history.repo.query.idle_time", unit: {:native, :millisecond}),
+
+      # Broadway Metrics
+      last_value("broadway.processor.init", unit: {:native, :millisecond}),
+      last_value("broadway.processor.start", unit: {:native, :millisecond}),
+      last_value("broadway.processor.stop", unit: {:native, :millisecond}),
+      last_value("broadway.processor.message.start", unit: {:native, :millisecond}),
+      last_value("broadway.processor.message.stop", unit: {:native, :millisecond}),
+      last_value("broadway.processor.message.exception", unit: {:native, :millisecond}),
+      last_value("broadway.batch_processor.start", unit: {:native, :millisecond}),
+      last_value("broadway.batch_processor.stop", unit: {:native, :millisecond}),
+      last_value("broadway.batcher.start", unit: {:native, :millisecond}),
+      last_value("broadway.batcher.stop", unit: {:native, :millisecond})
     ]
   end
 

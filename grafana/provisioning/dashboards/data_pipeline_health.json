@@ -8,6 +8,12 @@
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
         "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
         "type": "dashboard"
       }
     ]
@@ -15,7 +21,8 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": null,
+  "id": 15,
+  "iteration": 1630871228464,
   "links": [
     {
       "asDropdown": false,
@@ -33,6 +40,190 @@
     }
   ],
   "panels": [
+    {
+      "collapsed": false,
+      "datasource": null,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 7,
+      "panels": [],
+      "title": "Jobs",
+      "type": "row"
+    },
+    {
+      "datasource": "History TimescaleDB",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "axisSoftMin": 0,
+            "fillOpacity": 80,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineWidth": 1
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "complete"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "green",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "working"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "purple",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "enqueued"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "yellow",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "canceled"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#676767",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "error"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "red",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 23,
+        "w": 19,
+        "x": 0,
+        "y": 1
+      },
+      "id": 3,
+      "options": {
+        "barWidth": 0.97,
+        "groupWidth": 0.7,
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "orientation": "vertical",
+        "showValue": "auto",
+        "stacking": "none",
+        "text": {},
+        "tooltip": {
+          "mode": "single"
+        }
+      },
+      "pluginVersion": "8.1.2",
+      "targets": [
+        {
+          "format": "table",
+          "group": [],
+          "hide": false,
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  *\nFROM crosstab(\n    $$SELECT *\n    FROM (\n        SELECT\n          'trades' AS type,\n          trade_history_job_statuses.status,\n          trade_history_job_statuses.count\n        FROM (\n          SELECT\n            job_status_types.status,\n           COUNT(trade_history_jobs.status) AS count\n          FROM (SELECT\n              unnest(enum_range(NULL::job_status_type)) AS status\n            ) job_status_types\n          LEFT OUTER JOIN trade_history_jobs ON job_status_types.status = trade_history_jobs.status\n          GROUP BY\n            job_status_types.status\n        ) trade_history_job_statuses\n        UNION ALL\n        SELECT\n          'candles' AS type,\n          candle_history_job_statuses.status,\n          candle_history_job_statuses.count\n        FROM (\n          SELECT\n            job_status_types.status,\n            COUNT(candle_history_jobs.status) AS count\n          FROM (SELECT\n              unnest(enum_range(NULL::job_status_type)) AS status\n            ) job_status_types\n          LEFT OUTER JOIN candle_history_jobs ON job_status_types.status = candle_history_jobs.status\n          GROUP BY\n            job_status_types.status\n        ) candle_history_job_statuses\n        UNION ALL\n        SELECT\n          'funding_rates' AS type,\n          funding_rate_history_job_statuses.status,\n          funding_rate_history_job_statuses.count\n        FROM (\n          SELECT\n            job_status_types.status,\n            COUNT(funding_rate_history_jobs.status) AS count\n          FROM (SELECT\n              unnest(enum_range(NULL::job_status_type)) AS status\n            ) job_status_types\n          LEFT OUTER JOIN funding_rate_history_jobs ON job_status_types.status = funding_rate_history_jobs.status\n          GROUP BY\n            job_status_types.status\n        ) funding_rate_history_job_statuses\n        UNION ALL\n        SELECT\n          'predicted_funding_rates' AS type,\n          predicted_funding_rate_job_statuses.status,\n          predicted_funding_rate_job_statuses.count\n        FROM (\n          SELECT\n            job_status_types.status,\n            COUNT(predicted_funding_rate_jobs.status) AS count\n          FROM (SELECT\n              unnest(enum_range(NULL::job_status_type)) AS status\n            ) job_status_types\n          LEFT OUTER JOIN predicted_funding_rate_jobs ON job_status_types.status = predicted_funding_rate_jobs.status\n          GROUP BY\n            job_status_types.status\n        ) predicted_funding_rate_job_statuses\n        UNION ALL\n        SELECT\n          'lending_rates' AS type,\n          lending_rate_history_job_statuses.status,\n          lending_rate_history_job_statuses.count\n        FROM (\n          SELECT\n            job_status_types.status,\n            COUNT(lending_rate_history_jobs.status) AS count\n          FROM (SELECT\n              unnest(enum_range(NULL::job_status_type)) AS status\n            ) job_status_types\n          LEFT OUTER JOIN lending_rate_history_jobs ON job_status_types.status = lending_rate_history_jobs.status\n          GROUP BY\n            job_status_types.status\n        ) lending_rate_history_job_statuses\n      ) foo\n    ORDER BY foo.type, foo.status;$$\n  ) AS ct(type TEXT, \"enqueued\" BIGINT, \"error\" BIGINT, \"working\" BIGINT, \"complete\" BIGINT, \"canceled\" BIGINT);\n",
+          "refId": "Trade History",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "title": "Job Status",
+      "transformations": [],
+      "type": "barchart"
+    },
     {
       "datasource": null,
       "fieldConfig": {
@@ -86,12 +277,12 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 15,
-        "w": 24,
-        "x": 0,
-        "y": 0
+        "h": 11,
+        "w": 5,
+        "x": 19,
+        "y": 1
       },
-      "id": 2,
+      "id": 11,
       "options": {
         "legend": {
           "calcs": [],
@@ -102,8 +293,261 @@
           "mode": "single"
         }
       },
-      "title": "Data Pipelines",
+      "title": "Success Rate",
       "type": "timeseries"
+    },
+    {
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 12,
+        "w": 5,
+        "x": 19,
+        "y": 12
+      },
+      "id": 12,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "single"
+        }
+      },
+      "title": "Avg Time to Completion",
+      "type": "timeseries"
+    },
+    {
+      "collapsed": false,
+      "datasource": null,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 24
+      },
+      "id": 9,
+      "panels": [],
+      "title": "Chunks",
+      "type": "row"
+    },
+    {
+      "datasource": "History TimescaleDB",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "axisSoftMin": 0,
+            "fillOpacity": 80,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineWidth": 1
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "enqueued"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "yellow",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "error"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "red",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "working"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "purple",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "complete"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "green",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "canceled"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#7e7e7e",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 19,
+        "w": 24,
+        "x": 0,
+        "y": 25
+      },
+      "id": 5,
+      "options": {
+        "barWidth": 0.97,
+        "groupWidth": 0.7,
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "orientation": "auto",
+        "showValue": "auto",
+        "stacking": "none",
+        "text": {},
+        "tooltip": {
+          "mode": "single"
+        }
+      },
+      "targets": [
+        {
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  *\nFROM crosstab(\n    $$SELECT\n      job_chunks.*\n    FROM (\n        SELECT\n          'trades' AS type,\n          trade_history_chunk_statuses.status,\n          trade_history_chunk_statuses.count\n        FROM (\n          SELECT\n            chunk_status_types.status,\n           COUNT(trade_history_chunks.status) AS count\n          FROM (SELECT\n              unnest(enum_range(NULL::chunk_status_type)) AS status\n            ) chunk_status_types\n          LEFT OUTER JOIN trade_history_chunks ON chunk_status_types.status = trade_history_chunks.status\n          GROUP BY\n            chunk_status_types.status\n        ) trade_history_chunk_statuses\n        UNION ALL\n        SELECT\n          'candles' AS type,\n          candle_history_chunk_statuses.status,\n          candle_history_chunk_statuses.count\n        FROM (\n          SELECT\n            chunk_status_types.status,\n            COUNT(candle_history_chunks.status) AS count\n          FROM (SELECT\n              unnest(enum_range(NULL::chunk_status_type)) AS status\n            ) chunk_status_types\n          LEFT OUTER JOIN candle_history_chunks ON chunk_status_types.status = candle_history_chunks.status\n          GROUP BY\n            chunk_status_types.status\n        ) candle_history_chunk_statuses\n        UNION ALL\n        SELECT\n          'funding_rates' AS type,\n          funding_rate_history_chunk_statuses.status,\n          funding_rate_history_chunk_statuses.count\n        FROM (\n          SELECT\n            chunk_status_types.status,\n            COUNT(funding_rate_history_chunks.status) AS count\n          FROM (SELECT\n              unnest(enum_range(NULL::chunk_status_type)) AS status\n            ) chunk_status_types\n          LEFT OUTER JOIN funding_rate_history_chunks ON chunk_status_types.status = funding_rate_history_chunks.status\n          GROUP BY\n            chunk_status_types.status\n        ) funding_rate_history_chunk_statuses\n        UNION ALL\n        SELECT\n          'predicted_funding_rates' AS type,\n          predicted_funding_rate_chunk_statuses.status,\n          predicted_funding_rate_chunk_statuses.count\n        FROM (\n          SELECT\n            chunk_status_types.status,\n            COUNT(predicted_funding_rate_chunks.status) AS count\n          FROM (SELECT\n              unnest(enum_range(NULL::chunk_status_type)) AS status\n            ) chunk_status_types\n          LEFT OUTER JOIN predicted_funding_rate_chunks ON chunk_status_types.status = predicted_funding_rate_chunks.status\n          GROUP BY\n            chunk_status_types.status\n        ) predicted_funding_rate_chunk_statuses\n        UNION ALL\n        SELECT\n          'lending_rates' AS type,\n          lending_rate_history_chunk_statuses.status,\n          lending_rate_history_chunk_statuses.count\n        FROM (\n          SELECT\n            chunk_status_types.status,\n            COUNT(lending_rate_history_chunks.status) AS count\n          FROM (SELECT\n              unnest(enum_range(NULL::chunk_status_type)) AS status\n            ) chunk_status_types\n          LEFT OUTER JOIN lending_rate_history_chunks ON chunk_status_types.status = lending_rate_history_chunks.status\n          GROUP BY\n            chunk_status_types.status\n        ) lending_rate_history_chunk_statuses\n      ) job_chunks\n    ORDER BY job_chunks.type, job_chunks.status;$$\n  ) AS ct (type TEXT, enqueued BIGINT, error BIGINT, working BIGINT, not_found BIGINT, complete BIGINT, canceled BIGINT);",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "title": "Chunk Status",
+      "type": "barchart"
     }
   ],
   "schemaVersion": 30,
@@ -113,15 +557,126 @@
     "health"
   ],
   "templating": {
-    "list": []
+    "list": [
+      {
+        "allValue": null,
+        "current": {
+          "selected": true,
+          "text": [
+            "All"
+          ],
+          "value": [
+            "$__all"
+          ]
+        },
+        "description": null,
+        "error": null,
+        "hide": 0,
+        "includeAll": true,
+        "label": null,
+        "multi": true,
+        "name": "job_status",
+        "options": [
+          {
+            "selected": true,
+            "text": "All",
+            "value": "$__all"
+          },
+          {
+            "selected": false,
+            "text": "enqueued",
+            "value": "enqueued"
+          },
+          {
+            "selected": false,
+            "text": "working",
+            "value": "working"
+          },
+          {
+            "selected": false,
+            "text": "complete",
+            "value": "complete"
+          },
+          {
+            "selected": false,
+            "text": "error",
+            "value": "error"
+          },
+          {
+            "selected": false,
+            "text": "canceled",
+            "value": "canceled"
+          }
+        ],
+        "query": "enqueued,working,complete,error,canceled",
+        "queryValue": "",
+        "skipUrlSync": false,
+        "type": "custom"
+      },
+      {
+        "allValue": null,
+        "current": {
+          "selected": true,
+          "text": [
+            "All"
+          ],
+          "value": [
+            "$__all"
+          ]
+        },
+        "description": null,
+        "error": null,
+        "hide": 0,
+        "includeAll": true,
+        "label": null,
+        "multi": true,
+        "name": "chunk_status",
+        "options": [
+          {
+            "selected": true,
+            "text": "All",
+            "value": "$__all"
+          },
+          {
+            "selected": false,
+            "text": "enqueued",
+            "value": "enqueued"
+          },
+          {
+            "selected": false,
+            "text": "working",
+            "value": "working"
+          },
+          {
+            "selected": false,
+            "text": "complete",
+            "value": "complete"
+          },
+          {
+            "selected": false,
+            "text": "error",
+            "value": "error"
+          },
+          {
+            "selected": false,
+            "text": "canceled",
+            "value": "canceled"
+          }
+        ],
+        "query": "enqueued,working,complete,error,canceled",
+        "queryValue": "",
+        "skipUrlSync": false,
+        "type": "custom"
+      }
+    ]
   },
   "time": {
-    "from": "now-6h",
+    "from": "now-7d",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "Data Pipeline Health",
-  "uid": null,
-  "version": 0
+  "uid": "Nx6vTs4nz",
+  "version": 10
 }
