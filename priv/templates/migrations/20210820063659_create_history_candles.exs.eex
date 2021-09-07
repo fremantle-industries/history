@@ -17,6 +17,6 @@ defmodule <%= module_prefix %>.Repo.Migrations.CreateHistoryCandles do
       timestamps()
     end
 
-    create unique_index(:candles, [:venue, :product, :source, :period, :time])
+    create unique_index(:candles, [:product, :period, :venue, :source, :time])
   end
 end
