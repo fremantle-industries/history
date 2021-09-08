@@ -11,7 +11,7 @@ Add `history` to your list of dependencies in `mix.exs`
 ```elixir
 def deps do
   [
-    {:history, "~> 0.0.10"}
+    {:history, "~> 0.0.11"}
   ]
 end
 ```
