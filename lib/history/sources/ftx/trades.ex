@@ -1,13 +1,13 @@
 defmodule History.Sources.Ftx.Trades do
   def period do
-    {:ok, one_hour} = Time.new(1, 0, 0, 0)
-    {seconds, _ms} = Time.to_seconds_after_midnight(one_hour)
+    {:ok, fifteen_minutes} = Time.new(0, 15, 0, 0)
+    {seconds, _ms} = Time.to_seconds_after_midnight(fifteen_minutes)
     {:ok, seconds}
   end
 
   def periods_per_chunk do
-    # 4 hours
-    {:ok, 4}
+    # 15 minutes
+    {:ok, 1}
   end
 
   def fetch(chunk) do
