@@ -167,8 +167,8 @@ config :navigator,
         link: {WorkbenchWeb.Router.Helpers, :venue_path, [WorkbenchWeb.Endpoint, :index]}
       },
       %{
-        label: "Advisors",
-        link: {WorkbenchWeb.Router.Helpers, :advisor_path, [WorkbenchWeb.Endpoint, :index]}
+        label: "Fleets",
+        link: {WorkbenchWeb.Router.Helpers, :fleet_path, [WorkbenchWeb.Endpoint, :index]}
       },
       %{
         label: "History",
