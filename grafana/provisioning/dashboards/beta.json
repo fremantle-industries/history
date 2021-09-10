@@ -22,7 +22,7 @@
   "gnetId": null,
   "graphTooltip": 1,
   "id": 17,
-  "iteration": 1629818162936,
+  "iteration": 1630523548156,
   "links": [
     {
       "asDropdown": false,
@@ -37,6 +37,20 @@
       "tooltip": "",
       "type": "dashboards",
       "url": ""
+    },
+    {
+      "asDropdown": true,
+      "icon": "external link",
+      "includeVars": false,
+      "keepTime": false,
+      "tags": [
+        "discovery"
+      ],
+      "targetBlank": false,
+      "title": "Discovery",
+      "tooltip": "",
+      "type": "dashboards",
+      "url": ""
     }
   ],
   "panels": [
@@ -48,112 +62,11 @@
             "mode": "palette-classic"
           },
           "custom": {
-            "axisLabel": "Price Change",
+            "axisLabel": "Price Change Beta",
             "axisPlacement": "auto",
             "barAlignment": 0,
             "drawStyle": "bars",
-            "fillOpacity": 0,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "percent"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 34,
-        "w": 24,
-        "x": 0,
-        "y": 0
-      },
-      "id": 2,
-      "options": {
-        "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom"
-        },
-        "tooltip": {
-          "mode": "single"
-        }
-      },
-      "targets": [
-        {
-          "format": "time_series",
-          "group": [],
-          "metricColumn": "none",
-          "rawQuery": true,
-          "rawSql": "SELECT\n  candles.time,\n  candles.venue || ':' || candles.product AS text,\n  (candles.close - candles.open) / candles.open * 100 AS price_change_pct\nFROM candles\nWHERE\n  $__timeFilter(candles.time)\n  AND candles.period = '$period'::period_type\n  AND (candles.product = '$benchmark_product' OR candles.product IN ($beta_product))\nORDER BY\n  candles.time,\n  candles.venue,\n  candles.product",
-          "refId": "Price Changes",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "column"
-              }
-            ]
-          ],
-          "timeColumn": "time",
-          "where": [
-            {
-              "name": "$__timeFilter",
-              "params": [],
-              "type": "macro"
-            }
-          ]
-        }
-      ],
-      "title": "$period Price Changes",
-      "type": "timeseries"
-    },
-    {
-      "datasource": "History TimescaleDB",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisLabel": "Beta",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "bars",
-            "fillOpacity": 0,
+            "fillOpacity": 10,
             "gradientMode": "none",
             "hideFrom": {
               "legend": false,
@@ -195,10 +108,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 17,
+        "h": 26,
         "w": 24,
         "x": 0,
-        "y": 34
+        "y": 0
       },
       "id": 6,
       "options": {
@@ -240,21 +153,124 @@
           ]
         }
       ],
-      "title": "$period Benchmark Betas",
+      "title": "$period Open/Close Benchmark Betas",
+      "type": "timeseries"
+    },
+    {
+      "datasource": "History TimescaleDB",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "Price Range Beta",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "bars",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "β"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 24,
+        "w": 24,
+        "x": 0,
+        "y": 26
+      },
+      "id": 12,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "single"
+        }
+      },
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  benchmark.time,\n  beta.venue || ':' || beta.product AS text,\n  CASE  WHEN benchmark.price_range_pct=0 THEN 0\n        ELSE (beta.price_range_pct - benchmark.price_range_pct) / benchmark.price_range_pct\n  END AS beta\nFROM (\n    SELECT\n      candles.time,\n      candles.venue,\n      candles.product,\n      (candles.high - candles.low) / candles.low AS price_range_pct\n    FROM candles\n    WHERE\n      $__timeFilter(candles.time)\n      AND candles.period = '$period'::period_type\n      AND candles.product = '$benchmark_product'\n  ) benchmark\n  LEFT JOIN (\n    SELECT\n      candles.time,\n      candles.venue,\n      candles.product,\n      (candles.high - candles.low) / candles.low AS price_range_pct\n    FROM candles\n    WHERE\n      $__timeFilter(candles.time)\n      AND candles.period = '$period'::period_type\n      AND candles.product IN ($beta_product)\n  ) beta ON beta.time = benchmark.time\nORDER BY\n  benchmark.time;",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "title": "$period High/Low Benchmark Betas",
       "type": "timeseries"
     }
   ],
+  "refresh": false,
   "schemaVersion": 30,
   "style": "dark",
   "tags": [
-    "beta"
+    "beta",
+    "discovery"
   ],
   "templating": {
     "list": [
       {
         "allValue": null,
         "current": {
-          "selected": false,
+          "selected": true,
           "text": [
             "All"
           ],
@@ -306,7 +322,7 @@
       {
         "allValue": null,
         "current": {
-          "selected": false,
+          "selected": true,
           "text": [
             "usd",
             "usdt"
@@ -360,7 +376,7 @@
       {
         "allValue": null,
         "current": {
-          "selected": false,
+          "selected": true,
           "text": [
             "All"
           ],
@@ -388,16 +404,32 @@
       {
         "allValue": null,
         "current": {
-          "selected": false,
+          "selected": true,
           "text": [
+            "ada-perp",
+            "ar-perp",
             "avax-perp",
+            "axs-perp",
+            "c98-perp",
             "eth-perp",
-            "ada-perp"
+            "ftm-perp",
+            "mtl-perp",
+            "sol-perp",
+            "tru-perp",
+            "yfii-perp"
           ],
           "value": [
+            "ada-perp",
+            "ar-perp",
             "avax-perp",
+            "axs-perp",
+            "c98-perp",
             "eth-perp",
-            "ada-perp"
+            "ftm-perp",
+            "mtl-perp",
+            "sol-perp",
+            "tru-perp",
+            "yfii-perp"
           ]
         },
         "datasource": "History TimescaleDB",
@@ -420,9 +452,9 @@
       {
         "allValue": null,
         "current": {
-          "selected": false,
-          "text": "min_1",
-          "value": "min_1"
+          "selected": true,
+          "text": "hour_1",
+          "value": "hour_1"
         },
         "description": null,
         "error": null,
@@ -433,7 +465,7 @@
         "name": "period",
         "options": [
           {
-            "selected": true,
+            "selected": false,
             "text": "min_1",
             "value": "min_1"
           },
@@ -448,7 +480,7 @@
             "value": "min_15"
           },
           {
-            "selected": false,
+            "selected": true,
             "text": "hour_1",
             "value": "hour_1"
           },
@@ -508,5 +540,5 @@
   "timezone": "",
   "title": "Beta",
   "uid": "62g8ooMnz",
-  "version": 2
+  "version": 16
 }
