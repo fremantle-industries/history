@@ -1,0 +1,27 @@
+defmodule <%= module_prefix %>.Repo.Migrations.CreatePredictedFundingRateJobSchedules do
+  use Ecto.Migration
+
+  def up do
+    create table(:predicted_funding_rate_job_schedules<%= if not is_nil(db_prefix), do: ", prefix: \"#{db_prefix}\"" %>) do
+      add(:enabled, :boolean, null: false)
+      add(:products, {:array, :jsonb}, null: false)
+      add(:every, :integer, null: false)
+      add(:periods, {:array, History.SchedulePeriodType.type()}, null: false)
+      <%# add(:job_id, references(:candle_history_jobs), null: false) %>
+      <%# add(:venue, :string, null: false) %>
+      <%# add(:product, :string, null: false) %>
+      <%# add(:start_at, :utc_datetime, null: false) %>
+      <%# add(:end_at, :utc_datetime, null: false) %>
+
+      timestamps()
+    end
+
+    <%# create( %>
+    <%#   unique_index(:candle_history_chunks, [:venue, :product, :job_id, :start_at, :end_at, :period]) %>
+    <%# ) %>
+  end
+
+  def down do
+    drop table(:predicted_funding_rate_job_schedules<%= if not is_nil(db_prefix), do: ", prefix: \"#{db_prefix}\"" %>)
+  end
+end

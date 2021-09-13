@@ -22,6 +22,7 @@ defmodule History.MixProject do
   def application do
     [
       mod: {History.Application, []},
+      start_phases: [load_job_schedules: []],
       extra_applications: [:logger, :runtime_tools]
     ]
   end

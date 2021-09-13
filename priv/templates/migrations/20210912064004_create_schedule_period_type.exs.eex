@@ -1,0 +1,11 @@
+defmodule <%= module_prefix %>.Repo.Migrations.CreateSchedulePeriodType do
+  use Ecto.Migration
+
+  def up do
+    History.SchedulePeriodType.create_type()
+  end
+
+  def down do
+    History.SchedulePeriodType.drop_type()
+  end
+end

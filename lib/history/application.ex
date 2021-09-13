@@ -1,5 +1,6 @@
 defmodule History.Application do
   @moduledoc false
+  require Logger
 
   use Application
 
@@ -20,6 +21,12 @@ defmodule History.Application do
 
     opts = [strategy: :one_for_one, name: History.Supervisor]
     Supervisor.start_link(children, opts)
+  end
+
+  def start_phase(:load_job_schedules, _start_type, _phase_args) do
+    {:ok, loaded_job_schedules} = History.JobSchedules.load()
+    Logger.info "loaded job_schedules=#{loaded_job_schedules}"
+    :ok
   end
 
   # Tell Phoenix to update the endpoint configuration
