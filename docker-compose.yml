@@ -26,6 +26,7 @@ services:
     depends_on:
       - db
     environment:
+      - DOCKER=${DOCKER:-true}
       - DATABASE_URL=${DATABASE_URL:-ecto://postgres:postgres@db:5432/history_?}
       - HTTP_PORT
       - REPLACE_OS_VARS=true

@@ -77,11 +77,7 @@ config :workbench,
     quote_pairs: [binance: :usdt, okex: :usdt]
   }
 
-# Shared
-config :logger, :console,
-  format: "$time $metadata[$level] $message\n",
-  metadata: [:request_id]
-
+# MasterProxy
 config :master_proxy,
   http: [:inet6, port: http_port],
   backends: [
@@ -95,6 +91,7 @@ config :master_proxy,
     }
   ]
 
+# Navigator
 config :navigator,
   links: %{
     history: [
@@ -531,6 +528,12 @@ if config_env() == :dev do
   config :workbench, WorkbenchWeb.Endpoint,
     debug_errors: true,
     check_origin: false
+
+  # Logger
+  unless System.get_env("DOCKER") == "true" do
+    config :logger, backends: [{LoggerFileBackend, :file_log}]
+    config :logger, :file_log, path: "./logs/#{config_env()}.log", level: :info
+  end
 end
 
 if config_env() == :test do
@@ -542,6 +545,10 @@ if config_env() == :test do
     http: [port: 4002],
     server: false
 
-  # Print only warnings and errors during test
-  config :logger, level: :warn
+  # Logger
+  unless System.get_env("DOCKER") == "true" do
+    config :logger, backends: [{LoggerFileBackend, :file_log}]
+    # Print only warnings and errors during test
+    config :logger, :file_log, path: "./logs/#{config_env()}.log", level: :warn
+  end
 end
