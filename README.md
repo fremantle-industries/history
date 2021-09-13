@@ -51,6 +51,8 @@ password: password
 
 ![home](./docs/history-home.png)
 
+![gainers-and-losers](./docs/history-gainers-losers.png)
+
 ![swap-funding-rates](./docs/swap-funding-rates.png)
 
 ## Venues
