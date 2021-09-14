@@ -73,7 +73,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "workbenc_repo_query_queue_time",
+          "expr": "workbench_repo_query_queue_time",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
@@ -526,7 +526,7 @@
   },
   "timepicker": {},
   "timezone": "",
-  "title": "Ecto Health",
+  "title": "Workbench Ecto Health",
   "uid": "w_TSffUGk",
   "version": 1
 }
