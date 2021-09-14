@@ -27,7 +27,7 @@ defmodule History.CandleHistoryChunks do
     from(
       c in Chunk,
       where: c.job_id == ^job_id,
-      order_by: [asc: :start_at, asc: :product, asc: :venue],
+      order_by: [asc: :start_at, asc: :product, asc: :venue, asc: :period],
       offset: ^offset,
       limit: ^page_size
     )
