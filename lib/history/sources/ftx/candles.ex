@@ -9,17 +9,17 @@ defmodule History.Sources.Ftx.Candles do
   @spec chunk_range(atom) :: {:ok, non_neg_integer} | {:error, :not_supported}
   def chunk_range(period) do
     case period do
-      :min_1 -> {:ok, @seconds_in_1_hour}
-      :min_5 -> {:ok, @seconds_in_1_hour * 2}
-      :min_15 -> {:ok, @seconds_in_1_hour * 4}
-      :hour_1 -> {:ok, @seconds_in_1_day}
-      :hour_2 -> {:ok, @seconds_in_1_day}
-      :hour_3 -> {:ok, @seconds_in_1_day}
-      :hour_4 -> {:ok, @seconds_in_1_day}
-      :hour_6 -> {:ok, @seconds_in_1_day}
-      :hour_12 -> {:ok, @seconds_in_1_day}
-      :day_1 -> {:ok, @seconds_in_1_week}
-      :week_1 -> {:ok, @seconds_in_1_week * 4}
+      :min_1 -> {:ok, @seconds_in_1_hour * 24}
+      :min_5 -> {:ok, @seconds_in_1_hour * 120}
+      :min_15 -> {:ok, @seconds_in_1_hour * 360}
+      :hour_1 -> {:ok, @seconds_in_1_day * 60}
+      :hour_2 -> {:ok, @seconds_in_1_day * 30}
+      :hour_3 -> {:ok, @seconds_in_1_day * 20}
+      :hour_4 -> {:ok, @seconds_in_1_day * 15}
+      :hour_6 -> {:ok, @seconds_in_1_day * 10}
+      :hour_12 -> {:ok, @seconds_in_1_day * 5}
+      :day_1 -> {:ok, @seconds_in_1_week * 25}
+      :week_1 -> {:ok, @seconds_in_1_week * 25}
       _ -> {:error, :not_supported}
     end
   end
