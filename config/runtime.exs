@@ -533,8 +533,9 @@ if config_env() == :dev do
 
   # Logger
   unless System.get_env("DOCKER") == "true" do
+    level = "LOG_LEVEL" |> System.get_env("info") |> String.to_atom()
     config :logger, backends: [{LoggerFileBackend, :file_log}]
-    config :logger, :file_log, path: "./logs/#{config_env()}.log", level: :info
+    config :logger, :file_log, path: "./logs/#{config_env()}.log", level: level
   end
 end
 
@@ -549,8 +550,8 @@ if config_env() == :test do
 
   # Logger
   unless System.get_env("DOCKER") == "true" do
+    level = "LOG_LEVEL" |> System.get_env("warn") |> String.to_atom()
     config :logger, backends: [{LoggerFileBackend, :file_log}]
-    # Print only warnings and errors during test
-    config :logger, :file_log, path: "./logs/#{config_env()}.log", level: :warn
+    config :logger, :file_log, path: "./logs/#{config_env()}.log", level: level
   end
 end
