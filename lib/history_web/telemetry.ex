@@ -40,7 +40,22 @@ defmodule HistoryWeb.Telemetry do
       last_value("history.repo.query.decode_time", unit: {:native, :millisecond}),
       last_value("history.repo.query.query_time", unit: {:native, :millisecond}),
       last_value("history.repo.query.queue_time", unit: {:native, :millisecond}),
-      last_value("history.repo.query.idle_time", unit: {:native, :millisecond})
+      last_value("history.repo.query.idle_time", unit: {:native, :millisecond}),
+
+      # Broadway Metrics
+      last_value("broadway.processor.message.stop.duration",
+        tags: [:name, :index],
+        unit: {:native, :millisecond}
+      ),
+      # TODO: Figure out how to get last value + counter. Currently can only be one or the other
+      # counter("broadway.processor.message.stop.duration",
+      #   tags: [:name, :index],
+      #   unit: {:native, :millisecond}
+      # ),
+      counter("broadway.processor.message.exception.duration",
+        tags: [:name, :index],
+        unit: {:native, :millisecond}
+      ),
     ]
   end
 

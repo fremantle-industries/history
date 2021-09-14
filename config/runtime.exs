@@ -522,6 +522,8 @@ if config_env() == :dev do
       ]
     ]
 
+  config :history, :download_candle_chunks_concurrency, {:system, :integer, "DOWNLOAD_CANDLE_CHUNKS_CONCURRENCY", 2}
+
   # Workbench
   config :workbench, Workbench.Repo, show_sensitive_data_on_connection_error: true
 

@@ -4,8 +4,12 @@ defmodule History.LendingRates.DownloadChunksBroadway do
   alias Broadway.Message
   alias History.{LendingRateHistoryChunks, LendingRateHistoryJobs, LendingRates}
 
+  @default_concurrency 2
+
   @spec start_link(term) :: Supervisor.on_start()
   def start_link(_) do
+    processor_concurrency = Application.get_env(:history, :download_lending_rate_concurrency, @default_concurrency)
+
     Broadway.start_link(__MODULE__,
       name: __MODULE__,
       producer: [
@@ -13,7 +17,7 @@ defmodule History.LendingRates.DownloadChunksBroadway do
         transformer: {__MODULE__, :transform, []}
       ],
       processors: [
-        default: [concurrency: 2]
+        default: [concurrency: processor_concurrency]
       ]
     )
   end
