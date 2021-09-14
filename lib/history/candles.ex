@@ -61,26 +61,11 @@ defmodule History.Candles do
     |> Repo.one()
   end
 
-  def upsert(params) do
-    changeset = Candle.changeset(%Candle{}, params)
-
-    Repo.insert(
-      changeset,
-      on_conflict: [
-        set: [
-          venue: Ecto.Changeset.get_field(changeset, :venue),
-          product: Ecto.Changeset.get_field(changeset, :product),
-          source: Ecto.Changeset.get_field(changeset, :source),
-          period: Ecto.Changeset.get_field(changeset, :period),
-          time: Ecto.Changeset.get_field(changeset, :time),
-          open: Ecto.Changeset.get_field(changeset, :open),
-          high: Ecto.Changeset.get_field(changeset, :high),
-          low: Ecto.Changeset.get_field(changeset, :low),
-          close: Ecto.Changeset.get_field(changeset, :close),
-          volume: Ecto.Changeset.get_field(changeset, :volume),
-          updated_at: DateTime.utc_now()
-        ]
-      ],
+  def upsert_all(candles) do
+    Repo.insert_all(
+      History.Candles.Candle,
+      candles,
+      on_conflict: :replace_all,
       conflict_target: [:venue, :product, :source, :period, :time]
     )
   end

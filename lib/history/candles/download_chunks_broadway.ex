@@ -82,23 +82,25 @@ defmodule History.Candles.DownloadChunksBroadway do
     case CandleHistoryChunks.fetch(chunk) do
       {:ok, candles} ->
         candles
-        |> Enum.each(fn c ->
+        |> Enum.map(fn c ->
           {:ok, time, _} = DateTime.from_iso8601(c.start_time)
 
-          {:ok, _} =
-            Candles.upsert(%{
-              time: time,
-              venue: chunk.venue,
-              product: chunk.product,
-              source: "api",
-              period: chunk.period,
-              open: Tai.Utils.Decimal.cast!(c.open),
-              high: Tai.Utils.Decimal.cast!(c.high),
-              low: Tai.Utils.Decimal.cast!(c.low),
-              close: Tai.Utils.Decimal.cast!(c.close),
-              volume: Tai.Utils.Decimal.cast!(c.volume)
-            })
+          %{
+            time: time,
+            venue: chunk.venue,
+            product: chunk.product,
+            source: "api",
+            period: chunk.period,
+            open: Tai.Utils.Decimal.cast!(c.open),
+            high: Tai.Utils.Decimal.cast!(c.high),
+            low: Tai.Utils.Decimal.cast!(c.low),
+            close: Tai.Utils.Decimal.cast!(c.close),
+            volume: Tai.Utils.Decimal.cast!(c.volume),
+            inserted_at: NaiveDateTime.utc_now() |> NaiveDateTime.truncate(:second),
+            updated_at: NaiveDateTime.utc_now() |> NaiveDateTime.truncate(:second)
+          }
         end)
+        |> History.Candles.upsert_all()
 
         {chunk, "complete"}
 
