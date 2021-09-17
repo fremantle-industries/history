@@ -1,7 +1,7 @@
 defmodule HistoryWeb.CandleLive do
   use HistoryWeb, :live_view
   import HistoryWeb.JobView
-  alias History.{Candles, CandleHistoryJobs, Page}
+  alias History.{CandleHistoryJobs, Page}
 
   @impl true
   def mount(_params, _session, socket) do
