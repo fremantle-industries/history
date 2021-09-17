@@ -3,58 +3,6 @@
 </div>
 <%= render HistoryWeb.DataView, "_nav.html", conn: @socket %>
 
-<div class="mt-8">
-  <h3 class="text-2xl">
-    Latest
-  </h3>
-
-  <table class="w-full mt-4">
-    <thead class="bg-gray-200 border-t-2 border-gray-400">
-      <tr>
-        <th scope="col" class="px-4 py-3 text-left text-gray-700">Time</th>
-        <th scope="col" class="px-4 py-3 text-left text-gray-700">Period</th>
-        <th scope="col" class="px-4 py-3 text-left text-gray-700">Venue</th>
-        <th scope="col" class="px-4 py-3 text-left text-gray-700">Product</th>
-        <th scope="col" class="px-4 py-3 text-left text-gray-700">Open</th>
-        <th scope="col" class="px-4 py-3 text-left text-gray-700">High</th>
-        <th scope="col" class="px-4 py-3 text-left text-gray-700">Low</th>
-        <th scope="col" class="px-4 py-3 text-left text-gray-700">Close</th>
-        <th scope="col" class="px-4 py-3 text-left text-gray-700">Volume</th>
-        <th scope="col" class="px-4 py-3 text-left text-gray-700">Source</th>
-      </tr>
-    </thead>
-    <tbody>
-      <%= if Enum.any?(@latest_candles) do %>
-        <%= for c <- @latest_candles do %>
-          <tr class="hover:bg-gray-50 border-t border-b group">
-            <td class="px-4 py-3"><%= c.time %></td>
-            <td class="px-4 py-3"><%= c.period %></td>
-            <td class="px-4 py-3"><%= c.venue %></td>
-            <td class="px-4 py-3"><%= c.product %></td>
-            <td class="px-4 py-3"><%= c.open %></td>
-            <td class="px-4 py-3"><%= c.high %></td>
-            <td class="px-4 py-3"><%= c.low %></td>
-            <td class="px-4 py-3"><%= c.close %></td>
-            <td class="px-4 py-3"><%= c.volume %></td>
-            <td class="px-4 py-3"><%= c.source %></td>
-          </tr>
-        <% end %>
-      <% else %>
-        <tr class="hover:bg-gray-50 border-t border-b group">
-          <td colspan="10" class="px-4 py-3">No candles</td>
-        </tr>
-      <% end %>
-    </tbody>
-    <tfoot>
-      <tr>
-        <td colspan="10" class="px-4 py-3 text-right">
-          <%= link "See more...", to: Routes.candle_latest_path(@socket, :index), class: "opacity-70 hover:opacity-50" %>
-        </td>
-      </tr>
-    </tfoot>
-  </table>
-</div>
-
 <div class="mt-4">
   <h3 class="text-2xl">
     Schedules

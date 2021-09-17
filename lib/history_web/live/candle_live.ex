@@ -9,7 +9,6 @@ defmodule HistoryWeb.CandleLive do
 
     socket =
       socket
-      |> assign_latest_candles()
       |> assign_job_schedules()
       |> assign_latest_jobs()
 
@@ -23,17 +22,6 @@ defmodule HistoryWeb.CandleLive do
       |> assign_latest_jobs()
 
     {:noreply, socket}
-  end
-
-  defp assign_latest_candles(socket) do
-    candles =
-      Candles.search_latest(
-        page: Page.default_page_number(),
-        page_size: Page.small_page_size()
-      )
-
-    socket
-    |> assign(:latest_candles, candles)
   end
 
   defp assign_job_schedules(socket) do
