@@ -69,7 +69,4 @@ defmodule History.Candles do
       conflict_target: [:venue, :product, :source, :period, :time]
     )
   end
-
-  def delete(id) when is_number(id), do: %Candle{id: id} |> Repo.delete()
-  def delete(id) when is_bitstring(id), do: id |> String.to_integer() |> delete()
 end

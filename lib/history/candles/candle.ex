@@ -2,6 +2,7 @@ defmodule History.Candles.Candle do
   use Ecto.Schema
   import Ecto.Changeset
 
+  @primary_key false
   schema "candles" do
     field :venue, :string
     field :product, :string
