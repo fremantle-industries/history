@@ -118,9 +118,9 @@ defmodule History.Candles.DownloadChunksBroadway do
     low = venue_candle.low |> Tai.Utils.Decimal.cast!()
     close = venue_candle.close |> Tai.Utils.Decimal.cast!()
     volume = venue_candle.volume |> Tai.Utils.Decimal.cast!()
-    delta_high = high |> Decimal.sub(open)
-    delta_low = low |> Decimal.sub(open)
-    delta_close = close |> Decimal.sub(open)
+    delta_high = high |> Decimal.sub(open) |> Decimal.div(open)
+    delta_low = low |> Decimal.sub(open) |> Decimal.div(open)
+    delta_close = close |> Decimal.sub(open) |> Decimal.div(open)
     utc_now = NaiveDateTime.utc_now() |> NaiveDateTime.truncate(:second)
 
     %{

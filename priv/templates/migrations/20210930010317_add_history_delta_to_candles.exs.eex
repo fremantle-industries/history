@@ -11,9 +11,9 @@ defmodule <%= module_prefix %>.Repo.Migrations.AddHistoryDeltaToCandles do
     execute """
     UPDATE candles
     SET
-      delta_high = high - open,
-      delta_low = open - low,
-      delta_close = close - open
+      delta_high = (high - open) / open,
+      delta_low = (low - open) / open,
+      delta_close = (close - open) / open
     """
 
     alter table(:candles<%= if not is_nil(db_prefix), do: ", prefix: \"#{db_prefix}\"" %>) do
