@@ -7,7 +7,7 @@ defmodule History.Products.Queries.Search do
     from(
       p in Products.Product,
       where: ilike(p.symbol, ^"%#{query}%") or ilike(p.venue, ^"%#{query}%"),
-      order_by: [asc: :symbol, asc: :venue, asc: :type],
+      order_by: [asc: :symbol, asc: :venue, asc: :type]
     )
   end
 end
