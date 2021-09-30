@@ -61,7 +61,7 @@ defmodule History.Candles do
     |> Repo.one()
   end
 
-  def upsert_all(candles) do
+  def insert_all(candles) do
     Repo.insert_all(
       History.Candles.Candle,
       candles,

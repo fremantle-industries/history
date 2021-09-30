@@ -41,8 +41,9 @@ defmodule History.Candles.CreateChunksBroadway do
   def ack(:ack_id, successful, failed) do
     successful
     |> Enum.each(fn m ->
-      {:ok, _} = CandleHistoryJobs.update(m.data, %{status: "working"})
-      Candles.PubSub.broadcast_update(m.data.id, "working")
+      case CandleHistoryJobs.update(m.data, %{status: "working"}) do
+        {:ok, job} -> CandleHistoryJobs.broadcast(job)
+      end
     end)
 
     failed

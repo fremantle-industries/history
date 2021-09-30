@@ -43,22 +43,22 @@ defmodule History.CandleHistoryJobs do
     |> Repo.all()
   end
 
-  @seconds_in_1_hour 60 * 60
   def job_changeset_today(params) do
     now = DateTime.utc_now()
-    today = now |> DateTime.to_date()
-    yesterday = today |> Timex.shift(days: -1)
-    current_hour = Time.new!(now.hour, 0, 0)
-    next_hour = current_hour |> Time.add(@seconds_in_1_hour, :second)
+    {:ok, date_now} = Date.new(now.year, now.month, now.day)
+    {:ok, time_now} = Time.new(now.hour, 0, 0)
+    {:ok, current_hour} = DateTime.new(date_now, time_now)
+    from = current_hour |> Timex.shift(days: -1)
+    to = current_hour |> Timex.shift(hours: 1)
 
     merged_params =
       Map.merge(
         params,
         %{
-          from_date: yesterday,
-          from_time: current_hour,
-          to_date: today,
-          to_time: next_hour
+          from_date: from,
+          from_time: from,
+          to_date: to,
+          to_time: to
         }
       )
 
@@ -78,5 +78,22 @@ defmodule History.CandleHistoryJobs do
   def cancel(job) do
     changeset = Job.changeset(job, %{status: :canceled})
     Repo.update(changeset)
+  end
+
+  def broadcast(job, pub_sub \\ Tai.PubSub) do
+    msg = %{id: job.id, status: job.status}
+
+    [
+      "candle_history_job:#{job.id}",
+      "candle_history_job:*"
+    ]
+    |> Enum.each(fn topic ->
+      Phoenix.PubSub.broadcast(pub_sub, topic, {topic, msg})
+    end)
+  end
+
+  def subscribe_by_id(id, pub_sub \\ Tai.PubSub) do
+    topic = "candle_history_job:#{id}"
+    Phoenix.PubSub.subscribe(pub_sub, topic)
   end
 end

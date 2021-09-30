@@ -24,8 +24,7 @@ defmodule History.Candles.DownloadChunksBroadway do
 
   @impl true
   def handle_message(_, message, _) do
-    message
-    |> Message.update_data(&process_data/1)
+    Message.update_data(message, &process_data/1)
   end
 
   def transform(event, _opts) do
@@ -36,22 +35,40 @@ defmodule History.Candles.DownloadChunksBroadway do
   end
 
   def ack(:ack_id, successful, failed) do
-    successful
-    |> Enum.map(fn m ->
-      {chunk, new_status} = m.data
-      {:ok, _} = CandleHistoryChunks.update(chunk, %{status: new_status})
-      broadcast_update(chunk, new_status)
-      chunk.job_id
+    processed_chunk_job_ids = successful
+                               |> Enum.map(fn m ->
+                                 {chunk, new_status, error_reason} = m.data
+
+                                 case CandleHistoryChunks.update(chunk, %{status: new_status}) do
+                                   {:ok, chunk} -> CandleHistoryChunks.broadcast(chunk)
+                                 end
+
+                                 if error_reason != nil do
+                                   "could not download or process chunk id=~w, venue=~s, product=~s, reason=~w"
+                                   |> :io_lib.format([chunk.id, chunk.venue, chunk.product, error_reason])
+                                   |> List.to_string()
+                                   |> Logger.error()
+                                 end
+
+                                 chunk.job_id
+                               end)
+
+    # TODO: Not sure what the value of this will be
+    failed
+    |> Enum.map(fn f ->
+      Logger.error "failed to ack #{inspect f}"
     end)
+
+
+    processed_chunk_job_ids
     |> Enum.uniq()
     |> Enum.each(fn job_id ->
       total_chunks = CandleHistoryChunks.count_by_job_id(job_id)
-      total_complete = CandleHistoryChunks.count_by_job_id_and_status(job_id, :complete)
-      total_error = CandleHistoryChunks.count_by_job_id_and_status(job_id, :error)
-      total_not_found = CandleHistoryChunks.count_by_job_id_and_status(job_id, :not_found)
+      total_finished = CandleHistoryChunks.count_by_job_id_and_status(job_id, [:complete, :error, :not_found])
 
-      if total_chunks == total_complete + total_error + total_not_found do
+      if total_chunks == total_finished do
         job = CandleHistoryJobs.get!(job_id)
+        total_error = CandleHistoryChunks.count_by_job_id_and_status(job_id, [:error])
 
         job_status =
           if total_error > 0 do
@@ -60,77 +77,56 @@ defmodule History.Candles.DownloadChunksBroadway do
             "complete"
           end
 
-        CandleHistoryJobs.update(job, %{status: job_status})
-        Candles.PubSub.broadcast_update(job.id, job_status)
+        case CandleHistoryJobs.update(job, %{status: job_status}) do
+          {:ok, job} -> CandleHistoryJobs.broadcast(job)
+        end
       end
-    end)
-
-    failed
-    |> Enum.each(fn m ->
-      Logger.error(
-        "could not download chunk - id: #{m.data.id}, venue: #{m.data.venue}, product: #{m.data.product}"
-      )
-
-      CandleHistoryChunks.update(m.data, %{status: "error"})
-      broadcast_update(m.data, "error")
     end)
 
     :ok
   end
 
   defp process_data(chunk) do
-    case CandleHistoryChunks.fetch(chunk) do
-      {:ok, candles} ->
-        candles
-        |> Enum.map(fn c ->
-          {:ok, time, _} = DateTime.from_iso8601(c.start_time)
+    try do
+      case CandleHistoryChunks.fetch(chunk) do
+        {:ok, venue_candles} ->
+          venue_candles
+          |> Enum.map(&build_candle(&1, chunk))
+          |> History.Candles.insert_all()
 
-          %{
-            time: time,
-            venue: chunk.venue,
-            product: chunk.product,
-            source: "api",
-            period: chunk.period,
-            open: Tai.Utils.Decimal.cast!(c.open),
-            high: Tai.Utils.Decimal.cast!(c.high),
-            low: Tai.Utils.Decimal.cast!(c.low),
-            close: Tai.Utils.Decimal.cast!(c.close),
-            volume: Tai.Utils.Decimal.cast!(c.volume),
-            inserted_at: NaiveDateTime.utc_now() |> NaiveDateTime.truncate(:second),
-            updated_at: NaiveDateTime.utc_now() |> NaiveDateTime.truncate(:second)
-          }
-        end)
-        |> History.Candles.upsert_all()
+          {chunk, "complete", nil}
 
-        {chunk, "complete"}
+        {:error, :not_found} ->
+          {chunk, "not_found", :not_found}
 
-      {:error, :not_found} ->
-        {chunk, "not_found"}
+        {:error, :not_supported} ->
+          {chunk, "error", :not_supported}
 
-      {:error, :not_supported} ->
-        Logger.debug(
-          "fetch candle history chunk not supported by job: #{chunk.job_id}, chunk: #{chunk.id}"
-        )
-
-        {chunk, "error"}
-
-      {:error, reason} ->
-        Logger.error(
-          "fetch candle history chunk error for job: #{chunk.job_id}, chunk: #{chunk.id}, reason: #{inspect(reason)}"
-        )
-
-        {chunk, "error"}
+        {:error, reason} ->
+          {chunk, "error", reason}
+      end
+    rescue
+      error_reason -> 
+        {chunk, "error", error_reason}
     end
   end
 
-  @topic_prefix "candle_history_chunk"
-  defp broadcast_update(chunk, status) do
-    topics = ["#{@topic_prefix}:*", "#{@topic_prefix}:#{chunk.id}"]
-    msg = {:candle_history_chunk, :update, %{id: chunk.id, status: status}}
+  defp build_candle(venue_candle, chunk) do
+    {:ok, time, _} = DateTime.from_iso8601(venue_candle.start_time)
 
-    topics
-    |> Enum.each(fn topic ->
-      Phoenix.PubSub.broadcast(Tai.PubSub, topic, msg)
-    end)
+    %{
+      time: time,
+      venue: chunk.venue,
+      product: chunk.product,
+      source: "api",
+      period: chunk.period,
+      open: Tai.Utils.Decimal.cast!(venue_candle.open),
+      high: Tai.Utils.Decimal.cast!(venue_candle.high),
+      low: Tai.Utils.Decimal.cast!(venue_candle.low),
+      close: Tai.Utils.Decimal.cast!(venue_candle.close),
+      volume: Tai.Utils.Decimal.cast!(venue_candle.volume),
+      inserted_at: NaiveDateTime.utc_now() |> NaiveDateTime.truncate(:second),
+      updated_at: NaiveDateTime.utc_now() |> NaiveDateTime.truncate(:second)
+    }
   end
 end

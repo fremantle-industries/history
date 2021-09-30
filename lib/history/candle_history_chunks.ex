@@ -5,6 +5,11 @@ defmodule History.CandleHistoryChunks do
   alias History.{DataAdapter, Repo}
   alias History.Candles.CandleHistoryChunk, as: Chunk
 
+  @spec get!(Chunk.id()) :: Chunk.t()
+  def get!(id) do
+    Repo.get!(Chunk, id)
+  end
+
   @default_latest_page 1
   @default_latest_page_size 25
   @max_page_size 100
@@ -47,7 +52,7 @@ defmodule History.CandleHistoryChunks do
     from(
       c in Chunk,
       select: count(c.id),
-      where: c.job_id == ^job_id and c.status == ^status
+      where: c.job_id == ^job_id and c.status in ^status
     )
     |> Repo.one()
   end
@@ -65,5 +70,26 @@ defmodule History.CandleHistoryChunks do
     with {:ok, candle_adapter} <- DataAdapter.for_venue(chunk.venue, :candles) do
       candle_adapter.fetch(chunk)
     end
+  end
+
+  def broadcast(chunk, pub_sub \\ Tai.PubSub) do
+    msg = %{id: chunk.id, status: chunk.status}
+
+    [
+      "candle_history_chunk:#{chunk.id}",
+      "candle_history_chunk:job:#{chunk.job_id}:#{chunk.id}",
+      "candle_history_chunk:job:#{chunk.job_id}:*",
+      "candle_history_chunk:period:#{chunk.period}:#{chunk.id}",
+      "candle_history_chunk:period:#{chunk.period}:*",
+      "candle_history_chunk:*"
+    ]
+    |> Enum.each(fn topic ->
+      Phoenix.PubSub.broadcast(pub_sub, topic, {topic, msg})
+    end)
+  end
+
+  def subscribe_by_job_id(job_id, pub_sub \\ Tai.PubSub) do
+    topic = "candle_history_chunk:job:#{job_id}:*"
+    Phoenix.PubSub.subscribe(pub_sub, topic)
   end
 end

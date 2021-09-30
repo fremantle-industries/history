@@ -5,7 +5,7 @@ defmodule HistoryWeb.CandleLive do
 
   @impl true
   def mount(_params, _session, socket) do
-    Phoenix.PubSub.subscribe(Tai.PubSub, "candle_history_job:*")
+    CandleHistoryJobs.subscribe_by_id("*")
 
     socket =
       socket
@@ -16,7 +16,7 @@ defmodule HistoryWeb.CandleLive do
   end
 
   @impl true
-  def handle_info({:candle_history_job, :update, _}, socket) do
+  def handle_info({"candle_history_job:*", _}, socket) do
     socket =
       socket
       |> assign_latest_jobs()

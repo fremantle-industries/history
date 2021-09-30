@@ -3,6 +3,7 @@ defmodule History.Candles.CandleHistoryChunk do
   import Ecto.Changeset
   alias History.Candles
 
+  @type id :: pos_integer
   @type t :: %__MODULE__{}
 
   schema "candle_history_chunks" do

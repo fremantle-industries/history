@@ -6,13 +6,12 @@ defmodule HistoryWeb.CandleJob.ShowLive do
 
   @impl true
   def mount(%{"id" => id}, _session, socket) do
-    Phoenix.PubSub.subscribe(Tai.PubSub, "candle_history_job:*")
-    Phoenix.PubSub.subscribe(Tai.PubSub, "candle_history_chunk:*")
+    CandleHistoryJobs.subscribe_by_id(id)
+    CandleHistoryChunks.subscribe_by_job_id(id)
 
     socket =
       socket
-      |> assign(job: CandleHistoryJobs.get!(id))
-      |> assign_chunk_status_totals()
+      |> assign(job_id: id)
 
     {:ok, socket}
   end
@@ -26,16 +25,7 @@ defmodule HistoryWeb.CandleJob.ShowLive do
       socket
       |> assign(page_size: page_size)
       |> assign(current_page: page)
-      |> assign_chunks()
-
-    {:noreply, socket}
-  end
-
-  @impl true
-  def handle_info({:candle_history_job, :update, _}, socket) do
-    socket =
-      socket
-      |> assign(job: CandleHistoryJobs.get!(socket.assigns.job.id))
+      |> assign_job()
       |> assign_chunk_status_totals()
       |> assign_chunks()
 
@@ -43,7 +33,18 @@ defmodule HistoryWeb.CandleJob.ShowLive do
   end
 
   @impl true
-  def handle_info({:candle_history_chunk, :update, _}, socket) do
+  def handle_info({"candle_history_job:" <> _, _}, socket) do
+    socket =
+      socket
+      |> assign_job()
+      |> assign_chunk_status_totals()
+      |> assign_chunks()
+
+    {:noreply, socket}
+  end
+
+  @impl true
+  def handle_info({"candle_history_chunk:job:" <> _, _}, socket) do
     socket =
       socket
       |> assign_chunk_status_totals()
@@ -62,6 +63,11 @@ defmodule HistoryWeb.CandleJob.ShowLive do
       <span class="float-left">/</span>
       """
     end)
+  end
+
+  defp assign_job(socket) do
+    socket
+    |> assign(job: CandleHistoryJobs.get!(socket.assigns.job_id))
   end
 
   defp assign_chunks(socket) do
@@ -94,7 +100,7 @@ defmodule HistoryWeb.CandleJob.ShowLive do
     |> Enum.reduce(
       socket,
       fn {status, _color}, socket ->
-        total = CandleHistoryChunks.count_by_job_id_and_status(job.id, status)
+        total = CandleHistoryChunks.count_by_job_id_and_status(job.id, [status])
         assign(socket, :"total_#{status}", total)
       end
     )
