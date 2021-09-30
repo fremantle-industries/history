@@ -22,6 +22,7 @@ defmodule History.MixProject do
   def application do
     [
       mod: {History.Application, []},
+      start_phases: [pipelines: []],
       extra_applications: [:logger, :runtime_tools]
     ]
   end
@@ -54,8 +55,9 @@ defmodule History.MixProject do
       {:postgrex, ">= 0.0.0"},
       {:redirect, "~> 0.3"},
       {:stylish, "~> 0.0.6"},
+      # {:tai, "~> 0.0.70"},
       # {:tai, github: "fremantle-industries/tai", sparse: "apps/tai", branch: "main", override: true},
-      {:tai, "~> 0.0.70"},
+      {:tai, github: "fremantle-industries/tai", sparse: "apps/tai", branch: "receive-trades-in-advisor", override: true},
       {:telemetry_metrics, "~> 0.4"},
       {:telemetry_metrics_prometheus, "~> 1.0"},
       {:telemetry_poller, "~> 0.4"},

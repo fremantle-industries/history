@@ -44,6 +44,103 @@ config :history,
     okex: History.Sources.OkEx
   }
 
+config :history, pipelines: %{
+  # save_trades
+  # save_trades: %{
+  #   start_on_boot: false,
+  #   markets: "*",
+  #   streams: [:trade],
+  #   steps: [
+  #     {History.Pipelines.Steps.SaveTrades, :execute, []}
+  #   ]
+  # },
+  # # min_1
+  # build_min_1_candles_from_trades: %{
+  #   start_on_boot: true,
+  #   markets: "*",
+  #   streams: [:trade],
+  #   steps: [
+  #     {History.Pipelines.Steps.BuildCandlesFromTrades, :execute, [period: :min_1]}
+  #   ]
+  # },
+  # min_15
+  # build_min_15_candles_from_trades: %{
+  #   start_on_boot: true,
+  #   markets: "*",
+  #   streams: [:trade],
+  #   steps: [
+  #     {History.Pipelines.Steps.BuildCandlesFromTrades, :execute, [period: :min_15]}
+  #   ]
+  # },
+  build_min_15_candles_from_min_1_candles: %{
+    start_on_boot: true,
+    markets: "*",
+    streams: [
+      [:candle_history_chunk, :period, :min_1]
+    ],
+    steps: [
+      {History.Pipelines.Steps.BuildCandlesFromCandleHistoryChunks, :execute, [period: :min_15]}
+    ]
+  },
+  # hour_1
+  # build_hour_1_candles_from_trades: %{
+  #   start_on_boot: true,
+  #   markets: "*",
+  #   streams: [:trade],
+  #   steps: [
+  #     {History.Pipelines.Steps.BuildCandlesFromTrades, :execute, [period: :hour_1]}
+  #   ]
+  # },
+  build_hour_1_candles_from_min_1_candles: %{
+    start_on_boot: true,
+    markets: "*",
+    streams: [
+      [:candle_history_chunk, :period, :min_1]
+    ],
+    steps: [
+      {History.Pipelines.Steps.BuildCandlesFromCandleHistoryChunks, :execute, [period: :hour_1]}
+    ]
+  },
+  # hour_4
+  # build_hour_4_candles_from_trades: %{
+  #   start_on_boot: true,
+  #   markets: "*",
+  #   streams: [:trade],
+  #   steps: [
+  #     {History.Pipelines.Steps.BuildCandlesFromTrades, :execute, [period: :hour_4]}
+  #   ]
+  # },
+  build_hour_4_candles_from_min_1_candles: %{
+    start_on_boot: true,
+    markets: "*",
+    streams: [
+      [:candle_history_chunk, :period, :min_1]
+    ],
+    steps: [
+      {History.Pipelines.Steps.BuildCandlesFromCandleHistoryChunks, :execute, [period: :hour_4]}
+    ]
+  },
+  # day_1
+  # build_day_1_candles_from_trades: %{
+  #   start_on_boot: true,
+  #   markets: "*",
+  #   streams: [:trade],
+  #   steps: [
+  #     {History.Pipelines.Steps.BuildCandlesFromTrades, :execute, [period: :day_1]}
+  #   ]
+  # },
+  build_day_1_candles_from_min_1_candles: %{
+    start_on_boot: true,
+    markets: "*",
+    streams: [
+      [:candle_history_chunk, :period, :min_1]
+    ],
+    steps: [
+      {History.Pipelines.Steps.BuildCandlesFromCandleHistoryChunks, :execute, [period: :day_1]}
+    ]
+  }
+}
+
 # Workbench
 config :workbench, Workbench.Repo,
   url: database_url,
@@ -97,8 +194,12 @@ config :navigator,
     history: [
       %{
         label: "History",
-        link: {HistoryWeb.Router.Helpers, :trade_path, [HistoryWeb.Endpoint, :index]},
+        link: {HistoryWeb.Router.Helpers, :pipeline_path, [HistoryWeb.Endpoint, :index]},
         class: "text-4xl"
+      },
+      %{
+        label: "Pipelines",
+        link: {HistoryWeb.Router.Helpers, :pipeline_path, [HistoryWeb.Endpoint, :index]}
       },
       %{
         label: "Data",
@@ -199,263 +300,13 @@ config :tai, Tai.Orders.OrderRepo,
   url: database_url,
   pool_size: 5
 
-config :tai,
-  venues: %{
-    binance: [
-      enabled: true,
-      adapter: Tai.VenueAdapters.Binance,
-      timeout: 60_000,
-      products: "*",
-      # products: ~w(
-      #   btc_usdc
-      #   btc_usdt
-      #   btc_busd
-      #   btc_tusd
-
-      #   dot_usdt
-      #   eth_usdt
-      #   ltc_usdt
-      #   link_usdt
-      #   sol_usdt
-      # ) |> Enum.join(" "),
-      order_books: ""
-    ],
-    bitmex: [
-      enabled: true,
-      adapter: Tai.VenueAdapters.Bitmex,
-      products: "xbtusd",
-      order_books: ""
-    ],
-    bybit: [
-      enabled: true,
-      adapter: Tai.VenueAdapters.Bybit,
-      products: "*",
-      order_books: ""
-    ],
-    gdax: [
-      enabled: true,
-      adapter: Tai.VenueAdapters.Gdax,
-      products: "btc_usd",
-      order_books: ""
-    ],
-    ftx: [
-      enabled: true,
-      adapter: Tai.VenueAdapters.Ftx,
-      timeout: 60_000,
-      products: "*",
-      # products: ~w(
-      #   btc/usd
-
-      #   eth/usd
-
-      #   ltc/usd
-      # ) |> Enum.join(" ")
-      # products: ~w(
-      #   1inch/usd
-      #   1inch-perp
-      #   1inch-0625
-
-      #   aave/usd
-      #   aave/usdt
-      #   aave-perp
-      #   aave-0625
-
-      #   alpha/usd
-      #   alpha-perp
-
-      #   badger/usd
-      #   badger-perp
-      #   badger-0625
-
-      #   bal/usd
-      #   bal/usdt
-      #   bal-perp
-      #   bal-0625
-
-      #   bch/usd
-      #   bch/usdt
-      #   bch-perp
-      #   bch-0625
-
-      #   bnb/usd
-      #   bnb/usdt
-      #   bnb-perp
-      #   bnb-0625
-
-      #   bnt/usd
-      #   bnt-perp
-
-      #   btc/usd
-      #   btc/usdt
-      #   btc-perp
-      #   btc-0625
-      #   btc-0924
-      #   btc-1231
-
-      #   asd/usd
-      #   asd-perp
-      #   asd-0625
-
-      #   chz/usd
-      #   chz/usdt
-      #   chz-perp
-      #   chz-0625
-
-      #   comp/usd
-      #   comp/usdt
-      #   comp-perp
-      #   comp-0625
-
-      #   cro/usd
-      #   cro-perp
-
-      #   crv/usd
-      #   crv-perp
-
-      #   dent/usd
-      #   dent-perp
-
-      #   dodo/usd
-      #   dodo-perp
-
-      #   doge/usd
-      #   doge/usdt
-      #   doge-perp
-      #   doge-0625
-
-      #   enj/usd
-      #   enj-perp
-
-      #   eth/usd
-      #   eth/usdt
-      #   eth-perp
-      #   eth-0625
-      #   eth-0924
-      #   eth-1231
-
-      #   fida/usd
-      #   fida/usdt
-      #   fida-perp
-
-      #   ftm/usd
-      #   ftm-perp
-
-      #   ftt/usd
-      #   ftt/usdt
-      #   ftt-perp
-
-      #   knc/usd
-      #   knc/usdt
-      #   knc-perp
-
-      #   link/usd
-      #   link/usdt
-      #   link-perp
-      #   link-0625
-
-      #   ltc/usd
-      #   ltc/usdt
-      #   ltc-perp
-      #   ltc-0625
-
-      #   lrc/usd
-      #   lrc-perp
-
-      #   matic/usd
-      #   matic-perp
-
-      #   mkr/usd
-      #   mkr/usdt
-      #   mkr-perp
-
-      #   okb/usd
-      #   okb-perp
-      #   okb-0625
-
-      #   omg/usd
-      #   omg-perp
-      #   omg-0625
-
-      #   oxy/usd
-      #   oxy/usdt
-      #   oxy-perp
-
-      #   ray/usd
-      #   ray-perp
-
-      #   reef/usd
-      #   reef-perp
-      #   reef-0625
-
-      #   rune/usd
-      #   rune/usdt
-      #   rune-perp
-
-      #   skl/usd
-      #   skl-perp
-
-      #   snx/usd
-      #   snx-perp
-
-      #   srm/usd
-      #   srm/usdt
-      #   srm-perp
-
-      #   sol/usd
-      #   sol/usdt
-      #   sol-perp
-      #   sol-0625
-
-      #   storj/usd
-      #   storj-perp
-
-      #   sushi/usd
-      #   sushi/usdt
-      #   sushi-perp
-      #   sushi-0625
-
-      #   sxp/usd
-      #   sxp/usdt
-      #   sxp-perp
-      #   sxp-0625
-
-      #   tomo/usd
-      #   tomo/usdt
-      #   tomo-perp
-
-      #   trx/usd
-      #   trx/usdt
-      #   trx-perp
-      #   trx-0625
-
-      #   uni/usd
-      #   uni/usdt
-      #   uni-perp
-      #   uni-0625
-
-      #   xrp/usd
-      #   xrp/usdt
-      #   xrp-perp
-      #   xrp-0625
-
-      #   yfi/usd
-      #   yfi/usdt
-      #   yfi-perp
-      #   yfi-0625
-
-      #   waves/usd
-      #   waves-perp
-      #   waves-0625
-      # ) |> Enum.join(" "),
-      order_books: ""
-    ],
-    okex: [
-      enabled: true,
-      adapter: Tai.VenueAdapters.OkEx,
-      products: "btc_usdt eth_usdt",
-      order_books: ""
-    ]
+config :tai, fleets: %{
+  recorder: %{
+    advisor: History.Advisors.Recorder.Advisor,
+    factory: Tai.Advisors.Factories.OnePerVenue,
+    market_streams: "*"
   }
+}
 
 # Conditional Configuration
 if config_env() == :dev do
@@ -530,6 +381,49 @@ if config_env() == :dev do
   config :workbench, WorkbenchWeb.Endpoint,
     debug_errors: true,
     check_origin: false
+
+  # Tai
+  config :tai,
+    venues: %{
+      binance: [
+        enabled: true,
+        adapter: Tai.VenueAdapters.Binance,
+        timeout: 60_000,
+        products: "*",
+        market_streams: ""
+      ],
+      bitmex: [
+        enabled: true,
+        adapter: Tai.VenueAdapters.Bitmex,
+        products: "xbtusd",
+        market_streams: "*"
+      ],
+      bybit: [
+        enabled: true,
+        adapter: Tai.VenueAdapters.Bybit,
+        products: "*",
+        market_streams: ""
+      ],
+      gdax: [
+        enabled: true,
+        adapter: Tai.VenueAdapters.Gdax,
+        products: "btc_usd",
+        market_streams: ""
+      ],
+      ftx: [
+        enabled: true,
+        adapter: Tai.VenueAdapters.Ftx,
+        timeout: 60_000,
+        products: "*",
+        market_streams: "btc-perp"
+      ],
+      okex: [
+        enabled: true,
+        adapter: Tai.VenueAdapters.OkEx,
+        products: "btc_usdt eth_usdt",
+        market_streams: ""
+      ]
+    }
 
   # Logger
   unless System.get_env("DOCKER") == "true" do

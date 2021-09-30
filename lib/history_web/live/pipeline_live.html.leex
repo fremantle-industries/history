@@ -1,0 +1,62 @@
+<h2 class="text-3xl">
+  Pipelines
+</h2>
+
+<div class="flex items-center mt-4">
+  <form phx-change="suggest" phx-submit="search">
+    <input type="text" name="q" value="<%= @query %>" placeholder="Search" list="pipelines" autocomplete="off"/>
+    <datalist id="pipelines">
+      <%= for p <- @pipelines do %>
+        <option value="<%= p.id %>"><%= p.id %></option>
+      <% end %>
+    </datalist>
+  </form>
+
+  <%= live_component WorkbenchWeb.SharedLive.SelectNodeComponent, id: :select_node, class: "ml-4" %>
+</div>
+
+<table class="w-full mt-4">
+  <thead class="bg-gray-200 border-t-2 border-gray-400">
+    <tr>
+      <th scope="col" class="px-4 py-3 text-left text-gray-700">ID</th>
+      <th scope="col" class="px-4 py-3 text-left text-gray-700">Status</th>
+      <th scope="col" class="px-4 py-3 text-left text-gray-700">Streams</th>
+      <th scope="col" class="px-4 py-3 text-left text-gray-700">Steps</th>
+      <th scope="col" class="px-4 py-3 text-right text-gray-700">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= if Enum.any?(@pipelines) do %>
+      <%= for p <- @pipelines do %>
+        <tr class="hover:bg-gray-50 border-t border-b group">
+          <td class="px-4 py-3"><%= p.id %></td>
+          <td class="px-4 py-3"><%= p.status %></td>
+          <td class="px-4 py-3"><%= p.streams |> Enum.map(&inspect/1) |> Enum.join(", ") %></td>
+          <td class="px-4 py-3"><%= p.steps |> Enum.map(&inspect/1) |> Enum.join(", ") %></td>
+          <td class="px-4 py-3 text-right">
+            <%= content_tag(
+              :button,
+              "start",
+              class: "text-green-500 disabled:opacity-25 font-bold invisible group-hover:visible",
+              disabled: p.status != :unstarted,
+              "phx-click": "start",
+              "phx-value-id": p.id
+            ) %>
+            <%= content_tag(
+              :button,
+              "stop",
+              class: "text-red-500 disabled:opacity-25 font-bold invisible group-hover:visible ml-4",
+              disabled: p.status == :unstarted,
+              "phx-click": "stop",
+              "phx-value-id": p.id
+            ) %>
+          </td>
+        </tr>
+      <% end %>
+    <% else %>
+      <tr>
+        <td colspan="6" class="px-4 py-3">No pipelines</td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
