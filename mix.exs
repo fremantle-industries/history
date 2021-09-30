@@ -5,7 +5,7 @@ defmodule History.MixProject do
     [
       app: :history,
       version: "0.0.18",
-      elixir: "~> 1.11",
+      elixir: "~> 1.12",
       package: package(),
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: [:phoenix, :gettext] ++ Mix.compilers(),

@@ -33,7 +33,7 @@ password: password
 
 ## Requirements
 
-`history` requires Elixir 1.11+ & Erlang/OTP 22+
+`history` requires Elixir 1.12+ & Erlang/OTP 22+
 
 ## Features
 
