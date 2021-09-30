@@ -14,6 +14,9 @@ defmodule History.Candles.Candle do
     field :low, :decimal
     field :close, :decimal
     field :volume, :decimal
+    field :delta_high, :decimal
+    field :delta_low, :decimal
+    field :delta_close, :decimal
 
     timestamps()
   end
@@ -31,7 +34,10 @@ defmodule History.Candles.Candle do
       :high,
       :low,
       :close,
-      :volume
+      :volume,
+      :delta_high,
+      :delta_low,
+      :delta_close
     ])
     |> validate_required([
       :venue,
@@ -43,7 +49,10 @@ defmodule History.Candles.Candle do
       :high,
       :low,
       :close,
-      :volume
+      :volume,
+      :delta_high,
+      :delta_low,
+      :delta_close
     ])
   end
 end

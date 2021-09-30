@@ -1,0 +1,33 @@
+defmodule <%= module_prefix %>.Repo.Migrations.AddHistoryDeltaToCandles do
+  use Ecto.Migration
+
+  def up do
+    alter table(:candles<%= if not is_nil(db_prefix), do: ", prefix: \"#{db_prefix}\"" %>) do
+      add :delta_high, :decimal
+      add :delta_low, :decimal
+      add :delta_close, :decimal
+    end
+
+    execute """
+    UPDATE candles
+    SET
+      delta_high = high - open,
+      delta_low = open - low,
+      delta_close = close - open
+    """
+
+    alter table(:candles<%= if not is_nil(db_prefix), do: ", prefix: \"#{db_prefix}\"" %>) do
+      modify :delta_high, :decimal, null: false
+      modify :delta_low, :decimal, null: false
+      modify :delta_close, :decimal, null: false
+    end
+  end
+
+  def down do
+    alter table(:candles<%= if not is_nil(db_prefix), do: ", prefix: \"#{db_prefix}\"" %>) do
+      remove :delta_high, :decimal, null: false
+      remove :delta_low, :decimal, null: false
+      remove :delta_close, :decimal, null: false
+    end
+  end
+end

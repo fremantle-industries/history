@@ -113,6 +113,15 @@ defmodule History.Candles.DownloadChunksBroadway do
 
   defp build_candle(venue_candle, chunk) do
     {:ok, time, _} = DateTime.from_iso8601(venue_candle.start_time)
+    open = venue_candle.open |> Tai.Utils.Decimal.cast!()
+    high = venue_candle.high |> Tai.Utils.Decimal.cast!()
+    low = venue_candle.low |> Tai.Utils.Decimal.cast!()
+    close = venue_candle.close |> Tai.Utils.Decimal.cast!()
+    volume = venue_candle.volume |> Tai.Utils.Decimal.cast!()
+    delta_high = high |> Decimal.sub(open)
+    delta_low = low |> Decimal.sub(open)
+    delta_close = close |> Decimal.sub(open)
+    utc_now = NaiveDateTime.utc_now() |> NaiveDateTime.truncate(:second)
 
     %{
       time: time,
@@ -120,13 +129,16 @@ defmodule History.Candles.DownloadChunksBroadway do
       product: chunk.product,
       source: "api",
       period: chunk.period,
-      open: Tai.Utils.Decimal.cast!(venue_candle.open),
-      high: Tai.Utils.Decimal.cast!(venue_candle.high),
-      low: Tai.Utils.Decimal.cast!(venue_candle.low),
-      close: Tai.Utils.Decimal.cast!(venue_candle.close),
-      volume: Tai.Utils.Decimal.cast!(venue_candle.volume),
-      inserted_at: NaiveDateTime.utc_now() |> NaiveDateTime.truncate(:second),
-      updated_at: NaiveDateTime.utc_now() |> NaiveDateTime.truncate(:second)
+      open: open,
+      high: high,
+      low: low,
+      close: close,
+      volume: volume,
+      delta_high: delta_high,
+      delta_low: delta_low,
+      delta_close: delta_close,
+      inserted_at: utc_now,
+      updated_at: utc_now
     }
   end
 end
