@@ -118,27 +118,17 @@ defmodule History.Candles.DownloadChunksBroadway do
     low = venue_candle.low |> Tai.Utils.Decimal.cast!()
     close = venue_candle.close |> Tai.Utils.Decimal.cast!()
     volume = venue_candle.volume |> Tai.Utils.Decimal.cast!()
-    delta_high = high |> Decimal.sub(open) |> Decimal.div(open)
-    delta_low = low |> Decimal.sub(open) |> Decimal.div(open)
-    delta_close = close |> Decimal.sub(open) |> Decimal.div(open)
-    utc_now = NaiveDateTime.utc_now() |> NaiveDateTime.truncate(:second)
 
     %{
       time: time,
       venue: chunk.venue,
       product: chunk.product,
-      source: "api",
       period: chunk.period,
       open: open,
       high: high,
       low: low,
       close: close,
-      volume: volume,
-      delta_high: delta_high,
-      delta_low: delta_low,
-      delta_close: delta_close,
-      inserted_at: utc_now,
-      updated_at: utc_now
+      volume: volume
     }
   end
 end

@@ -66,7 +66,7 @@ defmodule History.Candles do
       History.Candles.Candle,
       candles,
       on_conflict: :replace_all,
-      conflict_target: [:venue, :product, :source, :period, :time]
+      conflict_target: [:venue, :product, :period, :time]
     )
   end
 end

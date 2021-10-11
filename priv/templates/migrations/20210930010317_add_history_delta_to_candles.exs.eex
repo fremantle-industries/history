@@ -25,9 +25,9 @@ defmodule <%= module_prefix %>.Repo.Migrations.AddHistoryDeltaToCandles do
 
   def down do
     alter table(:candles<%= if not is_nil(db_prefix), do: ", prefix: \"#{db_prefix}\"" %>) do
-      remove :delta_high, :decimal, null: false
-      remove :delta_low, :decimal, null: false
-      remove :delta_close, :decimal, null: false
+      remove :delta_high
+      remove :delta_low
+      remove :delta_close
     end
   end
 end
