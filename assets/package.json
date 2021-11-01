@@ -30,7 +30,7 @@
     "mini-css-extract-plugin": "^2.4.3",
     "postcss": "^8.3.11",
     "postcss-import": "^14.0.2",
-    "postcss-loader": "^6.1.1",
+    "postcss-loader": "^6.2.0",
     "postcss-preset-env": "^6.7.0",
     "tailwindcss": "^2.2.16",
     "tailwindcss-empty": "^1.0.0",
