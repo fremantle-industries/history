@@ -16,7 +16,7 @@
     "phoenix_live_view": "file:../deps/phoenix_live_view"
   },
   "devDependencies": {
-    "@babel/core": "^7.15.5",
+    "@babel/core": "^7.16.0",
     "@babel/preset-env": "^7.16.0",
     "@tailwindcss/forms": "^0.3.4",
     "@types/nprogress": "^0.2.0",
