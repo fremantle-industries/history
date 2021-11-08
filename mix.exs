@@ -55,7 +55,7 @@ defmodule History.MixProject do
       {:redirect, "~> 0.3"},
       {:stylish, "~> 0.0.6"},
       # {:tai, github: "fremantle-industries/tai", sparse: "apps/tai", branch: "main", override: true},
-      {:tai, "~> 0.0.70"},
+      {:tai, "~> 0.0.71"},
       {:telemetry_metrics, "~> 0.4"},
       {:telemetry_metrics_prometheus, "~> 1.0"},
       {:telemetry_poller, "~> 0.4"},
