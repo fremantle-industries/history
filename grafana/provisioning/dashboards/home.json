@@ -19,10 +19,10 @@
     ]
   },
   "editable": true,
-  "gnetId": null,
+  "fiscalYearStartMonth": 0,
   "graphTooltip": 1,
   "id": 2,
-  "iteration": 1631566436429,
+  "iteration": 1638500644760,
   "links": [
     {
       "asDropdown": false,
@@ -137,10 +137,10 @@
       "url": ""
     }
   ],
+  "liveNow": false,
   "panels": [
     {
       "collapsed": true,
-      "datasource": null,
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -150,7 +150,6 @@
       "id": 13,
       "panels": [
         {
-          "datasource": null,
           "description": "",
           "gridPos": {
             "h": 5,
@@ -173,7 +172,6 @@
     },
     {
       "collapsed": false,
-      "datasource": null,
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -186,7 +184,10 @@
       "type": "row"
     },
     {
-      "datasource": "History TimescaleDB",
+      "datasource": {
+        "type": "postgres",
+        "uid": "PDFB9503CA0A37EBC"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -254,7 +255,7 @@
               },
               {
                 "id": "unit",
-                "value": "prefix:$"
+                "value": "currencyUSD"
               },
               {
                 "id": "color",
@@ -296,7 +297,7 @@
               },
               {
                 "id": "unit",
-                "value": "prefix:$$"
+                "value": "currencyUSD"
               },
               {
                 "id": "color",
@@ -358,7 +359,10 @@
       "type": "timeseries"
     },
     {
-      "datasource": "History TimescaleDB",
+      "datasource": {
+        "type": "postgres",
+        "uid": "PDFB9503CA0A37EBC"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -505,7 +509,10 @@
       "type": "timeseries"
     },
     {
-      "datasource": "History TimescaleDB",
+      "datasource": {
+        "type": "postgres",
+        "uid": "PDFB9503CA0A37EBC"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -652,7 +659,10 @@
       "type": "timeseries"
     },
     {
-      "datasource": "History TimescaleDB",
+      "datasource": {
+        "type": "postgres",
+        "uid": "PDFB9503CA0A37EBC"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -726,7 +736,8 @@
         "text": {},
         "tooltip": {
           "mode": "single"
-        }
+        },
+        "xTickLabelRotation": 0
       },
       "pluginVersion": "8.1.2",
       "targets": [
@@ -757,13 +768,14 @@
           ]
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "24 Hour S&P+BTC+ETH Performance",
       "type": "barchart"
     },
     {
-      "datasource": "History TimescaleDB",
+      "datasource": {
+        "type": "postgres",
+        "uid": "PDFB9503CA0A37EBC"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -837,7 +849,8 @@
         "text": {},
         "tooltip": {
           "mode": "single"
-        }
+        },
+        "xTickLabelRotation": 0
       },
       "pluginVersion": "8.1.2",
       "targets": [
@@ -868,13 +881,14 @@
           ]
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "3 Month S&P+BTC+ETH Performance",
       "type": "barchart"
     },
     {
-      "datasource": "History TimescaleDB",
+      "datasource": {
+        "type": "postgres",
+        "uid": "PDFB9503CA0A37EBC"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -948,7 +962,8 @@
         "text": {},
         "tooltip": {
           "mode": "single"
-        }
+        },
+        "xTickLabelRotation": 0
       },
       "pluginVersion": "8.1.2",
       "targets": [
@@ -979,13 +994,14 @@
           ]
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "1 Year S&P+BTC+ETH Performance",
       "type": "barchart"
     },
     {
-      "datasource": "History TimescaleDB",
+      "datasource": {
+        "type": "postgres",
+        "uid": "PDFB9503CA0A37EBC"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1059,7 +1075,8 @@
         "text": {},
         "tooltip": {
           "mode": "single"
-        }
+        },
+        "xTickLabelRotation": 0
       },
       "pluginVersion": "8.1.2",
       "targets": [
@@ -1090,14 +1107,12 @@
           ]
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Start of Year S&P+BTC+ETH Performance",
       "type": "barchart"
     }
   ],
   "refresh": "",
-  "schemaVersion": 30,
+  "schemaVersion": 33,
   "style": "dark",
   "tags": [
     "home"
@@ -1105,17 +1120,13 @@
   "templating": {
     "list": [
       {
-        "allValue": null,
         "current": {
           "selected": false,
           "text": "day_1",
           "value": "day_1"
         },
-        "description": null,
-        "error": null,
         "hide": 0,
         "includeAll": false,
-        "label": null,
         "multi": false,
         "name": "period",
         "options": [
@@ -1191,19 +1202,18 @@
         "type": "custom"
       },
       {
-        "allValue": null,
         "current": {
           "selected": false,
           "text": "ftx",
           "value": "ftx"
         },
-        "datasource": "History TimescaleDB",
+        "datasource": {
+          "type": "postgres",
+          "uid": "PDFB9503CA0A37EBC"
+        },
         "definition": "SELECT products.venue FROM products GROUP BY products.venue ORDER BY products.venue",
-        "description": null,
-        "error": null,
         "hide": 0,
         "includeAll": false,
-        "label": null,
         "multi": false,
         "name": "snp_venue",
         "options": [],
@@ -1215,19 +1225,18 @@
         "type": "query"
       },
       {
-        "allValue": null,
         "current": {
           "selected": false,
           "text": "spy/usd",
           "value": "spy/usd"
         },
-        "datasource": "History TimescaleDB",
+        "datasource": {
+          "type": "postgres",
+          "uid": "PDFB9503CA0A37EBC"
+        },
         "definition": "SELECT products.symbol FROM products GROUP BY products.symbol ORDER BY products.symbol",
-        "description": null,
-        "error": null,
         "hide": 0,
         "includeAll": false,
-        "label": null,
         "multi": false,
         "name": "snp_symbol",
         "options": [],
@@ -1239,19 +1248,19 @@
         "type": "query"
       },
       {
-        "allValue": null,
         "current": {
           "selected": false,
           "text": "ftx",
           "value": "ftx"
         },
-        "datasource": "History TimescaleDB",
+        "datasource": {
+          "type": "postgres",
+          "uid": "PDFB9503CA0A37EBC"
+        },
         "definition": "SELECT products.venue FROM products GROUP BY products.venue ORDER BY products.venue",
         "description": "",
-        "error": null,
         "hide": 0,
         "includeAll": false,
-        "label": null,
         "multi": false,
         "name": "btc_venue",
         "options": [],
@@ -1263,19 +1272,18 @@
         "type": "query"
       },
       {
-        "allValue": null,
         "current": {
           "selected": false,
           "text": "btc/usd",
           "value": "btc/usd"
         },
-        "datasource": "History TimescaleDB",
+        "datasource": {
+          "type": "postgres",
+          "uid": "PDFB9503CA0A37EBC"
+        },
         "definition": "SELECT products.symbol FROM products WHERE products.base = 'btc' AND products.type = 'spot' GROUP BY products.symbol ORDER BY products.symbol",
-        "description": null,
-        "error": null,
         "hide": 0,
         "includeAll": false,
-        "label": null,
         "multi": false,
         "name": "btc_symbol",
         "options": [],
@@ -1287,19 +1295,18 @@
         "type": "query"
       },
       {
-        "allValue": null,
         "current": {
           "selected": false,
           "text": "ftx",
           "value": "ftx"
         },
-        "datasource": "History TimescaleDB",
+        "datasource": {
+          "type": "postgres",
+          "uid": "PDFB9503CA0A37EBC"
+        },
         "definition": "SELECT products.venue FROM products GROUP BY products.venue ORDER BY products.venue",
-        "description": null,
-        "error": null,
         "hide": 0,
         "includeAll": false,
-        "label": null,
         "multi": false,
         "name": "eth_venue",
         "options": [],
@@ -1311,19 +1318,18 @@
         "type": "query"
       },
       {
-        "allValue": null,
         "current": {
           "selected": false,
           "text": "eth/usd",
           "value": "eth/usd"
         },
-        "datasource": "History TimescaleDB",
+        "datasource": {
+          "type": "postgres",
+          "uid": "PDFB9503CA0A37EBC"
+        },
         "definition": "SELECT products.symbol FROM products WHERE products.base = 'eth' AND products.type = 'spot' GROUP BY products.symbol ORDER BY products.symbol",
-        "description": null,
-        "error": null,
         "hide": 0,
         "includeAll": false,
-        "label": null,
         "multi": false,
         "name": "eth_symbol",
         "options": [],
@@ -1335,7 +1341,6 @@
         "type": "query"
       },
       {
-        "allValue": null,
         "current": {
           "selected": true,
           "text": [
@@ -1345,13 +1350,14 @@
             "swap"
           ]
         },
-        "datasource": "History TimescaleDB",
+        "datasource": {
+          "type": "postgres",
+          "uid": "PDFB9503CA0A37EBC"
+        },
         "definition": "SELECT products.type FROM products GROUP BY products.type ORDER BY products.type",
         "description": "",
-        "error": null,
         "hide": 0,
         "includeAll": true,
-        "label": null,
         "multi": true,
         "name": "top_gainer_loser_type",
         "options": [],
@@ -1372,5 +1378,6 @@
   "timezone": "utc",
   "title": "Home",
   "uid": "YBJH3vM7k",
-  "version": 17
+  "version": 20,
+  "weekStart": ""
 }

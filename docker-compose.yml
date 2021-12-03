@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   db:
-    image: timescale/timescaledb:2.4.1-pg13
+    image: timescale/timescaledb:2.5.0-pg13
     restart: always
     ports:
       - "5432:5432"
@@ -68,7 +68,7 @@ services:
     entrypoint: "sh -c 'mix setup.deps && elixir --sname history -S mix phx.server'"
 
   prometheus:
-    image: 'prom/prometheus:v2.29.2'
+    image: 'prom/prometheus:v2.31.1'
     restart: always
     ports:
       - 9090:9090
@@ -82,7 +82,7 @@ services:
       - '--web.console.templates=/usr/share/prometheus/consoles'
 
   grafana:
-    image: 'grafana/grafana:8.1.3'
+    image: 'grafana/grafana:8.3.0'
     restart: always
     ports:
       - "3000:3000"
