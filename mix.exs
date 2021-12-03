@@ -4,7 +4,7 @@ defmodule History.MixProject do
   def project do
     [
       app: :history,
-      version: "0.0.22",
+      version: "0.0.23",
       elixir: "~> 1.12",
       package: package(),
       elixirc_paths: elixirc_paths(Mix.env()),
