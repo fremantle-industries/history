@@ -2,8 +2,6 @@ defmodule HistoryWeb.CandleJob.ShowLive do
   use HistoryWeb, :live_view
   alias History.{CandleHistoryJobs, CandleHistoryChunks}
 
-  @status_colors [enqueued: "yellow", working: "purple", complete: "green", error: "red"]
-
   @impl true
   def mount(%{"id" => id}, _session, socket) do
     CandleHistoryJobs.subscribe_by_id(id)
@@ -53,18 +51,6 @@ defmodule HistoryWeb.CandleJob.ShowLive do
     {:noreply, socket}
   end
 
-  def chunk_status_totals(assigns) do
-    @status_colors
-    |> Enum.map(fn {status, color} ->
-      total = assigns[:"total_#{status}"]
-
-      ~E"""
-      <span class="hover:text-<%= color %>-400 float-left" title="<%= status %>"><%= total %></span>
-      <span class="float-left">/</span>
-      """
-    end)
-  end
-
   defp assign_job(socket) do
     socket
     |> assign(job: CandleHistoryJobs.get!(socket.assigns.job_id))
@@ -93,6 +79,7 @@ defmodule HistoryWeb.CandleJob.ShowLive do
     )
   end
 
+  @status_colors [enqueued: "yellow", working: "purple", complete: "green", error: "red"]
   defp assign_chunk_status_totals(socket) do
     job = socket.assigns.job
 

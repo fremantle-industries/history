@@ -16,13 +16,8 @@
     Chunks
   </h3>
   <div class="flex space-x-4 items-center">
-    <div>
-      <%= chunk_status_totals(assigns) %>
-      <span title="total">&Sigma; <%= @total_chunks %></span>
-    </div>
-    <div>
-      <%= render HistoryWeb.StatusView, "_pill.html", status: @job.status, title: "job status" %>
-    </div>
+    <%= render HistoryWeb.StatusView, "_pill.html", status: @job.status, title: "job status" %>
+    <%= render HistoryWeb.StatusView, "_progress.html", enqueued: @total_enqueued, working: @total_working, complete: @total_complete, error: @total_error, total: @total_chunks %>
   </div>
 
   <table class="w-full mt-8">

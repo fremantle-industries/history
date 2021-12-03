@@ -17,15 +17,12 @@
   </h3>
   <div class="flex space-x-4 items-center">
     <div>
-      <span>from: <%= @job.from_date %> <%= @job.from_time %></span>
-      <span>to: <%= @job.to_date %> <%= @job.to_time %></span>
+      <span><strong>from=</strong><%= @job.from_date %><%= @job.from_time %></span>
+      <span><strong>to=</strong><%= @job.to_date %><%= @job.to_time %></span>
     </div>
     <div>
       <%= render HistoryWeb.StatusView, "_pill.html", status: @job.status, title: "job status" %>
-    </div>
-    <div>
-      <%= chunk_status_totals(assigns) %>
-      <span title="total">&Sigma; <%= @total_chunks %></span>
+      <%= render HistoryWeb.StatusView, "_progress.html", enqueued: @total_enqueued, working: @total_working, complete: @total_complete, error: @total_error, total: @total_chunks %>
     </div>
   </div>
 

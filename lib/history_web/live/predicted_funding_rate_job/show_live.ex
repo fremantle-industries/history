@@ -2,8 +2,6 @@ defmodule HistoryWeb.PredictedFundingRateJob.ShowLive do
   use HistoryWeb, :live_view
   alias History.{PredictedFundingRateJobs, PredictedFundingRateChunks}
 
-  @status_colors [enqueued: "yellow", working: "purple", complete: "green", error: "red"]
-
   @impl true
   def mount(%{"id" => id}, _session, socket) do
     Phoenix.PubSub.subscribe(Tai.PubSub, "predicted_funding_rate_job:*")
@@ -52,18 +50,6 @@ defmodule HistoryWeb.PredictedFundingRateJob.ShowLive do
     {:noreply, socket}
   end
 
-  def chunk_status_totals(assigns) do
-    @status_colors
-    |> Enum.map(fn {status, color} ->
-      total = assigns[:"total_#{status}"]
-
-      ~E"""
-      <span class="hover:text-<%= color %>-400 float-left" title="<%= status %>"><%= total %></span>
-      <span class="float-left">/</span>
-      """
-    end)
-  end
-
   defp assign_chunks(socket) do
     job = socket.assigns.job
     first_page = 1
@@ -87,6 +73,7 @@ defmodule HistoryWeb.PredictedFundingRateJob.ShowLive do
     )
   end
 
+  @status_colors [enqueued: "yellow", working: "purple", complete: "green", error: "red"]
   defp assign_chunk_status_totals(socket) do
     job = socket.assigns.job
 
