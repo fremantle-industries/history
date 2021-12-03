@@ -19,6 +19,8 @@ let liveSocket = new LiveSocket(
         if (from._x_dataStack) {
           window.Alpine.clone(from, to)
         }
+
+        return true
       }
     },
     hooks: hooks,
@@ -28,8 +30,8 @@ let liveSocket = new LiveSocket(
 Alpine.start()
 
 // Show progress bar on live navigation and form submits
-window.addEventListener("phx:page-loading-start", info => NProgress.start())
-window.addEventListener("phx:page-loading-stop", info => NProgress.done())
+window.addEventListener("phx:page-loading-start", _ => NProgress.start())
+window.addEventListener("phx:page-loading-stop", _ => NProgress.done())
 
 // connect if there are any LiveViews on the page
 liveSocket.connect()
