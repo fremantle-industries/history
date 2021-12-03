@@ -57,8 +57,8 @@ defmodule HistoryWeb.PredictedFundingRateJob.ShowLive do
     |> Enum.map(fn {status, color} ->
       total = assigns[:"total_#{status}"]
 
-      ~E"""
-      <span class="hover:text-<%= color %>-400 float-left" title="<%= status %>"><%= total %></span>
+      ~H"""
+      <span class={"hover:text-#{color}-400 float-left"} title={status}><%= total %></span>
       <span class="float-left">/</span>
       """
     end)

@@ -5,7 +5,7 @@ defmodule HistoryWeb.DataView do
   def render("_breadcrumbs.html", assigns) do
     indexed_sections = assigns.section |> List.wrap() |> Enum.with_index()
 
-    ~E"""
+    ~H"""
     <h2 class="text-3xl">
       <%= Enum.map(indexed_sections, &render_breadcrumb_section/1) %>
     </h2>
@@ -19,7 +19,7 @@ defmodule HistoryWeb.DataView do
   end
 
   def render("_nav.html", assigns) do
-    ~E"""
+    ~H"""
     <nav class="mt-2 space-x-1">
       <%= link "Trades", to: Routes.trade_path(assigns.conn, :index), class: "hover:opacity-75" %>
       <span class="text-gray-400">|</span>

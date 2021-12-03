@@ -4,9 +4,22 @@ defmodule HistoryWeb.StatusView do
   def render("_pill.html", assigns) do
     title = Map.get(assigns, :title, "status")
 
-    ~E"""
-    <span class="<%= bg_color(assigns.status) %> <%= text_color(assigns.status) %> py-2 px-4 inline-block rounded-full" title="<%= title %>">
+    ~H"""
+    <span class={"#{bg_color(assigns.status)} #{text_color(assigns.status)} py-2 px-4 inline-block rounded-full"} title={title}}>
       <%= assigns.status %>
+    </span>
+    """
+  end
+
+  def render("_progress.html", assigns) do
+    finished = assigns.complete + assigns.error
+    progress_pct = finished / assigns.total * 100
+    formatted_progress_pct = :io_lib.format("~.2f", [progress_pct])
+    title = "enqueued=#{assigns.enqueued}, working=#{assigns.working}, complete=#{assigns.complete}, error=#{assigns.error}"
+
+    ~H"""
+    <span title={title}>
+      <strong>progress=</strong><%= formatted_progress_pct %>%
     </span>
     """
   end
