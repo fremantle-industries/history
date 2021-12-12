@@ -9,8 +9,11 @@ COPY ./assets/js ./assets/js
 COPY ./assets/static ./assets/static
 COPY ./assets/package.json ./assets/package.json
 COPY ./assets/package-lock.json ./assets/package-lock.json
-COPY ./assets/webpack.config.js ./assets/webpack.config.js
 COPY ./assets/tsconfig.json ./assets/tsconfig.json
+COPY ./assets/postcss.config.js ./assets/postcss.config.js
+COPY ./assets/tailwind.config.js ./assets/tailwind.config.js
+COPY ./assets/webpack.config.js ./assets/webpack.config.js
+COPY ./assets/babel.config.js ./assets/babel.config.js
 COPY ./config ./config
 COPY ./lib ./lib
 COPY ./priv/repo ./priv/repo
