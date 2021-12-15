@@ -4,6 +4,7 @@ defmodule History.DataAdapter do
           :trades
           | :candles
           | :liquidations
+          | :open_interests
           | :funding_rates
           | :predicted_funding_rates
           | :lending_rates
@@ -12,6 +13,7 @@ defmodule History.DataAdapter do
   @callback trades() :: module
   @callback candles() :: module
   @callback liquidations() :: module
+  @callback open_interests() :: module
   @callback funding_rates() :: module
   @callback predicted_funding_rates() :: module
   @callback lending_rates() :: module

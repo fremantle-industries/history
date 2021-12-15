@@ -1,0 +1,12 @@
+defmodule <%= module_prefix %>.Repo.Migrations.CreateHistoryOpenInterestHistoryJobs do
+  use Ecto.Migration
+
+  def change do
+    create table(:open_interest_history_jobs<%= if not is_nil(db_prefix), do: ", prefix: \"#{db_prefix}\"" %>) do
+      add(:tokens, :map, null: false)
+      add(:status, History.JobStatusType.type(), null: false)
+
+      timestamps()
+    end
+  end
+end

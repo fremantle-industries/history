@@ -1,0 +1,205 @@
+<div class="space-x-4">
+  <%= render HistoryWeb.DataView, "_header.html", conn: @socket, section: [{"Open Interest", Routes.open_interest_path(@socket, :index)}, "Jobs"] %>
+</div>
+<%= render HistoryWeb.DataView, "_nav.html", conn: @socket %>
+
+<div class="mt-8">
+  <h3 class="text-2xl">Jobs</h3>
+
+  <%= form_for @job_changeset, "#", [phx_submit: :download, class: "flex items-start mt-4"], fn f -> %>
+    <div class="w-6/12 flex space-x-1">
+      <label for="tokens-search" class="font-bold mt-2">Tokens:</label>
+      <div
+        class="flex-grow"
+        x-data="{
+          tokens: <%= @tokens |> Enum.map(&Map.take(&1, [:id, :name, :symbol])) |> Jason.encode!() %>,
+          selections: [],
+          isOpen: false,
+          focus: 0,
+          searchTerm: '',
+          searchableTokens() {
+            const unselectedProducts =  this.tokens.filter(t => !this.selections.includes(t))
+            const searchTerms = this.searchTerm.split(' ').filter(t => t !== '')
+
+            if (searchTerms.length === 0) {
+              return unselectedProducts
+            }
+            return unselectedProducts.filter(t => {
+              const match = searchTerms.some(s => t.name.includes(s)) || searchTerms.some(s => t.symbol.includes(s))
+              if (match) { return true }
+
+              const nameAndSymbolSearchTerms = searchTerms.map(t => t.split(':')).filter(t => t.length === 2)
+              return nameAndSymbolSearchTerms.some(([n, s]) => t.name === n && t.symbol.includes(s))
+            })
+          },
+
+          open() {
+            this.isOpen = true
+          },
+          close() {
+            this.isOpen = false
+            this.focus = 0
+          },
+          scrollTo(idx) {
+            document.querySelector(`[ref='item-${idx}']`)?.scrollIntoView(false)
+          },
+          deselect(token) { this.selections = this.selections.filter(t => t !== token) },
+          setFocus(idx) {
+            this.focus = idx
+          },
+          focusPrev(event) {
+            this.setFocus(Math.max(this.focus-1, 0))
+            this.scrollTo(this.focus)
+            event.preventDefault()
+          },
+          focusNext(event) {
+            const tokens = this.searchableTokens()
+            this.setFocus(Math.min(this.focus+1, tokens.length-1))
+            this.scrollTo(this.focus)
+            event.preventDefault()
+          },
+          select(token) {
+            this.selections.push(token)
+          },
+          selectFocused(event) {
+            const token = this.searchableTokens()[this.focus]
+            if (token) {
+              this.selections.push(token)
+            } else {
+              const segments = this.searchTerm.split(':')
+              if (segments.length === 2) {
+                this.selections.push({ venue: segments[0], symbol: segments[1] })
+                this.searchTerm = ''
+              }
+            }
+            event.preventDefault()
+          },
+          pop(event) {
+            if (this.searchTerm === '' && (event.key === 'Backspace' || event.code === 'Backspace')) {
+              this.selections.pop()
+            }
+          }
+        }"
+        @click="$refs.search.focus()"
+        @click.away="close()"
+      >
+        <div class="flex flex-wrap space-x-1 space-y-1 border border-gray-600">
+          <template x-for="token in selections">
+            <div class="flex place-self-center text-xs">
+              <span class="border border-blue-700 rounded-l-lg bg-blue-700 text-white px-2 py-1" x-text="token.symbol"></span>
+              <span class="border-t border-b px-2 py-1" x-text="token.name"></span>
+
+              <label class="border rounded-r-lg px-2 py-1 cursor-pointer align-center">
+                <input
+                  type="checkbox"
+                  name="job[tokens][]"
+                  checked
+                  x-bind:value="JSON.stringify({ name: token.name, symbol: token.symbol })"
+                  @change="deselect(token)"
+                  class="hidden" />
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 20 14" fill="currentColor">
+                  <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                </svg>
+              </label>
+            </div>
+          </template>
+
+          <input
+            type="text"
+            id="tokens-search"
+            autocomplete="off"
+            class="text-sm flex-grow border-0 m-0 px-2 py-2 focus:outline-none focus:ring-transparent"
+            x-ref="search"
+            x-model="searchTerm"
+            @focus="open()"
+            @keydown.arrow-up="focusPrev($event)"
+            @keydown.arrow-down="focusNext($event)"
+            @keydown.enter="selectFocused($event)"
+            @keydown="pop($event)" />
+        </div>
+        <div
+          class="absolute w-96 max-h-64 bg-white shadow-md overflow-y-auto"
+          style="display: none"
+          x-show="isOpen"
+        >
+          <template x-for="(token, index) in searchableTokens()">
+            <label
+              class="block"
+              :class="index === focus ? 'bg-gray-200 opacity-50' : ''"
+              :ref="`item-${index}`"
+              @mouseover="setFocus(index)"
+            >
+              <input
+                class="hidden"
+                type="checkbox"
+                @change="select(token)" />
+              <span class="inline-block bg-blue-700 text-white px-2 py-2" x-text="token.symbol"></span>
+              <span class="inline-block pl-2 py-2" x-text="token.name"></span>
+            </label>
+          </template>
+        </div>
+      </div>
+      <%= error_tag f, :tokens %>
+    </div>
+
+    <div class="w-6/12">
+      <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded ml-4">
+        Download
+      </button>
+    </div>
+  <% end %>
+
+  <table class="w-full mt-4">
+    <thead class="bg-gray-200 border-t-2 border-gray-400">
+      <tr>
+        <th scope="col" class="px-4 py-3 text-left text-gray-700">ID</th>
+        <th scope="col" class="px-4 py-3 text-left text-gray-700">Created At</th>
+        <th scope="col" class="px-4 py-3 text-left text-gray-700">Tokens</th>
+        <th scope="col" class="px-4 py-3 text-left text-gray-700">Status</th>
+        <th scope="col" class="px-4 py-3 text-right text-gray-700">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= if Enum.any?(@jobs) do %>
+        <%= for j <- @jobs do %>
+          <tr class="hover:bg-gray-50 border-t border-b group">
+            <td class="px-4 py-3"><%= link j.id, to: Routes.open_interest_job_path(@socket, :show, j.id), class: "hover:opacity-75" %></td>
+            <td class="px-4 py-3"><%= j.inserted_at %></td>
+            <td class="px-4 py-3" title="<%= j.tokens |> Enum.map(& &1.name) |> Enum.join(", ") %>">
+              <%= j.tokens |> Enum.map(& &1.name) |> Enum.join(", ") %>
+            </td>
+            <td class="px-4 py-3">
+              <%= render HistoryWeb.StatusView, "_pill.html", status: j.status %>
+            </td>
+            <td class="px-4 py-3 text-right">
+              <button
+                type="button"
+                class="text-red-500 opacity-75 hover:opacity-100 invisible group-hover:visible"
+                phx-click="cancel"
+                phx-value-job-id="<%= j.id %>"
+              >
+                Cancel
+              </button>
+            </td>
+          </tr>
+        <% end %>
+      <% else %>
+        <tr class="hover:bg-gray-50 border-t border-b group">
+          <td colspan="8" class="px-4 py-3">No history download jobs</td>
+        </tr>
+      <% end %>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="8" class="px-4 py-3 text-right">
+          <%= link "<<", to: Routes.open_interest_job_path(@socket, :index, page: @first_page), class: "border px-4 py-2 bg-gray-100 opacity-70 hover:opacity-50" %>
+          <%= link "<", to: Routes.open_interest_job_path(@socket, :index, page: @previous_page), class: "border px-4 py-2 bg-gray-100 opacity-70 hover:opacity-50" %>
+          <%= link @current_page, to: Routes.open_interest_job_path(@socket, :index, page: @current_page), class: "border px-4 py-2 bg-gray-100 opacity-70 hover:opacity-50" %>
+          <%= link ">", to: Routes.open_interest_job_path(@socket, :index, page: @next_page), class: "border px-4 py-2 bg-gray-100 opacity-70 hover:opacity-50" %>
+          <%= link ">>", to: Routes.open_interest_job_path(@socket, :index, page: @last_page), class: "border px-4 py-2 bg-gray-100 opacity-70 hover:opacity-50" %>
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+</div>
+

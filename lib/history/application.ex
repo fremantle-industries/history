@@ -13,6 +13,7 @@ defmodule History.Application do
       HistoryWeb.Endpoint,
       History.Trades.Supervisor,
       History.Candles.Supervisor,
+      History.OpenInterests.Supervisor,
       History.FundingRates.Supervisor,
       History.PredictedFundingRates.Supervisor,
       History.LendingRates.Supervisor

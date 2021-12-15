@@ -48,6 +48,10 @@ defmodule HistoryWeb.Router do
       live("/data/lending/latest", LendingRateLatestLive, :index)
       live("/data/lending/jobs", LendingRateJob.IndexLive, :index, as: :lending_rate_job)
       live("/data/lending/jobs/:id", LendingRateJob.ShowLive, :show, as: :lending_rate_job)
+      live("/data/open_interest", OpenInterestLive, :index)
+      live("/data/open_interest/latest", OpenInterestLatestLive, :index)
+      live("/data/open_interest/jobs", OpenInterestJob.IndexLive, :index, as: :open_interest_job)
+      live("/data/open_interest/jobs/:id", OpenInterestJob.ShowLive, :show, as: :open_interest_job)
       live("/products", ProductLive, :index)
       live("/tokens", TokenLive, :index)
     end

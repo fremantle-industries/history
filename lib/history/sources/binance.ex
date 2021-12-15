@@ -13,6 +13,9 @@ defmodule History.Sources.Binance do
   def liquidations, do: NoOp.Liquidations
 
   @impl true
+  def open_interests, do: NoOp.OpenInterests
+
+  @impl true
   def funding_rates, do: NoOp.FundingRates
 
   @impl true

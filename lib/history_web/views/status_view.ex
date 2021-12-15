@@ -13,7 +13,7 @@ defmodule HistoryWeb.StatusView do
 
   def render("_progress.html", assigns) do
     finished = assigns.complete + assigns.error
-    progress_pct = finished / assigns.total * 100
+    progress_pct = if assigns.total == 0, do: 0.0, else: finished / assigns.total * 100
     formatted_progress_pct = :io_lib.format("~.2f", [progress_pct])
     title = "enqueued=#{assigns.enqueued}, working=#{assigns.working}, complete=#{assigns.complete}, error=#{assigns.error}"
 

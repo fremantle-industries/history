@@ -13,6 +13,9 @@ defmodule History.Sources.Ftx do
   def liquidations, do: Ftx.Liquidations
 
   @impl true
+  def open_interests, do: Ftx.OpenInterests
+
+  @impl true
   def funding_rates, do: Ftx.FundingRates
 
   @impl true

@@ -38,6 +38,7 @@ defmodule History.MixProject do
       {:enumerati, "~> 0.0.8"},
       {:etso, "~> 0.1.5"},
       {:ex_ftx, "~> 0.0.9"},
+      {:ex_coinglass, "~> 0.0.2"},
       {:gettext, "~> 0.11"},
       {:indifferent, "~> 0.9"},
       {:jason, "~> 1.0"},
