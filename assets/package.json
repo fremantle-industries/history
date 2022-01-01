@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "alpinejs": "3.4.2",
-    "multiselect-react-dropdown": "^2.0.7",
+    "multiselect-react-dropdown": "^2.0.17",
     "notified_phoenix": "file:../deps/notified_phoenix",
     "nprogress": "^0.2.0",
     "phoenix": "file:../deps/phoenix",
