@@ -19,10 +19,10 @@
     ]
   },
   "editable": true,
-  "gnetId": null,
+  "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 14,
-  "iteration": 1629746104181,
+  "id": 3,
+  "iteration": 1642362980588,
   "links": [
     {
       "icon": "external link",
@@ -46,10 +46,10 @@
       "url": ""
     }
   ],
+  "liveNow": false,
   "panels": [
     {
       "collapsed": true,
-      "datasource": null,
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -63,7 +63,10 @@
           "bars": true,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "History TimescaleDB",
+          "datasource": {
+            "type": "postgres",
+            "uid": "PDFB9503CA0A37EBC"
+          },
           "fieldConfig": {
             "defaults": {
               "unit": "percent"
@@ -133,9 +136,7 @@
             }
           ],
           "thresholds": [],
-          "timeFrom": null,
           "timeRegions": [],
-          "timeShift": null,
           "title": "24hr Rate Comparison",
           "tooltip": {
             "shared": false,
@@ -145,9 +146,7 @@
           "transformations": [],
           "type": "graph",
           "xaxis": {
-            "buckets": null,
             "mode": "series",
-            "name": null,
             "show": false,
             "values": [
               "total"
@@ -157,7 +156,6 @@
             {
               "$$hashKey": "object:388",
               "format": "percent",
-              "label": null,
               "logBase": 1,
               "max": "800",
               "min": "-400",
@@ -166,16 +164,12 @@
             {
               "$$hashKey": "object:389",
               "format": "short",
-              "label": null,
               "logBase": 1,
-              "max": null,
-              "min": null,
               "show": true
             }
           ],
           "yaxis": {
-            "align": false,
-            "alignLevel": null
+            "align": false
           }
         },
         {
@@ -183,7 +177,10 @@
           "bars": true,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "History TimescaleDB",
+          "datasource": {
+            "type": "postgres",
+            "uid": "PDFB9503CA0A37EBC"
+          },
           "fieldConfig": {
             "defaults": {
               "unit": "percent"
@@ -266,9 +263,7 @@
             }
           ],
           "thresholds": [],
-          "timeFrom": null,
           "timeRegions": [],
-          "timeShift": null,
           "title": "1 Week Rate Comparison",
           "tooltip": {
             "shared": false,
@@ -285,9 +280,7 @@
           ],
           "type": "graph",
           "xaxis": {
-            "buckets": null,
             "mode": "series",
-            "name": null,
             "show": false,
             "values": [
               "total"
@@ -297,7 +290,6 @@
             {
               "$$hashKey": "object:445",
               "format": "percent",
-              "label": null,
               "logBase": 1,
               "max": "800",
               "min": "-400",
@@ -306,16 +298,12 @@
             {
               "$$hashKey": "object:446",
               "format": "short",
-              "label": null,
               "logBase": 1,
-              "max": null,
-              "min": null,
               "show": true
             }
           ],
           "yaxis": {
-            "align": false,
-            "alignLevel": null
+            "align": false
           }
         }
       ],
@@ -324,7 +312,6 @@
     },
     {
       "collapsed": false,
-      "datasource": null,
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -337,7 +324,10 @@
       "type": "row"
     },
     {
-      "datasource": "History TimescaleDB",
+      "datasource": {
+        "type": "postgres",
+        "uid": "PDFB9503CA0A37EBC"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -462,14 +452,11 @@
           ]
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Annualized Comparison",
       "type": "timeseries"
     },
     {
       "collapsed": false,
-      "datasource": null,
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -482,7 +469,10 @@
       "type": "row"
     },
     {
-      "datasource": "History TimescaleDB",
+      "datasource": {
+        "type": "postgres",
+        "uid": "PDFB9503CA0A37EBC"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -555,6 +545,45 @@
                 }
               }
             ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "fast_apr_rate"
+            },
+            "properties": [
+              {
+                "id": "custom.drawStyle",
+                "value": "line"
+              },
+              {
+                "id": "custom.lineWidth",
+                "value": 2
+              },
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "yellow",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "slow_apr_rate"
+            },
+            "properties": [
+              {
+                "id": "custom.lineWidth",
+                "value": 2
+              },
+              {
+                "id": "custom.drawStyle",
+                "value": "line"
+              }
+            ]
           }
         ]
       },
@@ -569,7 +598,7 @@
       "options": {
         "legend": {
           "calcs": [],
-          "displayMode": "hidden",
+          "displayMode": "list",
           "placement": "bottom"
         },
         "tooltip": {
@@ -581,6 +610,10 @@
       "repeatDirection": "v",
       "targets": [
         {
+          "datasource": {
+            "type": "postgres",
+            "uid": "PDFB9503CA0A37EBC"
+          },
           "format": "time_series",
           "group": [],
           "metricColumn": "none",
@@ -607,6 +640,10 @@
           ]
         },
         {
+          "datasource": {
+            "type": "postgres",
+            "uid": "PDFB9503CA0A37EBC"
+          },
           "format": "time_series",
           "group": [],
           "hide": false,
@@ -632,16 +669,48 @@
               "type": "macro"
             }
           ]
+        },
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "PDFB9503CA0A37EBC"
+          },
+          "format": "time_series",
+          "group": [],
+          "hide": false,
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  funding_rates.time,\n  funding_rates.venue || ':' || product AS text,\n  AVG(funding_rates.rate) OVER (\n    PARTITION BY funding_rates.venue, funding_rates.product\n    ORDER BY funding_rates.time ROWS BETWEEN $fast_avg PRECEDING AND CURRENT ROW\n  ) * 24 * 365 * 100 AS fast_apr_rate,\n  AVG(funding_rates.rate) OVER (\n    PARTITION BY funding_rates.venue, funding_rates.product\n    ORDER BY funding_rates.time ROWS BETWEEN $slow_avg PRECEDING AND CURRENT ROW\n  ) * 24 * 365 * 100 AS slow_apr_rate\nFROM funding_rates\n  LEFT JOIN products ON products.symbol = funding_rates.product AND products.venue = funding_rates.venue AND products.type = 'swap'\n  LEFT JOIN tokens ON tokens.symbol = products.base\nWHERE\n  $__timeFilter(funding_rates.time)\n  AND products.base IN($base)\nORDER BY\n  time ASC,\n  fast_apr_rate DESC;",
+          "refId": "C",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "$base APR",
       "transformations": [],
       "type": "timeseries"
     },
     {
-      "datasource": "History TimescaleDB",
+      "datasource": {
+        "type": "postgres",
+        "uid": "PDFB9503CA0A37EBC"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -687,7 +756,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.0",
+      "pluginVersion": "8.3.0",
       "repeat": "base",
       "repeatDirection": "v",
       "targets": [
@@ -718,13 +787,11 @@
           ]
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "$base Predicted APR",
       "type": "stat"
     }
   ],
-  "schemaVersion": 30,
+  "schemaVersion": 33,
   "style": "dark",
   "tags": [
     "swap-funding-rates",
@@ -733,7 +800,6 @@
   "templating": {
     "list": [
       {
-        "allValue": null,
         "current": {
           "selected": false,
           "text": [
@@ -743,42 +809,13 @@
             "$__all"
           ]
         },
-        "datasource": "History TimescaleDB",
-        "definition": "SELECT venue FROM products WHERE products.type = 'swap' GROUP BY venue ORDER BY venue",
-        "description": null,
-        "error": {
-          "config": {
-            "data": {
-              "from": "1627154104169",
-              "queries": [
-                {
-                  "datasourceId": 84,
-                  "format": "table",
-                  "rawSql": "SELECT venue FROM products WHERE products.type = 'swap' GROUP BY venue ORDER BY venue",
-                  "refId": "venue"
-                }
-              ],
-              "to": "1629749704169"
-            },
-            "headers": {
-              "X-Grafana-Org-Id": 1
-            },
-            "hideFromInspector": false,
-            "method": "POST",
-            "requestId": "venue",
-            "retry": 0,
-            "url": "api/ds/query"
-          },
-          "data": {
-            "message": "Invalid data source ID"
-          },
-          "message": "Invalid data source ID",
-          "status": 400,
-          "statusText": "Bad Request"
+        "datasource": {
+          "type": "postgres",
+          "uid": "PDFB9503CA0A37EBC"
         },
+        "definition": "SELECT venue FROM products WHERE products.type = 'swap' GROUP BY venue ORDER BY venue",
         "hide": 0,
         "includeAll": true,
-        "label": null,
         "multi": true,
         "name": "venue",
         "options": [],
@@ -793,7 +830,6 @@
         "useTags": false
       },
       {
-        "allValue": null,
         "current": {
           "selected": false,
           "text": [
@@ -803,42 +839,13 @@
             "$__all"
           ]
         },
-        "datasource": "History TimescaleDB",
-        "definition": "SELECT quote FROM products WHERE products.type = 'swap'  GROUP BY quote ORDER BY quote",
-        "description": null,
-        "error": {
-          "config": {
-            "data": {
-              "from": "1627154104170",
-              "queries": [
-                {
-                  "datasourceId": 84,
-                  "format": "table",
-                  "rawSql": "SELECT quote FROM products WHERE products.type = 'swap'  GROUP BY quote ORDER BY quote",
-                  "refId": "quote"
-                }
-              ],
-              "to": "1629749704170"
-            },
-            "headers": {
-              "X-Grafana-Org-Id": 1
-            },
-            "hideFromInspector": false,
-            "method": "POST",
-            "requestId": "quote",
-            "retry": 0,
-            "url": "api/ds/query"
-          },
-          "data": {
-            "message": "Invalid data source ID"
-          },
-          "message": "Invalid data source ID",
-          "status": 400,
-          "statusText": "Bad Request"
+        "datasource": {
+          "type": "postgres",
+          "uid": "PDFB9503CA0A37EBC"
         },
+        "definition": "SELECT quote FROM products WHERE products.type = 'swap'  GROUP BY quote ORDER BY quote",
         "hide": 0,
         "includeAll": true,
-        "label": null,
         "multi": true,
         "name": "quote",
         "options": [],
@@ -853,52 +860,22 @@
         "useTags": false
       },
       {
-        "allValue": null,
         "current": {
-          "selected": true,
+          "selected": false,
           "text": [
-            "All"
+            "btc"
           ],
           "value": [
-            "$__all"
+            "btc"
           ]
         },
-        "datasource": "History TimescaleDB",
-        "definition": "SELECT base FROM products WHERE products.type = 'swap' GROUP BY base ORDER BY base",
-        "description": null,
-        "error": {
-          "config": {
-            "data": {
-              "from": "1627154104170",
-              "queries": [
-                {
-                  "datasourceId": 84,
-                  "format": "table",
-                  "rawSql": "SELECT base FROM products WHERE products.type = 'swap' GROUP BY base ORDER BY base",
-                  "refId": "base"
-                }
-              ],
-              "to": "1629749704170"
-            },
-            "headers": {
-              "X-Grafana-Org-Id": 1
-            },
-            "hideFromInspector": false,
-            "method": "POST",
-            "requestId": "base",
-            "retry": 0,
-            "url": "api/ds/query"
-          },
-          "data": {
-            "message": "Invalid data source ID"
-          },
-          "message": "Invalid data source ID",
-          "status": 400,
-          "statusText": "Bad Request"
+        "datasource": {
+          "type": "postgres",
+          "uid": "PDFB9503CA0A37EBC"
         },
+        "definition": "SELECT base FROM products WHERE products.type = 'swap' GROUP BY base ORDER BY base",
         "hide": 0,
         "includeAll": true,
-        "label": null,
         "multi": true,
         "name": "base",
         "options": [],
@@ -911,6 +888,44 @@
         "tagsQuery": "",
         "type": "query",
         "useTags": false
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "24",
+          "value": "24"
+        },
+        "hide": 0,
+        "name": "fast_avg",
+        "options": [
+          {
+            "selected": true,
+            "text": "24",
+            "value": "24"
+          }
+        ],
+        "query": "24",
+        "skipUrlSync": false,
+        "type": "textbox"
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "168",
+          "value": "168"
+        },
+        "hide": 0,
+        "name": "slow_avg",
+        "options": [
+          {
+            "selected": true,
+            "text": "168",
+            "value": "168"
+          }
+        ],
+        "query": "168",
+        "skipUrlSync": false,
+        "type": "textbox"
       }
     ]
   },
@@ -922,5 +937,6 @@
   "timezone": "",
   "title": "Swap Funding Rates",
   "uid": "2dkHtKXGz",
-  "version": 4
+  "version": 4,
+  "weekStart": ""
 }
