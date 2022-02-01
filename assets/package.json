@@ -7,7 +7,7 @@
     "watch": "NODE_ENV=development webpack --mode development --watch"
   },
   "dependencies": {
-    "alpinejs": "3.4.2",
+    "alpinejs": "3.8.1",
     "multiselect-react-dropdown": "^2.0.17",
     "notified_phoenix": "file:../deps/notified_phoenix",
     "nprogress": "^0.2.0",
