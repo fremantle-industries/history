@@ -97,87 +97,87 @@ config :navigator,
     history: [
       %{
         label: "History",
-        link: {HistoryWeb.Router.Helpers, :trade_path, [HistoryWeb.Endpoint, :index]},
+        to: {HistoryWeb.Router.Helpers, :trade_path, [HistoryWeb.Endpoint, :index]},
         class: "text-4xl"
       },
       %{
         label: "Data",
-        link: {HistoryWeb.Router.Helpers, :trade_path, [HistoryWeb.Endpoint, :index]}
+        to: {HistoryWeb.Router.Helpers, :trade_path, [HistoryWeb.Endpoint, :index]}
       },
       %{
         label: "Products",
-        link: {HistoryWeb.Router.Helpers, :product_path, [HistoryWeb.Endpoint, :index]}
+        to: {HistoryWeb.Router.Helpers, :product_path, [HistoryWeb.Endpoint, :index]}
       },
       %{
         label: "Tokens",
-        link: {HistoryWeb.Router.Helpers, :token_path, [HistoryWeb.Endpoint, :index]}
+        to: {HistoryWeb.Router.Helpers, :token_path, [HistoryWeb.Endpoint, :index]}
       },
       %{
         label: "Workbench",
-        link: {WorkbenchWeb.Router.Helpers, :balance_all_url, [WorkbenchWeb.Endpoint, :index]}
+        to: {WorkbenchWeb.Router.Helpers, :balance_all_url, [WorkbenchWeb.Endpoint, :index]}
       },
       %{
         label: "Grafana",
-        link: "http://#{grafana_host}"
+        to: "http://#{grafana_host}"
       },
       %{
         label: "Prometheus",
-        link: "http://#{prometheus_host}"
+        to: "http://#{prometheus_host}"
       }
     ],
     workbench: [
       %{
         label: "Workbench",
-        link: {WorkbenchWeb.Router.Helpers, :balance_all_path, [WorkbenchWeb.Endpoint, :index]},
+        to: {WorkbenchWeb.Router.Helpers, :balance_all_path, [WorkbenchWeb.Endpoint, :index]},
         class: "text-4xl"
       },
       %{
         label: "Balances",
-        link: {WorkbenchWeb.Router.Helpers, :balance_day_path, [WorkbenchWeb.Endpoint, :index]}
+        to: {WorkbenchWeb.Router.Helpers, :balance_day_path, [WorkbenchWeb.Endpoint, :index]}
       },
       %{
         label: "Accounts",
-        link: {WorkbenchWeb.Router.Helpers, :account_path, [WorkbenchWeb.Endpoint, :index]}
+        to: {WorkbenchWeb.Router.Helpers, :account_path, [WorkbenchWeb.Endpoint, :index]}
       },
       %{
         label: "Wallets",
-        link: {WorkbenchWeb.Router.Helpers, :wallet_path, [WorkbenchWeb.Endpoint, :index]}
+        to: {WorkbenchWeb.Router.Helpers, :wallet_path, [WorkbenchWeb.Endpoint, :index]}
       },
       %{
         label: "Orders",
-        link: {WorkbenchWeb.Router.Helpers, :order_path, [WorkbenchWeb.Endpoint, :index]}
+        to: {WorkbenchWeb.Router.Helpers, :order_path, [WorkbenchWeb.Endpoint, :index]}
       },
       %{
         label: "Positions",
-        link: {WorkbenchWeb.Router.Helpers, :position_path, [WorkbenchWeb.Endpoint, :index]}
+        to: {WorkbenchWeb.Router.Helpers, :position_path, [WorkbenchWeb.Endpoint, :index]}
       },
       %{
         label: "Products",
-        link: {WorkbenchWeb.Router.Helpers, :product_path, [WorkbenchWeb.Endpoint, :index]}
+        to: {WorkbenchWeb.Router.Helpers, :product_path, [WorkbenchWeb.Endpoint, :index]}
       },
       %{
         label: "Fees",
-        link: {WorkbenchWeb.Router.Helpers, :fee_path, [WorkbenchWeb.Endpoint, :index]}
+        to: {WorkbenchWeb.Router.Helpers, :fee_path, [WorkbenchWeb.Endpoint, :index]}
       },
       %{
         label: "Venues",
-        link: {WorkbenchWeb.Router.Helpers, :venue_path, [WorkbenchWeb.Endpoint, :index]}
+        to: {WorkbenchWeb.Router.Helpers, :venue_path, [WorkbenchWeb.Endpoint, :index]}
       },
       %{
         label: "Fleets",
-        link: {WorkbenchWeb.Router.Helpers, :fleet_path, [WorkbenchWeb.Endpoint, :index]}
+        to: {WorkbenchWeb.Router.Helpers, :fleet_path, [WorkbenchWeb.Endpoint, :index]}
       },
       %{
         label: "History",
-        link: {HistoryWeb.Router.Helpers, :trade_url, [HistoryWeb.Endpoint, :index]}
+        to: {HistoryWeb.Router.Helpers, :trade_url, [HistoryWeb.Endpoint, :index]}
       },
       %{
         label: "Grafana",
-        link: "http://#{grafana_host}"
+        to: "http://#{grafana_host}"
       },
       %{
         label: "Prometheus",
-        link: "http://#{prometheus_host}"
+        to: "http://#{prometheus_host}"
       }
     ]
   }

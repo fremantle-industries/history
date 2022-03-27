@@ -43,7 +43,7 @@ defmodule History.MixProject do
       {:jason, "~> 1.0"},
       {:master_proxy, "~> 0.1"},
       {:notified_phoenix, "~> 0.0.7"},
-      {:navigator, "~> 0.0.6"},
+      {:navigator, "~> 0.0.7"},
       {:paged_query, "~> 0.0.2"},
       {:phoenix, "~> 1.6.0"},
       {:phoenix_ecto, "~> 4.4"},
