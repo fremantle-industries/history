@@ -9,7 +9,7 @@
   "dependencies": {
     "alpinejs": "3.4.2",
     "glob": "^8.0.3",
-    "multiselect-react-dropdown": "^2.0.21",
+    "multiselect-react-dropdown": "^2.0.22",
     "notified_phoenix": "file:../deps/notified_phoenix",
     "nprogress": "^0.2.0",
     "phoenix": "file:../deps/phoenix",
