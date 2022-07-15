@@ -68,7 +68,7 @@ defmodule History.MixProject do
       {:ex_doc, ">= 0.0.0", only: :dev},
       {:floki, ">= 0.0.0", only: :test},
       {:mock, "~> 0.3", only: :test},
-      {:wallaby, "~> 0.29.0", runtime: false, only: :test},
+      {:wallaby, "~> 0.30.0", runtime: false, only: :test},
       {:logger_file_backend, "~> 0.0.1", only: [:dev, :test]}
     ]
   end
